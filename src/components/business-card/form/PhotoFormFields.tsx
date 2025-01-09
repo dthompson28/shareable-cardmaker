@@ -37,7 +37,7 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
 
           <div className="space-y-2">
             <Label>Preview</Label>
-            <div className="relative">
+            <div className="relative max-w-md mx-auto">
               {data.photoStyle === 'compact' ? (
                 <div className="relative">
                   <div className="w-full h-32 bg-[#00674f]" />
@@ -53,7 +53,7 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
                 </div>
               ) : (
                 <div 
-                  className="w-full h-72 bg-cover rounded-t-xl"
+                  className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden"
                   style={{
                     backgroundImage: `url(${data.photo})`,
                     backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
