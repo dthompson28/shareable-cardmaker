@@ -31,9 +31,13 @@ export const PhotoPositionControl = ({ data, zoom, onChange }: PhotoPositionCont
     const xPercent = (x / rect.width) * 100;
     const yPercent = (y / rect.height) * 100;
 
+    // Invert the percentages to make the movement feel more natural
+    const invertedX = 100 - xPercent;
+    const invertedY = 100 - yPercent;
+
     // Clamp values between 0 and 100
-    const clampedX = Math.max(0, Math.min(100, xPercent));
-    const clampedY = Math.max(0, Math.min(100, yPercent));
+    const clampedX = Math.max(0, Math.min(100, invertedX));
+    const clampedY = Math.max(0, Math.min(100, invertedY));
 
     onChange("photoPosition.x", Math.round(clampedX));
     onChange("photoPosition.y", Math.round(clampedY));
