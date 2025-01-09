@@ -24,16 +24,21 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        brand: {
+          primary: "#00674f",
+          secondary: "#ff8c00",
+          background: "#f5f5f5",
+        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
         primary: {
-          DEFAULT: "#8B5CF6",
+          DEFAULT: "#00674f",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#D946EF",
+          DEFAULT: "#ff8c00",
           foreground: "#FFFFFF",
         },
         destructive: {

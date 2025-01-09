@@ -91,7 +91,7 @@ export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
       <ColorSection data={data} onChange={handleChange} />
       <Button 
         type="submit" 
-        className="w-full bg-[#00674f] hover:bg-[#00674f]/90 text-[#f5f5f5]"
+        className="w-full bg-brand-primary hover:bg-brand-primary/90 text-brand-background"
       >
         Next
       </Button>
