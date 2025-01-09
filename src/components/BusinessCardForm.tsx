@@ -83,17 +83,19 @@ export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 animate-fadeIn">
-      <PhotoSection data={data} onChange={handleChange} />
-      <LogoSection data={data} onChange={handleChange} />
-      <ContactSection data={data} onChange={handleChange} />
-      <SocialSection data={data} onChange={handleChange} />
-      <ColorSection data={data} onChange={handleChange} />
+    <form onSubmit={handleSubmit} className="space-y-12 animate-fadeIn">
+      <div className="space-y-12 divide-y divide-muted">
+        <PhotoSection data={data} onChange={handleChange} />
+        <LogoSection data={data} onChange={handleChange} />
+        <ContactSection data={data} onChange={handleChange} />
+        <SocialSection data={data} onChange={handleChange} />
+        <ColorSection data={data} onChange={handleChange} />
+      </div>
       <Button 
         type="submit" 
-        className="w-full bg-brand-primary hover:bg-brand-primary/90 text-brand-background"
+        className="w-full h-12 text-lg bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:opacity-90 transition-opacity"
       >
-        Next
+        Preview Card
       </Button>
     </form>
   );

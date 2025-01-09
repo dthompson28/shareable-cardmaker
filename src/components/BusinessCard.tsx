@@ -15,21 +15,20 @@ export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
       <div className="flex justify-center gap-4">
         <button
           onClick={onBack}
-          className="px-4 py-2 text-sm font-medium border rounded-md hover:opacity-80 transition-opacity"
+          className="px-6 py-3 text-base font-medium border rounded-md transition-all duration-300 hover:bg-brand-primary/5"
           style={{ 
-            backgroundColor: "#f5f5f5",
-            color: "#00674f",
-            borderColor: "#00674f"
+            borderColor: data.colors.primary,
+            color: data.colors.primary
           }}
         >
           Back
         </button>
         <button
           onClick={onEdit}
-          className="px-4 py-2 text-sm font-medium border rounded-md hover:opacity-80 transition-opacity"
+          className="px-6 py-3 text-base font-medium rounded-md transition-all duration-300 hover:opacity-90"
           style={{ 
-            backgroundColor: "#00674f",
-            color: "#f5f5f5",
+            backgroundColor: data.colors.primary,
+            color: "#FFFFFF"
           }}
         >
           Edit Card
