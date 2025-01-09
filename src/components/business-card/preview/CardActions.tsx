@@ -21,12 +21,24 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor }: Ca
         Share
       </Button>
       <Button
-        className={`flex-1 transition-colors duration-200 hover:text-[${backgroundColor}] hover:bg-[${tertiaryColor}]`}
+        className="flex-1 transition-colors duration-200"
         variant="outline"
         style={{ 
           borderColor: tertiaryColor,
           borderWidth: '2px',
-          color: tertiaryColor
+          color: tertiaryColor,
+          '--hover-bg': tertiaryColor,
+          '--hover-color': backgroundColor,
+        } as React.CSSProperties}
+        onMouseEnter={(e) => {
+          const target = e.currentTarget;
+          target.style.backgroundColor = tertiaryColor;
+          target.style.color = backgroundColor;
+        }}
+        onMouseLeave={(e) => {
+          const target = e.currentTarget;
+          target.style.backgroundColor = 'transparent';
+          target.style.color = tertiaryColor;
         }}
       >
         <Download className="w-4 h-4 mr-2" />
