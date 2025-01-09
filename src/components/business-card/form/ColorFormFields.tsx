@@ -8,46 +8,92 @@ interface ColorFormFieldsProps {
 }
 
 export const ColorFormFields = ({ data, onChange }: ColorFormFieldsProps) => {
+  const handleColorChange = (field: string, value: string) => {
+    // Ensure the value starts with #
+    const colorValue = value.startsWith('#') ? value : `#${value}`;
+    onChange(field, colorValue);
+  };
+
   return (
     <div className="grid gap-4">
       <div className="grid gap-2">
-        <Label htmlFor="primaryColor">Primary Color</Label>
-        <Input
-          id="primaryColor"
-          type="color"
-          value={data.colors.primary}
-          onChange={(e) => onChange("colors.primary", e.target.value)}
-        />
+        <Label htmlFor="primaryColor">Primary Color (Hex)</Label>
+        <div className="flex gap-2">
+          <Input
+            id="primaryColor"
+            type="text"
+            value={data.colors.primary}
+            onChange={(e) => handleColorChange("colors.primary", e.target.value)}
+            placeholder="#000000"
+            className="font-mono"
+          />
+          <Input
+            type="color"
+            value={data.colors.primary}
+            onChange={(e) => handleColorChange("colors.primary", e.target.value)}
+            className="w-12 h-10 p-1"
+          />
+        </div>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="secondaryColor">Secondary Color</Label>
-        <Input
-          id="secondaryColor"
-          type="color"
-          value={data.colors.secondary}
-          onChange={(e) => onChange("colors.secondary", e.target.value)}
-        />
+        <Label htmlFor="secondaryColor">Secondary Color (Hex)</Label>
+        <div className="flex gap-2">
+          <Input
+            id="secondaryColor"
+            type="text"
+            value={data.colors.secondary}
+            onChange={(e) => handleColorChange("colors.secondary", e.target.value)}
+            placeholder="#000000"
+            className="font-mono"
+          />
+          <Input
+            type="color"
+            value={data.colors.secondary}
+            onChange={(e) => handleColorChange("colors.secondary", e.target.value)}
+            className="w-12 h-10 p-1"
+          />
+        </div>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="accentColor">Accent Color</Label>
-        <Input
-          id="accentColor"
-          type="color"
-          value={data.colors.accent}
-          onChange={(e) => onChange("colors.accent", e.target.value)}
-        />
+        <Label htmlFor="accentColor">Accent Color (Hex)</Label>
+        <div className="flex gap-2">
+          <Input
+            id="accentColor"
+            type="text"
+            value={data.colors.accent}
+            onChange={(e) => handleColorChange("colors.accent", e.target.value)}
+            placeholder="#000000"
+            className="font-mono"
+          />
+          <Input
+            type="color"
+            value={data.colors.accent}
+            onChange={(e) => handleColorChange("colors.accent", e.target.value)}
+            className="w-12 h-10 p-1"
+          />
+        </div>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="backgroundColor">Background Color</Label>
-        <Input
-          id="backgroundColor"
-          type="color"
-          value={data.colors.background}
-          onChange={(e) => onChange("colors.background", e.target.value)}
-        />
+        <Label htmlFor="backgroundColor">Background Color (Hex)</Label>
+        <div className="flex gap-2">
+          <Input
+            id="backgroundColor"
+            type="text"
+            value={data.colors.background}
+            onChange={(e) => handleColorChange("colors.background", e.target.value)}
+            placeholder="#000000"
+            className="font-mono"
+          />
+          <Input
+            type="color"
+            value={data.colors.background}
+            onChange={(e) => handleColorChange("colors.background", e.target.value)}
+            className="w-12 h-10 p-1"
+          />
+        </div>
       </div>
     </div>
   );
