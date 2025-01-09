@@ -5,13 +5,10 @@ import { downloadVCard } from "@/utils/vCardGenerator";
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 interface CardActionsProps {
-  primaryColor: string;
-  backgroundColor: string;
-  tertiaryColor: string;
   data: BusinessCardData;
 }
 
-export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor, data }: CardActionsProps) => {
+export const CardActions = ({ data }: CardActionsProps) => {
   const { toast } = useToast();
 
   const handleShare = async () => {
@@ -67,7 +64,7 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor, data
       <Button 
         className="flex-1"
         style={{ 
-          backgroundColor: primaryColor,
+          backgroundColor: data.colors.primary,
           color: "#FFFFFF"
         }}
         onClick={handleShare}
@@ -76,14 +73,23 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor, data
         Share
       </Button>
       <Button
-        className="flex-1 transition-colors duration-200 hover:bg-[#7E69AB]"
+        className="flex-1 transition-colors duration-200"
         variant="outline"
         style={{ 
-          borderColor: tertiaryColor,
+          borderColor: data.colors.accent,
           borderWidth: '2px',
-          color: tertiaryColor
+          color: data.colors.accent,
+          backgroundColor: data.colors.background,
         }}
         onClick={handleSaveContact}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = data.colors.secondary;
+          e.currentTarget.style.color = data.colors.background;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = data.colors.background;
+          e.currentTarget.style.color = data.colors.accent;
+        }}
       >
         <Download className="w-4 h-4 mr-2" />
         Save Contact
