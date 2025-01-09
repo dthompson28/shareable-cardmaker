@@ -76,7 +76,7 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor, data
         Share
       </Button>
       <Button
-        className="flex-1 transition-colors duration-200"
+        className="flex-1 transition-colors duration-200 hover:bg-[#7E69AB]"
         variant="outline"
         style={{ 
           borderColor: tertiaryColor,
