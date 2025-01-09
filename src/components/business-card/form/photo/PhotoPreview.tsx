@@ -1,6 +1,7 @@
-import { Label } from "@/components/ui/label";
-import { useState, useRef, MouseEvent } from "react";
 import { BusinessCardData } from "../../../BusinessCardForm";
+import { PhotoDragHandler } from "./PhotoDragHandler";
+import { CompactPhotoStyle, FullWidthPhotoStyle } from "./PhotoPreviewStyles";
+import { Label } from "@/components/ui/label";
 
 interface PhotoPreviewProps {
   data: BusinessCardData;
@@ -9,71 +10,18 @@ interface PhotoPreviewProps {
 }
 
 export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const previewRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseDown = (e: MouseEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging || !previewRef.current) return;
-
-    e.preventDefault();
-    const rect = previewRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
-
-    const clampedX = Math.max(0, Math.min(100, x));
-    const clampedY = Math.max(0, Math.min(100, y));
-
-    onChange("photoPosition", {
-      x: Math.round(clampedX),
-      y: Math.round(clampedY)
-    });
-  };
+  if (!data.photo) return null;
 
   return (
     <div className="space-y-2">
       <Label>Preview (Click and drag to position)</Label>
-      <div 
-        className="relative max-w-md mx-auto select-none"
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        onMouseMove={handleMouseMove}
-        ref={previewRef}
-      >
+      <PhotoDragHandler data={data} onChange={onChange}>
         {data.photoStyle === 'compact' ? (
-          <div className="relative h-48">
-            <div className="absolute left-6">
-              <div 
-                className="w-48 h-48 rounded-full bg-cover border-4 border-white shadow-xl" 
-                style={{ 
-                  backgroundImage: `url(${data.photo})`,
-                  backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-                  backgroundSize: `${zoom}%`
-                }} 
-              />
-            </div>
-          </div>
+          <CompactPhotoStyle data={data} zoom={zoom} />
         ) : (
-          <div 
-            className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden border-2 border-gray-300"
-            style={{
-              backgroundImage: `url(${data.photo})`,
-              backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-              backgroundSize: `${zoom}%`,
-              backgroundRepeat: 'no-repeat'
-            }}
-          />
+          <FullWidthPhotoStyle data={data} zoom={zoom} />
         )}
-      </div>
+      </PhotoDragHandler>
     </div>
   );
 };
