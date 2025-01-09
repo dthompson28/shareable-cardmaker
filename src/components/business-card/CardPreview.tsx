@@ -55,11 +55,8 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
         </>
       ) : (
         <div className="flex flex-col">
-          <div 
-            className="relative h-40 w-full"
-            style={{ backgroundColor: data.colors.primary }}
-          >
-            <div className="absolute left-6 -bottom-16">
+          <div className="relative pt-6">
+            <div className="absolute left-6">
               <PhotoDisplay data={data} />
             </div>
             {data.logo && (

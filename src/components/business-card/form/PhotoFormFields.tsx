@@ -76,8 +76,7 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
             >
               {data.photoStyle === 'compact' ? (
                 <div className="relative">
-                  <div className="w-full h-32 bg-[#00674f]" />
-                  <div className="absolute top-16 left-6">
+                  <div className="absolute top-0 left-6">
                     <div 
                       className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
                       style={{ 
