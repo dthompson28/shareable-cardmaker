@@ -1,15 +1,16 @@
 import { Facebook, Instagram, Linkedin, Youtube, Twitter, Phone } from "lucide-react";
 import { BusinessCardData } from "../BusinessCardForm";
-import { memo } from "react";
-import { LucideIcon } from "lucide-react";
+import { memo, forwardRef } from "react";
+import { LucideIcon, LucideProps } from "lucide-react";
 
 interface SocialLinksProps {
   data: BusinessCardData;
 }
 
-// Define TikTok icon as a proper Lucide-compatible component
-const TikTokIcon: LucideIcon = (props) => (
+// Define TikTok icon as a proper Lucide-compatible component using forwardRef
+const TikTokIcon: LucideIcon = forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
   <svg
+    ref={ref}
     {...props}
     viewBox="0 0 24 24"
     fill="none"
@@ -20,7 +21,9 @@ const TikTokIcon: LucideIcon = (props) => (
   >
     <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
   </svg>
-);
+));
+
+TikTokIcon.displayName = 'TikTokIcon';
 
 const socialIcons: Record<string, LucideIcon> = {
   linkedin: Linkedin,
