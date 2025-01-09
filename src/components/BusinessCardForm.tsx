@@ -22,6 +22,9 @@ export interface BusinessCardData {
     facebook: string;
     instagram: string;
     youtube: string;
+    twitter: string;
+    tiktok: string;
+    whatsapp: string;
     additionalLinks?: { title: string; url: string; }[];
   };
   colors: {

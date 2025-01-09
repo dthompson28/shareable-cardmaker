@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Plus, Trash2, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
+import { Plus, Trash2, Facebook, Instagram, Linkedin, Youtube, Twitter, Phone } from "lucide-react";
 import { BusinessCardData } from "../BusinessCardForm";
 
 interface SocialSectionProps {
@@ -75,6 +75,44 @@ export const SocialSection = ({ data, onChange }: SocialSectionProps) => {
             id="youtube"
             value={data.social.youtube}
             onChange={(e) => onChange("social.youtube", e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor="twitter">
+            <Twitter className="inline-block w-4 h-4 mr-2" />
+            X (Twitter) URL
+          </Label>
+          <Input
+            id="twitter"
+            value={data.social.twitter}
+            onChange={(e) => onChange("social.twitter", e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor="tiktok">
+            <svg className="inline-block w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+            </svg>
+            TikTok URL
+          </Label>
+          <Input
+            id="tiktok"
+            value={data.social.tiktok}
+            onChange={(e) => onChange("social.tiktok", e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-2">
+          <Label htmlFor="whatsapp">
+            <Phone className="inline-block w-4 h-4 mr-2" />
+            WhatsApp URL
+          </Label>
+          <Input
+            id="whatsapp"
+            value={data.social.whatsapp}
+            onChange={(e) => onChange("social.whatsapp", e.target.value)}
           />
         </div>
 

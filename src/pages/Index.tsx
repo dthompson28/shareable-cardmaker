@@ -19,6 +19,9 @@ const initialData: BusinessCardData = {
     facebook: "",
     instagram: "",
     youtube: "",
+    twitter: "",
+    tiktok: "",
+    whatsapp: "",
     additionalLinks: [],
   },
   colors: {
