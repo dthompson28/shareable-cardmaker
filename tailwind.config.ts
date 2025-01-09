@@ -27,7 +27,8 @@ export default {
         brand: {
           primary: "#00674f",
           secondary: "#ff8c00",
-          background: "#f5f5f5",
+          background: "#f3f3f3",
+          accent: "#F56565",
         },
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -41,20 +42,20 @@ export default {
           DEFAULT: "#ff8c00",
           foreground: "#FFFFFF",
         },
+        accent: {
+          DEFAULT: "#F56565",
+          foreground: "#FFFFFF",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
+          DEFAULT: "#f1f0fb",
           foreground: "hsl(var(--muted-foreground))",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
+          DEFAULT: "#f2fce2",
           foreground: "hsl(var(--popover-foreground))",
         },
       },
