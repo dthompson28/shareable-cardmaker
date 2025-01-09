@@ -36,13 +36,19 @@ export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
   const handleChange = (field: string, value: string) => {
     if (field.includes(".")) {
       const [parent, child] = field.split(".");
-      onChange({
-        ...data,
-        [parent]: {
-          ...data[parent as keyof BusinessCardData],
-          [child]: value,
-        },
-      });
+      const parentKey = parent as keyof BusinessCardData;
+      const parentValue = data[parentKey];
+      
+      // Type guard to ensure parentValue is an object
+      if (parentValue && typeof parentValue === 'object') {
+        onChange({
+          ...data,
+          [parent]: {
+            ...parentValue,
+            [child]: value,
+          },
+        });
+      }
     } else {
       onChange({
         ...data,
