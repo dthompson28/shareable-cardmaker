@@ -1,5 +1,6 @@
 import { BusinessCardData } from "../../BusinessCardForm";
 import { CardActions } from "../preview/CardActions";
+import { CardHeader } from "../header/CardHeader";
 
 interface FullCardLayoutProps {
   data: BusinessCardData;
@@ -25,25 +26,19 @@ export const FullCardLayout = ({
       <div className="relative">
         {data.photo && (
           <div 
-            className="w-full h-48 bg-cover bg-center"
+            className="w-full h-48 bg-cover bg-center relative"
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`
             }}
-          />
+          >
+            <div className="absolute inset-0 bg-black/30" /> {/* Overlay for better text readability */}
+            <CardHeader data={data} />
+          </div>
         )}
         {renderLogo()}
       </div>
       <div className="p-6 space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold" style={{ color: data.colors.primary }}>{data.name}</h1>
-          {data.jobTitle && (
-            <p className="text-lg" style={{ color: data.colors.secondary }}>{data.jobTitle}</p>
-          )}
-          {data.company && (
-            <p className="text-lg" style={{ color: data.colors.secondary }}>{data.company}</p>
-          )}
-        </div>
         <div className="space-y-2">
           {data.phone && (
             <p style={{ color: data.colors.primary }}>{data.phone}</p>

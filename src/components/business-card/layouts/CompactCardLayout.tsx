@@ -1,5 +1,6 @@
 import { BusinessCardData } from "../../BusinessCardForm";
 import { CardActions } from "../preview/CardActions";
+import { CardHeader } from "../header/CardHeader";
 
 interface CompactCardLayoutProps {
   data: BusinessCardData;
@@ -27,25 +28,19 @@ export const CompactCardLayout = ({
       <div className="relative pt-6">
         <div className={`absolute ${isLogoBottomLeft() ? 'right-6' : 'left-6'}`}>
           <div 
-            className="w-24 h-24 rounded-full bg-cover bg-center"
+            className="w-24 h-24 rounded-full bg-cover bg-center relative"
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`
             }}
-          />
+          >
+            <div className="absolute inset-0 bg-black/10 rounded-full" /> {/* Subtle overlay for better text contrast */}
+          </div>
         </div>
         {renderLogo()}
+        <CardHeader data={data} />
       </div>
       <div className="mt-20 p-6 space-y-6">
-        <div className="space-y-2">
-          <h1 className="text-2xl font-bold" style={{ color: data.colors.primary }}>{data.name}</h1>
-          {data.jobTitle && (
-            <p className="text-lg" style={{ color: data.colors.secondary }}>{data.jobTitle}</p>
-          )}
-          {data.company && (
-            <p className="text-lg" style={{ color: data.colors.secondary }}>{data.company}</p>
-          )}
-        </div>
         <div className="space-y-2">
           {data.phone && (
             <p style={{ color: data.colors.primary }}>{data.phone}</p>
