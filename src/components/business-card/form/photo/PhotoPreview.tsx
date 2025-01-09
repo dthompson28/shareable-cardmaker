@@ -64,7 +64,7 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
           </div>
         ) : (
           <div 
-            className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden"
+            className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden border-2 border-gray-300"
             style={{
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
