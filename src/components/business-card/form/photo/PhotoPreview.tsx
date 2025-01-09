@@ -12,7 +12,8 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
     setIsDragging(true);
   };
 
@@ -23,6 +24,7 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDragging || !previewRef.current) return;
 
+    e.preventDefault();
     const rect = previewRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
@@ -40,7 +42,7 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
     <div className="space-y-2">
       <Label>Preview (Click and drag to position)</Label>
       <div 
-        className="relative max-w-md mx-auto cursor-move mb-8"
+        className="relative max-w-md mx-auto select-none"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
