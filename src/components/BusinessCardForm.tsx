@@ -88,7 +88,12 @@ export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
       <ContactSection data={data} onChange={handleChange} />
       <SocialSection data={data} onChange={handleChange} />
       <ColorSection data={data} onChange={handleChange} />
-      <Button type="submit" className="w-full">Next</Button>
+      <Button 
+        type="submit" 
+        className="w-full bg-[#00674f] hover:bg-[#00674f]/90 text-[#f5f5f5]"
+      >
+        Next
+      </Button>
     </form>
   );
 };
