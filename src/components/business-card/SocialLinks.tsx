@@ -14,10 +14,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
@@ -30,10 +27,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
@@ -46,10 +40,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
@@ -62,10 +53,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
@@ -78,10 +66,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
@@ -94,10 +79,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
@@ -112,10 +94,7 @@ export const SocialLinks = ({ data }: SocialLinksProps) => {
           target="_blank" 
           rel="noopener noreferrer"
           className="transition-colors duration-200"
-          style={{ 
-            color: data.colors.primary,
-            ':hover': { color: data.colors.accent }
-          }}
+          style={{ color: data.colors.primary }}
           onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
           onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
         >
