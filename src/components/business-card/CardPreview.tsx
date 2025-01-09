@@ -18,10 +18,8 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
 
   return (
     <div 
-      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300"
+      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-white"
       style={{ 
-        backgroundColor: data.colors.background,
-        color: data.colors.primary,
         minHeight: data.photoStyle === 'compact' ? '400px' : '500px',
       }}
     >
@@ -61,7 +59,7 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
             className="relative h-40 w-full"
             style={{ backgroundColor: data.colors.primary }}
           >
-            <div className="absolute left-6 -bottom-16">
+            <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-16">
               <PhotoDisplay data={data} />
             </div>
             {data.logo && (

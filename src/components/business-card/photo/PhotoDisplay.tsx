@@ -9,9 +9,14 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
 
   if (data.photoStyle === 'compact') {
     return (
-      <div className="absolute left-6 top-6">
-        <div 
-          className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
+      <div 
+        className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl relative z-10"
+        style={{ 
+          backgroundColor: 'white',
+        }}
+      >
+        <div
+          className="w-full h-full bg-cover bg-center"
           style={{ 
             backgroundImage: `url(${data.photo})`,
             backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
