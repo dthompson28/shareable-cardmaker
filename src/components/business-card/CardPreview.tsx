@@ -11,26 +11,31 @@ interface CardPreviewProps {
 }
 
 export const CardPreview = ({ data }: CardPreviewProps) => {
+  const hasAdditionalLinks = data.social.additionalLinks && data.social.additionalLinks.length > 0;
+  const hasSocialLinks = Object.values(data.social).some(value => 
+    typeof value === 'string' && value.length > 0
+  );
+
   return (
     <div 
-      className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative"
+      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300"
       style={{ 
         backgroundColor: data.colors.background,
-        color: data.colors.primary
+        color: data.colors.primary,
+        minHeight: data.photoStyle === 'compact' ? '400px' : '500px',
       }}
     >
       <div 
-        className="relative"
+        className={`relative ${data.photoStyle === 'compact' ? 'h-40' : ''}`}
         style={{ 
           backgroundColor: data.photoStyle === 'compact' ? data.colors.primary : 'transparent',
-          height: data.photoStyle === 'compact' ? '160px' : 'auto'
         }}
       >
         <PhotoDisplay data={data} />
         <CardHeader data={data} />
       </div>
       
-      <div className="p-6 space-y-6">
+      <div className={`p-6 space-y-6 ${hasAdditionalLinks || hasSocialLinks ? 'pb-8' : 'pb-6'}`}>
         {data.logo && (
           <div 
             className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
@@ -41,7 +46,7 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
           />
         )}
         
-        <div className="space-y-4">
+        <div className={`space-y-4 ${hasAdditionalLinks ? 'mb-8' : ''}`}>
           <ContactInfo data={data} />
           <SocialLinks data={data} />
           <AdditionalLinks data={data} />
