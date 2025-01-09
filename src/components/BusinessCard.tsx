@@ -52,7 +52,13 @@ END:VCARD`;
         style={{ backgroundColor: data.colors.background }}
       >
         {data.photo && (
-          <div className="w-full h-48 bg-cover bg-center" style={{ backgroundImage: `url(${data.photo})` }} />
+          <div 
+            className="w-full h-48 bg-cover" 
+            style={{ 
+              backgroundImage: `url(${data.photo})`,
+              backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
+            }} 
+          />
         )}
         
         <div className="p-6 space-y-6">

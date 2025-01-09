@@ -12,16 +12,17 @@ export interface BusinessCardData {
   email: string;
   website: string;
   photo: string;
+  photoPosition: {
+    x: number;
+    y: number;
+  };
   address: string;
   social: {
     linkedin: string;
     facebook: string;
     instagram: string;
     youtube: string;
-    additionalLinks: Array<{
-      title: string;
-      url: string;
-    }>;
+    additionalLinks?: { title: string; url: string; }[];
   };
   colors: {
     primary: string;
