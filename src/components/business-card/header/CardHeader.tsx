@@ -6,10 +6,10 @@ interface CardHeaderProps {
 
 export const CardHeader = ({ data }: CardHeaderProps) => {
   return (
-    <div className="text-center">
-      <h1 className="text-2xl font-bold" style={{ color: data.colors.primary }}>{data.name}</h1>
+    <div className="absolute bottom-4 left-4 text-left">
+      <h1 className="text-3xl font-bold text-white mb-1">{data.name}</h1>
       {data.company && (
-        <p className="text-lg" style={{ color: data.colors.secondary }}>{data.company}</p>
+        <p className="text-xl text-white/90">{data.company}</p>
       )}
     </div>
   );
