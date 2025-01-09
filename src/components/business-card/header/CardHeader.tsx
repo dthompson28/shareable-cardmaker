@@ -7,7 +7,7 @@ interface CardHeaderProps {
 export const CardHeader = ({ data }: CardHeaderProps) => {
   if (data.photoStyle === 'compact') {
     return (
-      <div className="absolute left-6 top-44 text-left">
+      <div className="text-left">
         <h1 
           className="text-3xl font-bold mb-1"
           style={{ color: data.colors.primary }}
