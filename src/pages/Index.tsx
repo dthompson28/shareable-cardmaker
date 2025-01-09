@@ -31,10 +31,10 @@ const initialData: BusinessCardData = {
     additionalLinks: [],
   },
   colors: {
-    primary: "#8B5CF6",
-    secondary: "#D946EF",
-    accent: "#F97316",
-    background: "#FFFFFF",
+    primary: "#00674f",
+    secondary: "#326872",
+    accent: "#be5103",
+    background: "#cecabe",
   },
 };
 
