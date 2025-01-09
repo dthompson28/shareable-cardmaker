@@ -21,13 +21,6 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
     >
       <div className="relative">
         <PhotoDisplay data={data} />
-        <div 
-          className="absolute inset-0 bg-gradient-to-t from-current to-transparent"
-          style={{ 
-            opacity: 0.8,
-            '--tw-gradient-from': data.colors.background
-          } as React.CSSProperties}
-        />
         <CardHeader data={data} />
       </div>
       
