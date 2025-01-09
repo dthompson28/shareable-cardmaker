@@ -19,12 +19,18 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
         color: data.colors.primary
       }}
     >
-      <div className="relative">
+      <div 
+        className="relative"
+        style={{ 
+          backgroundColor: data.photoStyle === 'compact' ? data.colors.primary : 'transparent',
+          height: data.photoStyle === 'compact' ? '160px' : 'auto'
+        }}
+      >
         <PhotoDisplay data={data} />
         <CardHeader data={data} />
       </div>
       
-      <div className={`p-6 space-y-6 ${data.photoStyle === 'compact' ? 'mt-16' : ''}`}>
+      <div className="p-6 space-y-6">
         {data.logo && (
           <div 
             className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
@@ -35,15 +41,9 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
           />
         )}
         
-        <div style={{ color: data.colors.secondary }}>
+        <div className="space-y-4">
           <ContactInfo data={data} />
-        </div>
-        
-        <div style={{ color: data.colors.accent }}>
           <SocialLinks data={data} />
-        </div>
-        
-        <div style={{ color: data.colors.secondary }}>
           <AdditionalLinks data={data} />
         </div>
         

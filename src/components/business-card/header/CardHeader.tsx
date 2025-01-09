@@ -7,13 +7,13 @@ interface CardHeaderProps {
 export const CardHeader = ({ data }: CardHeaderProps) => {
   if (data.photoStyle === 'compact') {
     return (
-      <div className="absolute left-6 top-52 text-left">
-        <h1 className="text-3xl font-bold mb-1" style={{ color: data.colors.primary }}>{data.name}</h1>
-        {data.jobTitle && (
-          <p className="text-xl mb-1" style={{ color: data.colors.secondary }}>{data.jobTitle}</p>
-        )}
+      <div className="absolute left-44 top-12 text-left">
+        <h1 className="text-3xl font-bold mb-1 text-white">{data.name}</h1>
         {data.company && (
-          <p className="text-xl" style={{ color: data.colors.secondary }}>{data.company}</p>
+          <p className="text-xl mb-1 text-white/90">{data.company}</p>
+        )}
+        {data.jobTitle && (
+          <p className="text-lg text-white/80">{data.jobTitle}</p>
         )}
       </div>
     );

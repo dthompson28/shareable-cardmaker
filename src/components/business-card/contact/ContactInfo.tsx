@@ -7,25 +7,25 @@ interface ContactInfoProps {
 
 export const ContactInfo = ({ data }: ContactInfoProps) => {
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {data.phone && (
-        <a href={`tel:${data.phone}`} className="flex items-center gap-2 hover:opacity-75">
-          <Phone className="w-5 h-5" style={{ color: data.colors.primary }} />
-          <span>{data.phone}</span>
+        <a href={`tel:${data.phone}`} className="flex items-center gap-3 hover:opacity-75">
+          <Phone className="w-6 h-6" style={{ color: data.colors.primary }} />
+          <span className="text-lg">{data.phone}</span>
         </a>
       )}
       
       {data.email && (
-        <a href={`mailto:${data.email}`} className="flex items-center gap-2 hover:opacity-75">
-          <Mail className="w-5 h-5" style={{ color: data.colors.primary }} />
-          <span>{data.email}</span>
+        <a href={`mailto:${data.email}`} className="flex items-center gap-3 hover:opacity-75">
+          <Mail className="w-6 h-6" style={{ color: data.colors.primary }} />
+          <span className="text-lg">{data.email}</span>
         </a>
       )}
       
       {data.website && (
-        <a href={data.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:opacity-75">
-          <Globe className="w-5 h-5" style={{ color: data.colors.primary }} />
-          <span>{data.website}</span>
+        <a href={data.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:opacity-75">
+          <Globe className="w-6 h-6" style={{ color: data.colors.primary }} />
+          <span className="text-lg">{data.website}</span>
         </a>
       )}
     </div>
