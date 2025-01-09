@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { BusinessCardData } from "../../BusinessCardForm";
+import { useState, useRef, MouseEvent } from "react";
 
 interface PhotoFormFieldsProps {
   data: BusinessCardData;
@@ -10,6 +11,33 @@ interface PhotoFormFieldsProps {
 }
 
 export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const [zoom, setZoom] = useState(100);
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging || !previewRef.current) return;
+
+    const rect = previewRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    // Clamp values between 0 and 100
+    const clampedX = Math.max(0, Math.min(100, x));
+    const clampedY = Math.max(0, Math.min(100, y));
+
+    onChange("photoPosition.x", Math.round(clampedX));
+    onChange("photoPosition.y", Math.round(clampedY));
+  };
+
   return (
     <div className="grid gap-4">
       <div className="grid gap-2">
@@ -36,8 +64,15 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label>Preview</Label>
-            <div className="relative max-w-md mx-auto">
+            <Label>Preview (Click and drag to position)</Label>
+            <div 
+              className="relative max-w-md mx-auto cursor-move"
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              ref={previewRef}
+            >
               {data.photoStyle === 'compact' ? (
                 <div className="relative">
                   <div className="w-full h-32 bg-[#00674f]" />
@@ -47,7 +82,7 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
                       style={{ 
                         backgroundImage: `url(${data.photo})`,
                         backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-                        backgroundSize: 'cover'
+                        backgroundSize: `${zoom}%`
                       }} 
                     />
                   </div>
@@ -58,7 +93,7 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
                   style={{
                     backgroundImage: `url(${data.photo})`,
                     backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-                    backgroundSize: 'cover'
+                    backgroundSize: `${zoom}%`
                   }}
                 />
               )}
@@ -66,28 +101,15 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
           </div>
 
           <div className="space-y-4">
-            <Label>Photo Position</Label>
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <Label>Horizontal (X)</Label>
-                <Slider
-                  value={[data.photoPosition.x]}
-                  onValueChange={(value) => onChange("photoPosition.x", value[0])}
-                  min={0}
-                  max={100}
-                  step={1}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Vertical (Y)</Label>
-                <Slider
-                  value={[data.photoPosition.y]}
-                  onValueChange={(value) => onChange("photoPosition.y", value[0])}
-                  min={0}
-                  max={100}
-                  step={1}
-                />
-              </div>
+            <div className="space-y-2">
+              <Label>Zoom</Label>
+              <Slider
+                value={[zoom]}
+                onValueChange={(value) => setZoom(value[0])}
+                min={100}
+                max={200}
+                step={1}
+              />
             </div>
           </div>
         </>
