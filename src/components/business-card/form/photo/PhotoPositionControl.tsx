@@ -47,15 +47,15 @@ export const PhotoPositionControl = ({ data, zoom, onChange }: PhotoPositionCont
     <div 
       className="relative max-w-md mx-auto mb-8"
       ref={previewRef}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onMouseMove={handleMouseMove}
     >
       {data.photoStyle === 'compact' ? (
         <div className="relative flex justify-center">
           <div 
             className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl cursor-move"
             onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onMouseMove={handleMouseMove}
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
@@ -68,9 +68,6 @@ export const PhotoPositionControl = ({ data, zoom, onChange }: PhotoPositionCont
         <div 
           className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden cursor-move"
           onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-          onMouseMove={handleMouseMove}
           style={{
             backgroundImage: `url(${data.photo})`,
             backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,

@@ -20,7 +20,6 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
           style={{ 
             backgroundImage: `url(${data.photo})`,
             backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-            backgroundSize: 'cover'
           }} 
         />
       </div>
@@ -33,7 +32,6 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
       style={{ 
         backgroundImage: `url(${data.photo})`,
         backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-        backgroundSize: 'cover'
       }} 
     />
   );
