@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { BusinessCardForm, BusinessCardData } from "@/components/BusinessCardForm";
 import { BusinessCard } from "@/components/BusinessCard";
 import { PageLayout } from "@/components/layout/PageLayout";
@@ -46,9 +46,21 @@ const Index = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<BusinessCardData>(initialData);
 
-  const handleEdit = () => {
+  const handleEdit = useCallback(() => {
     setStep(1);
-  };
+  }, []);
+
+  const handleBack = useCallback(() => {
+    setStep(1);
+  }, []);
+
+  const handleDataChange = useCallback((newData: BusinessCardData) => {
+    setData(newData);
+  }, []);
+
+  const handleNext = useCallback(() => {
+    setStep(2);
+  }, []);
 
   return (
     <PageLayout>
@@ -57,13 +69,13 @@ const Index = () => {
         {step === 1 ? (
           <BusinessCardForm
             data={data}
-            onChange={setData}
-            onNext={() => setStep(2)}
+            onChange={handleDataChange}
+            onNext={handleNext}
           />
         ) : (
           <BusinessCard
             data={data}
-            onBack={() => setStep(1)}
+            onBack={handleBack}
             onEdit={handleEdit}
           />
         )}

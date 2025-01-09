@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { BusinessCardData } from "./BusinessCardForm";
 import { CardPreview } from "./business-card/CardPreview";
 
@@ -7,7 +8,7 @@ interface Props {
   onEdit: () => void;
 }
 
-export const BusinessCard = ({ data, onBack, onEdit }: Props) => {
+export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
   return (
     <div className="space-y-8 animate-fadeIn">
       <CardPreview data={data} />
@@ -36,4 +37,6 @@ export const BusinessCard = ({ data, onBack, onEdit }: Props) => {
       </div>
     </div>
   );
-};
+});
+
+BusinessCard.displayName = "BusinessCard";
