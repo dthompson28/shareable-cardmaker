@@ -68,7 +68,7 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor, data
         className="flex-1"
         style={{ 
           backgroundColor: primaryColor,
-          color: backgroundColor
+          color: "#FFFFFF"
         }}
         onClick={handleShare}
       >
