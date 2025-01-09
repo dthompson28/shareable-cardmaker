@@ -24,17 +24,16 @@ export const PhotoPositionControl = ({ data, zoom, onChange }: PhotoPositionCont
     if (!isDragging || !previewRef.current) return;
 
     const rect = previewRef.current.getBoundingClientRect();
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    const x = ((e.clientX - rect.left - centerX) / (rect.width / 2)) * 100;
-    const y = ((e.clientY - rect.top - centerY) / (rect.height / 2)) * 100;
+    // Calculate position as percentage
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
 
-    const normalizedX = 50 + (x / 2);
-    const normalizedY = 50 - (y / 2);
-
-    const clampedX = Math.max(0, Math.min(100, normalizedX));
-    const clampedY = Math.max(0, Math.min(100, normalizedY));
+    // Clamp values between 0 and 100
+    const clampedX = Math.max(0, Math.min(100, xPercent));
+    const clampedY = Math.max(0, Math.min(100, yPercent));
 
     onChange("photoPosition.x", Math.round(clampedX));
     onChange("photoPosition.y", Math.round(clampedY));
