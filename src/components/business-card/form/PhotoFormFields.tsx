@@ -15,7 +15,8 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
   const previewRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(100);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (e: MouseEvent) => {
+    e.preventDefault();
     setIsDragging(true);
   };
 
@@ -27,11 +28,20 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
     if (!isDragging || !previewRef.current) return;
 
     const rect = previewRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    // Calculate position relative to center of the circle
+    const x = ((e.clientX - rect.left - centerX) / (rect.width / 2)) * 100;
+    const y = ((e.clientY - rect.top - centerY) / (rect.height / 2)) * 100;
 
-    const clampedX = Math.max(0, Math.min(100, x));
-    const clampedY = Math.max(0, Math.min(100, y));
+    // Convert to percentage (0-100) and invert Y for more intuitive dragging
+    const normalizedX = 50 + (x / 2);
+    const normalizedY = 50 - (y / 2);
+
+    // Clamp values between 0 and 100
+    const clampedX = Math.max(0, Math.min(100, normalizedX));
+    const clampedY = Math.max(0, Math.min(100, normalizedY));
 
     onChange("photoPosition.x", Math.round(clampedX));
     onChange("photoPosition.y", Math.round(clampedY));
@@ -66,27 +76,32 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
             <div className="space-y-2">
               <Label>Preview (Click and drag to position)</Label>
               <div 
-                className="relative max-w-md mx-auto cursor-move mb-8"
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                onMouseMove={handleMouseMove}
+                className="relative max-w-md mx-auto mb-8"
                 ref={previewRef}
               >
                 {data.photoStyle === 'compact' ? (
                   <div className="relative flex justify-center">
                     <div 
-                      className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl" 
+                      className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl cursor-move"
+                      onMouseDown={handleMouseDown}
+                      onMouseUp={handleMouseUp}
+                      onMouseLeave={handleMouseUp}
+                      onMouseMove={handleMouseMove}
                       style={{ 
                         backgroundImage: `url(${data.photo})`,
                         backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-                        backgroundSize: `${zoom}%`
+                        backgroundSize: `${zoom}%`,
+                        backgroundRepeat: 'no-repeat'
                       }} 
                     />
                   </div>
                 ) : (
                   <div 
-                    className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden"
+                    className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden cursor-move"
+                    onMouseDown={handleMouseDown}
+                    onMouseUp={handleMouseUp}
+                    onMouseLeave={handleMouseUp}
+                    onMouseMove={handleMouseMove}
                     style={{
                       backgroundImage: `url(${data.photo})`,
                       backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
