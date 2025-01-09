@@ -1,10 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Switch } from "@/components/ui/switch";
 import { BusinessCardData } from "../../BusinessCardForm";
-import { useState } from "react";
-import { PhotoPositionControl } from "./photo/PhotoPositionControl";
-import { PhotoZoomControl } from "./photo/PhotoZoomControl";
-import { PhotoStyleSwitch } from "./photo/PhotoStyleSwitch";
+import { useState, useRef, MouseEvent } from "react";
 
 interface PhotoFormFieldsProps {
   data: BusinessCardData;
@@ -12,7 +11,33 @@ interface PhotoFormFieldsProps {
 }
 
 export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const previewRef = useRef<HTMLDivElement>(null);
   const [zoom, setZoom] = useState(100);
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging || !previewRef.current) return;
+
+    const rect = previewRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    // Invert the Y calculation to make dragging more intuitive
+    const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
+
+    // Clamp values between 0 and 100
+    const clampedX = Math.max(0, Math.min(100, x));
+    const clampedY = Math.max(0, Math.min(100, y));
+
+    onChange("photoPosition.x", Math.round(clampedX));
+    onChange("photoPosition.y", Math.round(clampedY));
+  };
 
   return (
     <div className="grid gap-4">
@@ -28,27 +53,64 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
 
       {data.photo && (
         <>
-          <PhotoStyleSwitch 
-            isFullWidth={data.photoStyle === 'full'}
-            onChange={(checked) => 
-              onChange("photoStyle", checked ? 'full' : 'compact')
-            }
-          />
+          <div className="flex items-center space-x-2">
+            <Switch
+              id="photo-style"
+              checked={data.photoStyle === 'full'}
+              onCheckedChange={(checked) => 
+                onChange("photoStyle", checked ? 'full' : 'compact')
+              }
+            />
+            <Label htmlFor="photo-style">Use full-width photo header</Label>
+          </div>
 
-          <div className="space-y-6">
+          <div className="space-y-2">
+            <Label>Preview (Click and drag to position)</Label>
+            <div 
+              className="relative max-w-md mx-auto cursor-move"
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              ref={previewRef}
+            >
+              {data.photoStyle === 'compact' ? (
+                <div className="relative">
+                  <div className="absolute top-0 left-6">
+                    <div 
+                      className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
+                      style={{ 
+                        backgroundImage: `url(${data.photo})`,
+                        backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+                        backgroundSize: `${zoom}%`
+                      }} 
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div 
+                  className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden"
+                  style={{
+                    backgroundImage: `url(${data.photo})`,
+                    backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+                    backgroundSize: `${zoom}%`
+                  }}
+                />
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Preview (Click and drag to position)</Label>
-              <PhotoPositionControl 
-                data={data}
-                zoom={zoom}
-                onChange={onChange}
+              <Label>Zoom</Label>
+              <Slider
+                value={[zoom]}
+                onValueChange={(value) => setZoom(value[0])}
+                min={100}
+                max={200}
+                step={1}
               />
             </div>
-
-            <PhotoZoomControl 
-              zoom={zoom}
-              onZoomChange={setZoom}
-            />
           </div>
         </>
       )}
