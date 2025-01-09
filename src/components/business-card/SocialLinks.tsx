@@ -6,7 +6,9 @@ interface SocialLinksProps {
   data: BusinessCardData;
 }
 
-const socialIcons = {
+type IconType = typeof Facebook | typeof Instagram | typeof Linkedin | typeof Youtube | typeof Twitter | typeof Phone;
+
+const socialIcons: Record<string, IconType> = {
   linkedin: Linkedin,
   facebook: Facebook,
   instagram: Instagram,
@@ -26,8 +28,8 @@ export const SocialLinks = memo(({ data }: SocialLinksProps) => {
       {Object.entries(data.social)
         .filter(([key, value]) => key !== 'additionalLinks' && value)
         .map(([key, value]) => {
-          const Icon = socialIcons[key as keyof typeof socialIcons];
-          if (!Icon) return null;
+          const IconComponent = socialIcons[key];
+          if (!IconComponent) return null;
 
           return (
             <a 
@@ -40,7 +42,7 @@ export const SocialLinks = memo(({ data }: SocialLinksProps) => {
               onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
               onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
             >
-              <Icon className="w-6 h-6" />
+              <IconComponent className="w-6 h-6" />
             </a>
           );
         })}
