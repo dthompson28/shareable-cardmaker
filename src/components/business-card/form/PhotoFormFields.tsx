@@ -28,10 +28,8 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
 
     const rect = previewRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
-    // Invert the Y calculation to make dragging more intuitive
     const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
 
-    // Clamp values between 0 and 100
     const clampedX = Math.max(0, Math.min(100, x));
     const clampedY = Math.max(0, Math.min(100, y));
 
@@ -64,21 +62,21 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
             <Label htmlFor="photo-style">Use full-width photo header</Label>
           </div>
 
-          <div className="space-y-2">
-            <Label>Preview (Click and drag to position)</Label>
-            <div 
-              className="relative max-w-md mx-auto cursor-move"
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onMouseLeave={handleMouseUp}
-              onMouseMove={handleMouseMove}
-              ref={previewRef}
-            >
-              {data.photoStyle === 'compact' ? (
-                <div className="relative">
-                  <div className="absolute top-0 left-6">
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <Label>Preview (Click and drag to position)</Label>
+              <div 
+                className="relative max-w-md mx-auto cursor-move mb-8"
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                ref={previewRef}
+              >
+                {data.photoStyle === 'compact' ? (
+                  <div className="relative flex justify-center">
                     <div 
-                      className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
+                      className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl" 
                       style={{ 
                         backgroundImage: `url(${data.photo})`,
                         backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
@@ -86,21 +84,19 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
                       }} 
                     />
                   </div>
-                </div>
-              ) : (
-                <div 
-                  className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden"
-                  style={{
-                    backgroundImage: `url(${data.photo})`,
-                    backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-                    backgroundSize: `${zoom}%`
-                  }}
-                />
-              )}
+                ) : (
+                  <div 
+                    className="w-full aspect-[16/9] bg-cover rounded-t-xl overflow-hidden"
+                    style={{
+                      backgroundImage: `url(${data.photo})`,
+                      backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+                      backgroundSize: `${zoom}%`
+                    }}
+                  />
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="space-y-4">
             <div className="space-y-2">
               <Label>Zoom</Label>
               <Slider
