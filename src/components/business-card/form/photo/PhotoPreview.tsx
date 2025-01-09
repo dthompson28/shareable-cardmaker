@@ -25,10 +25,8 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
 
     const rect = previewRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
-    // Invert the Y calculation by subtracting from 100
     const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
 
-    // Ensure values stay within 0-100 range
     const clampedX = Math.max(0, Math.min(100, x));
     const clampedY = Math.max(0, Math.min(100, y));
 
@@ -69,7 +67,7 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
               backgroundSize: `${zoom}%`,
-              objectFit: 'cover'
+              backgroundRepeat: 'no-repeat'
             }}
           />
         )}
