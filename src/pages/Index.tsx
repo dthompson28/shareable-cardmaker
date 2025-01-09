@@ -36,9 +36,9 @@ const initialData: BusinessCardData = {
   },
   colors: {
     primary: "#00674f",
-    secondary: "#ff8c00",
-    accent: "#00674f",
-    background: "#f5f5f5",
+    secondary: "#326872",
+    accent: "#be5103",
+    background: "#cecabe",
   },
 };
 
