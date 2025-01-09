@@ -21,9 +21,14 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     const { x = 50, y = 50 } = data.logoPosition || {};
     if (x === 0 && y === 0) return 'top-4 left-4';
     if (x === 100 && y === 0) return 'top-4 right-4';
-    if (x === 0 && y === 100) return 'bottom-32 left-4'; // Adjusted position
+    if (x === 0 && y === 100) return 'bottom-32 left-4';
     if (x === 100 && y === 100) return 'bottom-4 right-4';
     return 'top-4 right-4';
+  };
+
+  const isLogoBottomLeft = () => {
+    const { x = 50, y = 50 } = data.logoPosition || {};
+    return x === 0 && y === 100;
   };
 
   const renderLogo = () => {
@@ -50,7 +55,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     return (
       <div className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-white" style={{ minHeight: '400px' }}>
         <div className="relative pt-6">
-          <div className="absolute left-6">
+          <div className={`absolute ${isLogoBottomLeft() ? 'right-6' : 'left-6'}`}>
             <PhotoDisplay data={data} />
           </div>
           {renderLogo()}
