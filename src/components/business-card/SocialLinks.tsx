@@ -1,25 +1,35 @@
 import { Facebook, Instagram, Linkedin, Youtube, Twitter, Phone } from "lucide-react";
 import { BusinessCardData } from "../BusinessCardForm";
 import { memo } from "react";
+import { LucideIcon } from "lucide-react";
 
 interface SocialLinksProps {
   data: BusinessCardData;
 }
 
-type IconType = typeof Facebook | typeof Instagram | typeof Linkedin | typeof Youtube | typeof Twitter | typeof Phone;
+// Define TikTok icon as a proper Lucide-compatible component
+const TikTokIcon: LucideIcon = (props) => (
+  <svg
+    {...props}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+  </svg>
+);
 
-const socialIcons: Record<string, IconType> = {
+const socialIcons: Record<string, LucideIcon> = {
   linkedin: Linkedin,
   facebook: Facebook,
   instagram: Instagram,
   youtube: Youtube,
   twitter: Twitter,
   whatsapp: Phone,
-  tiktok: () => (
-    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-    </svg>
-  ),
+  tiktok: TikTokIcon,
 };
 
 export const SocialLinks = memo(({ data }: SocialLinksProps) => {
