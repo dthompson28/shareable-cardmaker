@@ -16,6 +16,15 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
     typeof value === 'string' && value.length > 0
   );
 
+  const getLogoPosition = () => {
+    const { x = 50, y = 50 } = data.logoPosition || {};
+    if (x === 0 && y === 0) return 'top-4 left-4';
+    if (x === 100 && y === 0) return 'top-4 right-4';
+    if (x === 0 && y === 100) return 'bottom-24 left-4';
+    if (x === 100 && y === 100) return 'bottom-4 right-4';
+    return 'top-4 right-4'; // default position
+  };
+
   return (
     <div 
       className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-white"
@@ -32,10 +41,9 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
           <div className="p-6 space-y-6">
             {data.logo && (
               <div 
-                className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
+                className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition()}`}
                 style={{ 
                   backgroundImage: `url(${data.logo})`,
-                  backgroundPosition: `${data.logoPosition?.x || 50}% ${data.logoPosition?.y || 50}%`
                 }}
               />
             )}
@@ -61,10 +69,9 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
             </div>
             {data.logo && (
               <div 
-                className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
+                className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition()}`}
                 style={{ 
                   backgroundImage: `url(${data.logo})`,
-                  backgroundPosition: `${data.logoPosition?.x || 50}% ${data.logoPosition?.y || 50}%`
                 }}
               />
             )}
