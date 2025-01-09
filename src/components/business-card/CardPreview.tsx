@@ -15,7 +15,10 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
   return (
     <div 
       className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative bg-white"
-      style={{ backgroundColor: data.colors.background }}
+      style={{ 
+        backgroundColor: data.colors.background,
+        color: data.colors.primary // Set default text color
+      }}
     >
       <div className="relative">
         <PhotoDisplay data={data} />
