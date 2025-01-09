@@ -9,15 +9,20 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
 
   if (data.photoStyle === 'compact') {
     return (
-      <div className="absolute top-6 left-6">
+      <>
         <div 
-          className="w-24 h-24 rounded-full bg-cover border-4 border-white shadow-lg" 
-          style={{ 
-            backgroundImage: `url(${data.photo})`,
-            backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
-          }} 
+          className="w-full h-32 bg-[#1B4D3E]"
         />
-      </div>
+        <div className="absolute top-16 left-6">
+          <div 
+            className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
+            style={{ 
+              backgroundImage: `url(${data.photo})`,
+              backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
+            }} 
+          />
+        </div>
+      </>
     );
   }
 
