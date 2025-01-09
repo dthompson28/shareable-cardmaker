@@ -25,7 +25,7 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
 
     const rect = previewRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
 
     const clampedX = Math.max(0, Math.min(100, x));
     const clampedY = Math.max(0, Math.min(100, y));
@@ -38,7 +38,7 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
     <div className="space-y-2">
       <Label>Preview (Click and drag to position)</Label>
       <div 
-        className="relative max-w-md mx-auto cursor-move"
+        className="relative max-w-md mx-auto cursor-move mb-8"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
@@ -46,8 +46,8 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
         ref={previewRef}
       >
         {data.photoStyle === 'compact' ? (
-          <div className="relative">
-            <div className="absolute top-0 left-6">
+          <div className="relative h-48">
+            <div className="absolute left-6">
               <div 
                 className="w-48 h-48 rounded-full bg-cover border-4 border-white shadow-xl" 
                 style={{ 
