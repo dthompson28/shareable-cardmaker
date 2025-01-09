@@ -53,7 +53,13 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
 
   if (data.photoStyle === 'compact') {
     return (
-      <div className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-white" style={{ minHeight: '400px' }}>
+      <div 
+        className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
+        style={{ 
+          minHeight: '400px',
+          backgroundColor: data.colors.background 
+        }}
+      >
         <div className="relative pt-6">
           <div className={`absolute ${isLogoBottomLeft() ? 'right-6' : 'left-6'}`}>
             <PhotoDisplay data={data} />
@@ -75,7 +81,13 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-white" style={{ minHeight: '500px' }}>
+    <div 
+      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
+      style={{ 
+        minHeight: '500px',
+        backgroundColor: data.colors.background 
+      }}
+    >
       <div className="relative">
         <PhotoDisplay data={data} />
         {renderLogo()}
