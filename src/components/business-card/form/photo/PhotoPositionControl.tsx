@@ -1,5 +1,5 @@
 import { MouseEvent, useRef, useState } from "react";
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/components/BusinessCardForm";
 
 interface PhotoPositionControlProps {
   data: BusinessCardData;
