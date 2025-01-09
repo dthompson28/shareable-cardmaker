@@ -68,7 +68,8 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
             style={{
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-              backgroundSize: `${zoom}%`
+              backgroundSize: `${zoom}%`,
+              objectFit: 'cover'
             }}
           />
         )}

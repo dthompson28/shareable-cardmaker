@@ -13,7 +13,7 @@ export const PhotoZoomControl = ({ zoom, onZoomChange }: PhotoZoomControlProps) 
       <Slider
         value={[zoom]}
         onValueChange={(value) => onZoomChange(value[0])}
-        min={100}
+        min={50}
         max={200}
         step={1}
       />
