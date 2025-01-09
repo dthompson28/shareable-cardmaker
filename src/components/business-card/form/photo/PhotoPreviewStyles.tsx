@@ -6,6 +6,9 @@ interface PhotoPreviewStylesProps {
 }
 
 export const FullWidthPhotoStyle = ({ data, zoom }: PhotoPreviewStylesProps) => {
+  // Calculate minimum size to ensure coverage
+  const backgroundSize = `${Math.max(100, zoom)}%`;
+
   return (
     <div className="relative">
       <div 
@@ -13,7 +16,7 @@ export const FullWidthPhotoStyle = ({ data, zoom }: PhotoPreviewStylesProps) => 
         style={{
           backgroundImage: `url(${data.photo})`,
           backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-          backgroundSize: `${zoom}%`,
+          backgroundSize,
           backgroundRepeat: 'no-repeat'
         }}
       />
@@ -22,6 +25,9 @@ export const FullWidthPhotoStyle = ({ data, zoom }: PhotoPreviewStylesProps) => 
 };
 
 export const CompactPhotoStyle = ({ data, zoom }: PhotoPreviewStylesProps) => {
+  // Calculate minimum size to ensure coverage
+  const backgroundSize = `${Math.max(100, zoom)}%`;
+
   return (
     <div className="relative h-48">
       <div className="absolute left-6">
@@ -30,7 +36,7 @@ export const CompactPhotoStyle = ({ data, zoom }: PhotoPreviewStylesProps) => {
           style={{ 
             backgroundImage: `url(${data.photo})`,
             backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
-            backgroundSize: `${zoom}%`,
+            backgroundSize,
             backgroundRepeat: 'no-repeat'
           }} 
         />
