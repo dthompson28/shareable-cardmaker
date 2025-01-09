@@ -15,15 +15,18 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
     <div 
       className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative"
       style={{ 
-        backgroundColor: "#1A1F2C",
-        color: "#9b87f5"
+        backgroundColor: data.colors.background,
+        color: data.colors.primary
       }}
     >
       <div className="relative">
         <PhotoDisplay data={data} />
         <div 
-          className="absolute inset-0 bg-gradient-to-t from-[#1A1F2C] to-transparent"
-          style={{ opacity: 0.8 }}
+          className="absolute inset-0 bg-gradient-to-t from-current to-transparent"
+          style={{ 
+            opacity: 0.8,
+            '--tw-gradient-from': data.colors.background
+          } as React.CSSProperties}
         />
         <CardHeader data={data} />
       </div>
@@ -39,22 +42,22 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
           />
         )}
         
-        <div style={{ color: "#7E69AB" }}>
+        <div style={{ color: data.colors.secondary }}>
           <ContactInfo data={data} />
         </div>
         
-        <div style={{ color: "#6E59A5" }}>
+        <div style={{ color: data.colors.accent }}>
           <SocialLinks data={data} />
         </div>
         
-        <div style={{ color: "#7E69AB" }}>
+        <div style={{ color: data.colors.secondary }}>
           <AdditionalLinks data={data} />
         </div>
         
         <CardActions 
-          primaryColor="#9b87f5"
-          backgroundColor="#1A1F2C"
-          tertiaryColor="#6E59A5"
+          primaryColor={data.colors.primary}
+          backgroundColor={data.colors.background}
+          tertiaryColor={data.colors.accent}
         />
       </div>
     </div>
