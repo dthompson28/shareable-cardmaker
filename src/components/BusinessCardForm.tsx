@@ -9,6 +9,7 @@ import { LogoSection } from "./business-card/LogoSection";
 export interface BusinessCardData {
   name: string;
   company: string;
+  jobTitle: string;
   phone: string;
   email: string;
   website: string;

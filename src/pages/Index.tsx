@@ -8,6 +8,7 @@ import { ContentContainer } from "@/components/layout/ContentContainer";
 const initialData: BusinessCardData = {
   name: "",
   company: "",
+  jobTitle: "",
   phone: "",
   email: "",
   website: "",

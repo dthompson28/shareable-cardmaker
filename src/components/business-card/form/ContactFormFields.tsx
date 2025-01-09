@@ -30,6 +30,15 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
       </div>
 
       <div className="grid gap-2">
+        <Label htmlFor="jobTitle">Job Title</Label>
+        <Input
+          id="jobTitle"
+          value={data.jobTitle}
+          onChange={(e) => onChange("jobTitle", e.target.value)}
+        />
+      </div>
+
+      <div className="grid gap-2">
         <Label htmlFor="phone">Phone *</Label>
         <Input
           id="phone"
