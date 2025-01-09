@@ -4,8 +4,7 @@ import { CardHeader } from "./header/CardHeader";
 import { PhotoDisplay } from "./photo/PhotoDisplay";
 import { SocialLinks } from "./SocialLinks";
 import { AdditionalLinks } from "./AdditionalLinks";
-import { Button } from "@/components/ui/button";
-import { Download, Share2 } from "lucide-react";
+import { CardActions } from "./preview/CardActions";
 
 interface CardPreviewProps {
   data: BusinessCardData;
@@ -16,8 +15,8 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
     <div 
       className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative"
       style={{ 
-        backgroundColor: "#1A1F2C", // Dark Purple background
-        color: "#9b87f5" // Primary Purple for text
+        backgroundColor: "#1A1F2C",
+        color: "#9b87f5"
       }}
     >
       <div className="relative">
@@ -40,41 +39,23 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
           />
         )}
         
-        <div style={{ color: "#7E69AB" }}> {/* Secondary Purple for contact info */}
+        <div style={{ color: "#7E69AB" }}>
           <ContactInfo data={data} />
         </div>
         
-        <div style={{ color: "#6E59A5" }}> {/* Tertiary Purple for social links */}
+        <div style={{ color: "#6E59A5" }}>
           <SocialLinks data={data} />
         </div>
         
-        <div style={{ color: "#7E69AB" }}> {/* Secondary Purple for additional links */}
+        <div style={{ color: "#7E69AB" }}>
           <AdditionalLinks data={data} />
         </div>
         
-        <div className="flex gap-4 mt-6">
-          <Button 
-            className="flex-1"
-            style={{ 
-              backgroundColor: "#9b87f5", // Primary Purple
-              color: '#1A1F2C' // Dark Purple
-            }}
-          >
-            <Share2 className="w-4 h-4 mr-2" />
-            Share
-          </Button>
-          <Button
-            className="flex-1"
-            variant="outline"
-            style={{ 
-              borderColor: "#6E59A5", // Tertiary Purple
-              color: "#9b87f5" // Primary Purple
-            }}
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Save Contact
-          </Button>
-        </div>
+        <CardActions 
+          primaryColor="#9b87f5"
+          backgroundColor="#1A1F2C"
+          tertiaryColor="#6E59A5"
+        />
       </div>
     </div>
   );
