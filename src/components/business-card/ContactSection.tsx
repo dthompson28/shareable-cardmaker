@@ -14,16 +14,6 @@ export const ContactSection = ({ data, onChange }: ContactSectionProps) => {
       
       <div className="grid gap-4">
         <div className="grid gap-2">
-          <Label htmlFor="photo">Photo URL</Label>
-          <Input
-            id="photo"
-            placeholder="https://example.com/photo.jpg"
-            value={data.photo}
-            onChange={(e) => onChange("photo", e.target.value)}
-          />
-        </div>
-
-        <div className="grid gap-2">
           <Label htmlFor="name">Name *</Label>
           <Input
             id="name"

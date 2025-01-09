@@ -1,7 +1,8 @@
 import { BusinessCardData } from "./BusinessCardForm";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, Globe, Download, Share2, ExternalLink } from "lucide-react";
+import { Download, Share2 } from "lucide-react";
 import { toast } from "sonner";
+import { CardPreview } from "./business-card/CardPreview";
 
 interface Props {
   data: BusinessCardData;
@@ -47,95 +48,7 @@ END:VCARD`;
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      <div 
-        className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl"
-        style={{ backgroundColor: data.colors.background }}
-      >
-        {data.photo && (
-          <div 
-            className="w-full h-48 bg-cover" 
-            style={{ 
-              backgroundImage: `url(${data.photo})`,
-              backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
-            }} 
-          />
-        )}
-        
-        <div className="p-6 space-y-6">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold" style={{ color: data.colors.primary }}>{data.name}</h1>
-            {data.company && (
-              <p className="text-lg" style={{ color: data.colors.secondary }}>{data.company}</p>
-            )}
-          </div>
-
-          <div className="space-y-3">
-            {data.phone && (
-              <a href={`tel:${data.phone}`} className="flex items-center gap-2 hover:opacity-75">
-                <Phone className="w-5 h-5" style={{ color: data.colors.primary }} />
-                <span>{data.phone}</span>
-              </a>
-            )}
-            
-            {data.email && (
-              <a href={`mailto:${data.email}`} className="flex items-center gap-2 hover:opacity-75">
-                <Mail className="w-5 h-5" style={{ color: data.colors.primary }} />
-                <span>{data.email}</span>
-              </a>
-            )}
-            
-            {data.website && (
-              <a href={data.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:opacity-75">
-                <Globe className="w-5 h-5" style={{ color: data.colors.primary }} />
-                <span>{data.website}</span>
-              </a>
-            )}
-          </div>
-
-          <div className="flex justify-center gap-4">
-            {data.social.linkedin && (
-              <a href={data.social.linkedin} target="_blank" rel="noopener noreferrer">
-                <Linkedin className="w-6 h-6 hover:opacity-75" style={{ color: data.colors.primary }} />
-              </a>
-            )}
-            {data.social.facebook && (
-              <a href={data.social.facebook} target="_blank" rel="noopener noreferrer">
-                <Facebook className="w-6 h-6 hover:opacity-75" style={{ color: data.colors.primary }} />
-              </a>
-            )}
-            {data.social.instagram && (
-              <a href={data.social.instagram} target="_blank" rel="noopener noreferrer">
-                <Instagram className="w-6 h-6 hover:opacity-75" style={{ color: data.colors.primary }} />
-              </a>
-            )}
-            {data.social.youtube && (
-              <a href={data.social.youtube} target="_blank" rel="noopener noreferrer">
-                <Youtube className="w-6 h-6 hover:opacity-75" style={{ color: data.colors.primary }} />
-              </a>
-            )}
-          </div>
-
-          {data.social.additionalLinks?.length > 0 && (
-            <div className="space-y-2">
-              <h2 className="text-lg font-semibold" style={{ color: data.colors.accent }}>Additional Links</h2>
-              <div className="space-y-2">
-                {data.social.additionalLinks.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:opacity-75"
-                  >
-                    <ExternalLink className="w-4 h-4" style={{ color: data.colors.accent }} />
-                    <span>{link.title}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      <CardPreview data={data} />
 
       <div className="flex gap-4 justify-center">
         <Button onClick={onBack} variant="outline">Back</Button>

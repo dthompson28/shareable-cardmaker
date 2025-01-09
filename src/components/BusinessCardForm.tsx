@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { ContactSection } from "./business-card/ContactSection";
 import { SocialSection } from "./business-card/SocialSection";
 import { ColorSection } from "./business-card/ColorSection";
+import { PhotoSection } from "./business-card/PhotoSection";
 
 export interface BusinessCardData {
   name: string;
@@ -73,6 +73,7 @@ export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 animate-fadeIn">
+      <PhotoSection data={data} onChange={handleChange} />
       <ContactSection data={data} onChange={handleChange} />
       <SocialSection data={data} onChange={handleChange} />
       <ColorSection data={data} onChange={handleChange} />
