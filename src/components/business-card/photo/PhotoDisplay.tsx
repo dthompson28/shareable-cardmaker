@@ -11,7 +11,8 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
     return (
       <>
         <div 
-          className="w-full h-32 bg-[#1B4D3E]"
+          className="w-full h-32"
+          style={{ backgroundColor: data.colors.primary }}
         />
         <div className="absolute top-16 left-6">
           <div 
