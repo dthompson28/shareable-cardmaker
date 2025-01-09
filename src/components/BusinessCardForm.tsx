@@ -13,6 +13,7 @@ export interface BusinessCardData {
   email: string;
   website: string;
   photo: string;
+  photoStyle: 'full' | 'compact';
   photoPosition: {
     x: number;
     y: number;
