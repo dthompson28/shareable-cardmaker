@@ -21,7 +21,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     const { x = 50, y = 50 } = data.logoPosition || {};
     if (x === 0 && y === 0) return 'top-4 left-4';
     if (x === 100 && y === 0) return 'top-4 right-4';
-    if (x === 0 && y === 100) return 'bottom-24 left-4';
+    if (x === 0 && y === 100) return 'bottom-32 left-4'; // Adjusted position
     if (x === 100 && y === 100) return 'bottom-4 right-4';
     return 'top-4 right-4';
   };
@@ -73,10 +73,10 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     <div className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-white" style={{ minHeight: '500px' }}>
       <div className="relative">
         <PhotoDisplay data={data} />
+        {renderLogo()}
         <CardHeader data={data} />
       </div>
       <div className="p-6 space-y-6">
-        {renderLogo()}
         <ContactInfo data={data} />
         {renderSocialSection()}
         <CardActions 
