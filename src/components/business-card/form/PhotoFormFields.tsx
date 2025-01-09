@@ -46,7 +46,8 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
                       className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
                       style={{ 
                         backgroundImage: `url(${data.photo})`,
-                        backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
+                        backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+                        backgroundSize: 'cover'
                       }} 
                     />
                   </div>
@@ -57,6 +58,7 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
                   style={{
                     backgroundImage: `url(${data.photo})`,
                     backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+                    backgroundSize: 'cover'
                   }}
                 />
               )}

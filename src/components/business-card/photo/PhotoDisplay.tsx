@@ -19,7 +19,8 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
             className="w-32 h-32 rounded-full bg-cover border-4 border-white shadow-xl" 
             style={{ 
               backgroundImage: `url(${data.photo})`,
-              backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
+              backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+              backgroundSize: 'cover'
             }} 
           />
         </div>
@@ -32,7 +33,8 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
       className="w-full h-72 bg-cover" 
       style={{ 
         backgroundImage: `url(${data.photo})`,
-        backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
+        backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+        backgroundSize: 'cover'
       }} 
     />
   );
