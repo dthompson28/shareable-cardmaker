@@ -74,6 +74,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
             primaryColor={data.colors.primary}
             backgroundColor={data.colors.background}
             tertiaryColor={data.colors.accent}
+            data={data}
           />
         </div>
       </div>
@@ -100,6 +101,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
           primaryColor={data.colors.primary}
           backgroundColor={data.colors.background}
           tertiaryColor={data.colors.accent}
+          data={data}
         />
       </div>
     </div>
