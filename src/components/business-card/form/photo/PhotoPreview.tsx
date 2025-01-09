@@ -27,11 +27,14 @@ export const PhotoPreview = ({ data, onChange, zoom }: PhotoPreviewProps) => {
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
 
+    // Ensure values stay within 0-100 range
     const clampedX = Math.max(0, Math.min(100, x));
     const clampedY = Math.max(0, Math.min(100, y));
 
-    onChange("photoPosition.x", Math.round(clampedX));
-    onChange("photoPosition.y", Math.round(clampedY));
+    onChange("photoPosition", {
+      x: Math.round(clampedX),
+      y: Math.round(clampedY)
+    });
   };
 
   return (
