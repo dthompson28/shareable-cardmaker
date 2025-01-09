@@ -42,6 +42,10 @@ const Index = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<BusinessCardData>(initialData);
 
+  const handleEdit = () => {
+    setStep(1);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container max-w-4xl">
@@ -61,6 +65,7 @@ const Index = () => {
             <BusinessCard
               data={data}
               onBack={() => setStep(1)}
+              onEdit={handleEdit}
             />
           )}
         </div>
