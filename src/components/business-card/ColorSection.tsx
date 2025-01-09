@@ -33,6 +33,16 @@ export const ColorSection = ({ data, onChange }: ColorSectionProps) => {
         </div>
 
         <div className="grid gap-2">
+          <Label htmlFor="accentColor">Accent Color</Label>
+          <Input
+            id="accentColor"
+            type="color"
+            value={data.colors.accent}
+            onChange={(e) => onChange("colors.accent", e.target.value)}
+          />
+        </div>
+
+        <div className="grid gap-2">
           <Label htmlFor="backgroundColor">Background Color</Label>
           <Input
             id="backgroundColor"

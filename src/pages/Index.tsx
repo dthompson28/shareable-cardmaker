@@ -15,10 +15,12 @@ const initialData: BusinessCardData = {
     facebook: "",
     instagram: "",
     youtube: "",
+    additionalLinks: [],
   },
   colors: {
     primary: "#8B5CF6",
     secondary: "#D946EF",
+    accent: "#F97316",
     background: "#FFFFFF",
   },
 };

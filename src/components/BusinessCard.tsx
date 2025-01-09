@@ -1,6 +1,6 @@
 import { BusinessCardData } from "./BusinessCardForm";
 import { Button } from "@/components/ui/button";
-import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, Globe, Download, Share2 } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Youtube, Phone, Mail, Globe, Download, Share2, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 
 interface Props {
@@ -108,6 +108,26 @@ END:VCARD`;
               </a>
             )}
           </div>
+
+          {data.social.additionalLinks?.length > 0 && (
+            <div className="space-y-2">
+              <h2 className="text-lg font-semibold" style={{ color: data.colors.accent }}>Additional Links</h2>
+              <div className="space-y-2">
+                {data.social.additionalLinks.map((link, index) => (
+                  <a
+                    key={index}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 hover:opacity-75"
+                  >
+                    <ExternalLink className="w-4 h-4" style={{ color: data.colors.accent }} />
+                    <span>{link.title}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

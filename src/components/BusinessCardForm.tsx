@@ -18,10 +18,15 @@ export interface BusinessCardData {
     facebook: string;
     instagram: string;
     youtube: string;
+    additionalLinks: Array<{
+      title: string;
+      url: string;
+    }>;
   };
   colors: {
     primary: string;
     secondary: string;
+    accent: string;
     background: string;
   };
 }
@@ -33,7 +38,7 @@ interface Props {
 }
 
 export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
-  const handleChange = (field: string, value: string) => {
+  const handleChange = (field: string, value: string | any) => {
     if (field.includes(".")) {
       const [parent, child] = field.split(".");
       const parentKey = parent as keyof BusinessCardData;
