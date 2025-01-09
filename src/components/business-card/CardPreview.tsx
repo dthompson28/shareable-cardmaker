@@ -12,12 +12,21 @@ interface CardPreviewProps {
 export const CardPreview = ({ data }: CardPreviewProps) => {
   return (
     <div 
-      className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl"
+      className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative"
       style={{ backgroundColor: data.colors.background }}
     >
       <PhotoDisplay data={data} />
       
       <div className="p-6 space-y-6">
+        {data.logo && (
+          <div 
+            className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
+            style={{ 
+              backgroundImage: `url(${data.logo})`,
+              backgroundPosition: `${data.logoPosition?.x || 50}% ${data.logoPosition?.y || 50}%`
+            }}
+          />
+        )}
         <CardHeader data={data} />
         <ContactInfo data={data} />
         <SocialLinks data={data} />
