@@ -15,7 +15,7 @@ export const SocialMediaInput = ({ id, label, value, onChange, Icon }: Props) =>
     <div className="grid gap-2">
       <Label htmlFor={id}>
         {typeof Icon === 'function' ? (
-          <Icon />
+          <Icon className="inline-block w-4 h-4 mr-2" />
         ) : (
           <Icon className="inline-block w-4 h-4 mr-2" />
         )}
