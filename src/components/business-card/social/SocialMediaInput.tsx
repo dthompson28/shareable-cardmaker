@@ -7,18 +7,14 @@ interface Props {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  Icon: LucideIcon | React.FC;
+  Icon: LucideIcon | React.FC<{ className?: string }>;
 }
 
 export const SocialMediaInput = ({ id, label, value, onChange, Icon }: Props) => {
   return (
     <div className="grid gap-2">
       <Label htmlFor={id}>
-        {typeof Icon === 'function' ? (
-          <Icon className="inline-block w-4 h-4 mr-2" />
-        ) : (
-          <Icon className="inline-block w-4 h-4 mr-2" />
-        )}
+        <Icon className="inline-block w-4 h-4 mr-2" />
         {label}
       </Label>
       <Input
