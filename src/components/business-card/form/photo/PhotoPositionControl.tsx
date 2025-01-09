@@ -54,7 +54,7 @@ export const PhotoPositionControl = ({ data, zoom, onChange }: PhotoPositionCont
       {data.photoStyle === 'compact' ? (
         <div className="relative flex justify-center">
           <div 
-            className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-xl cursor-move"
+            className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-xl cursor-move"
             onMouseDown={handleMouseDown}
             style={{ 
               backgroundImage: `url(${data.photo})`,
