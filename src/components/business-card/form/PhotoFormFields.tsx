@@ -28,7 +28,8 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
 
     const rect = previewRef.current.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    // Invert the Y calculation to make dragging more intuitive
+    const y = 100 - ((e.clientY - rect.top) / rect.height) * 100;
 
     // Clamp values between 0 and 100
     const clampedX = Math.max(0, Math.min(100, x));
