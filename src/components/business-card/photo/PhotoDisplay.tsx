@@ -29,7 +29,7 @@ export const PhotoDisplay = ({ data }: PhotoDisplayProps) => {
 
   return (
     <div 
-      className="w-full h-48 bg-cover" 
+      className="w-full h-72 bg-cover" 
       style={{ 
         backgroundImage: `url(${data.photo})`,
         backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`
