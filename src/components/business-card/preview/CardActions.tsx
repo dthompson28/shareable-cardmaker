@@ -21,16 +21,12 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor }: Ca
         Share
       </Button>
       <Button
-        className="flex-1 transition-colors duration-200"
+        className={`flex-1 transition-colors duration-200 hover:text-[${backgroundColor}] hover:bg-[${tertiaryColor}]`}
         variant="outline"
         style={{ 
           borderColor: tertiaryColor,
           borderWidth: '2px',
-          color: tertiaryColor,
-          ':hover': {
-            backgroundColor: tertiaryColor,
-            color: backgroundColor
-          }
+          color: tertiaryColor
         }}
       >
         <Download className="w-4 h-4 mr-2" />
