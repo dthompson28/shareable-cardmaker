@@ -14,14 +14,18 @@ interface CardPreviewProps {
 export const CardPreview = ({ data }: CardPreviewProps) => {
   return (
     <div 
-      className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative bg-white"
+      className="max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative"
       style={{ 
-        backgroundColor: data.colors.background,
-        color: data.colors.primary // Set default text color
+        backgroundColor: "#1A1F2C", // Dark Purple background
+        color: "#9b87f5" // Primary Purple for text
       }}
     >
       <div className="relative">
         <PhotoDisplay data={data} />
+        <div 
+          className="absolute inset-0 bg-gradient-to-t from-[#1A1F2C] to-transparent"
+          style={{ opacity: 0.8 }}
+        />
         <CardHeader data={data} />
       </div>
       
@@ -35,16 +39,25 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
             }}
           />
         )}
-        <ContactInfo data={data} />
-        <SocialLinks data={data} />
-        <AdditionalLinks data={data} />
+        
+        <div style={{ color: "#7E69AB" }}> {/* Secondary Purple for contact info */}
+          <ContactInfo data={data} />
+        </div>
+        
+        <div style={{ color: "#6E59A5" }}> {/* Tertiary Purple for social links */}
+          <SocialLinks data={data} />
+        </div>
+        
+        <div style={{ color: "#7E69AB" }}> {/* Secondary Purple for additional links */}
+          <AdditionalLinks data={data} />
+        </div>
         
         <div className="flex gap-4 mt-6">
           <Button 
             className="flex-1"
             style={{ 
-              backgroundColor: data.colors.primary,
-              color: 'white'
+              backgroundColor: "#9b87f5", // Primary Purple
+              color: '#1A1F2C' // Dark Purple
             }}
           >
             <Share2 className="w-4 h-4 mr-2" />
@@ -54,8 +67,8 @@ export const CardPreview = ({ data }: CardPreviewProps) => {
             className="flex-1"
             variant="outline"
             style={{ 
-              borderColor: data.colors.primary,
-              color: data.colors.primary
+              borderColor: "#6E59A5", // Tertiary Purple
+              color: "#9b87f5" // Primary Purple
             }}
           >
             <Download className="w-4 h-4 mr-2" />
