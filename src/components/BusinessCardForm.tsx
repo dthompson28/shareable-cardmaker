@@ -5,6 +5,7 @@ import { SocialSection } from "./business-card/SocialSection";
 import { ColorSection } from "./business-card/ColorSection";
 import { PhotoSection } from "./business-card/PhotoSection";
 import { LogoSection } from "./business-card/LogoSection";
+import { memo } from "react";
 
 export interface BusinessCardData {
   name: string;
@@ -49,7 +50,7 @@ interface Props {
   onNext: () => void;
 }
 
-export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
+export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
   const handleChange = (field: string, value: string | any) => {
     if (field.includes(".")) {
       const [parent, child] = field.split(".");
@@ -99,4 +100,6 @@ export const BusinessCardForm = ({ data, onChange, onNext }: Props) => {
       </Button>
     </form>
   );
-};
+});
+
+BusinessCardForm.displayName = "BusinessCardForm";
