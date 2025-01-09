@@ -25,7 +25,8 @@ export const CardActions = ({ primaryColor, backgroundColor, tertiaryColor }: Ca
         variant="outline"
         style={{ 
           borderColor: tertiaryColor,
-          color: primaryColor
+          borderWidth: '2px',
+          color: tertiaryColor
         }}
       >
         <Download className="w-4 h-4 mr-2" />
