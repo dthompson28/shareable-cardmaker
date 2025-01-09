@@ -1,11 +1,7 @@
 import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
-import { ContactInfo } from "./contact/ContactInfo";
-import { CardHeader } from "./header/CardHeader";
-import { PhotoDisplay } from "./photo/PhotoDisplay";
-import { SocialLinks } from "./SocialLinks";
-import { AdditionalLinks } from "./AdditionalLinks";
-import { CardActions } from "./preview/CardActions";
+import { CompactCardLayout } from "./layouts/CompactCardLayout";
+import { FullCardLayout } from "./layouts/FullCardLayout";
 
 interface CardPreviewProps {
   data: BusinessCardData;
@@ -41,70 +37,25 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     );
   };
 
-  const renderSocialSection = () => {
-    if (!hasSocialLinks && !hasAdditionalLinks) return null;
-    return (
-      <div className="space-y-4">
-        <SocialLinks data={data} />
-        <AdditionalLinks data={data} />
-      </div>
-    );
-  };
-
   if (data.photoStyle === 'compact') {
     return (
-      <div 
-        className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
-        style={{ 
-          minHeight: '400px',
-          backgroundColor: data.colors.background 
-        }}
-      >
-        <div className="relative pt-6">
-          <div className={`absolute ${isLogoBottomLeft() ? 'right-6' : 'left-6'}`}>
-            <PhotoDisplay data={data} />
-          </div>
-          {renderLogo()}
-        </div>
-        <div className="mt-20 p-6 space-y-6">
-          <CardHeader data={data} />
-          <ContactInfo data={data} />
-          {renderSocialSection()}
-          <CardActions 
-            primaryColor={data.colors.primary}
-            backgroundColor={data.colors.background}
-            tertiaryColor={data.colors.accent}
-            data={data}
-          />
-        </div>
-      </div>
+      <CompactCardLayout
+        data={data}
+        hasSocialLinks={hasSocialLinks}
+        hasAdditionalLinks={hasAdditionalLinks}
+        renderLogo={renderLogo}
+        isLogoBottomLeft={isLogoBottomLeft}
+      />
     );
   }
 
   return (
-    <div 
-      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
-      style={{ 
-        minHeight: '500px',
-        backgroundColor: data.colors.background 
-      }}
-    >
-      <div className="relative">
-        <PhotoDisplay data={data} />
-        {renderLogo()}
-        <CardHeader data={data} />
-      </div>
-      <div className="p-6 space-y-6">
-        <ContactInfo data={data} />
-        {renderSocialSection()}
-        <CardActions 
-          primaryColor={data.colors.primary}
-          backgroundColor={data.colors.background}
-          tertiaryColor={data.colors.accent}
-          data={data}
-        />
-      </div>
-    </div>
+    <FullCardLayout
+      data={data}
+      hasSocialLinks={hasSocialLinks}
+      hasAdditionalLinks={hasAdditionalLinks}
+      renderLogo={renderLogo}
+    />
   );
 });
 
