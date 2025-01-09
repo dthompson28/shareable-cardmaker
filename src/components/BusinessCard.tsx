@@ -50,16 +50,8 @@ END:VCARD`;
     <div className="space-y-8 animate-fadeIn">
       <CardPreview data={data} />
 
-      <div className="flex gap-4 justify-center">
+      <div className="flex justify-center">
         <Button onClick={onBack} variant="outline">Back</Button>
-        <Button onClick={generateVCard}>
-          <Download className="w-4 h-4 mr-2" />
-          Save Contact
-        </Button>
-        <Button onClick={handleShare}>
-          <Share2 className="w-4 h-4 mr-2" />
-          Share
-        </Button>
       </div>
     </div>
   );
