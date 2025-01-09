@@ -22,31 +22,46 @@ export const PhotoFormFields = ({ data, onChange }: PhotoFormFieldsProps) => {
       </div>
 
       {data.photo && (
-        <div className="space-y-4">
-          <Label>Photo Position</Label>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label>Horizontal (X)</Label>
-              <Slider
-                value={[data.photoPosition.x]}
-                onValueChange={(value) => onChange("photoPosition.x", value[0])}
-                min={0}
-                max={100}
-                step={1}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Vertical (Y)</Label>
-              <Slider
-                value={[data.photoPosition.y]}
-                onValueChange={(value) => onChange("photoPosition.y", value[0])}
-                min={0}
-                max={100}
-                step={1}
+        <>
+          <div className="space-y-2">
+            <Label>Preview</Label>
+            <div className="relative w-full h-48 rounded-t-xl overflow-hidden border border-border">
+              <div
+                className="w-full h-full bg-cover"
+                style={{
+                  backgroundImage: `url(${data.photo})`,
+                  backgroundPosition: `${data.photoPosition.x}% ${data.photoPosition.y}%`,
+                }}
               />
             </div>
           </div>
-        </div>
+
+          <div className="space-y-4">
+            <Label>Photo Position</Label>
+            <div className="space-y-6">
+              <div className="space-y-2">
+                <Label>Horizontal (X)</Label>
+                <Slider
+                  value={[data.photoPosition.x]}
+                  onValueChange={(value) => onChange("photoPosition.x", value[0])}
+                  min={0}
+                  max={100}
+                  step={1}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Vertical (Y)</Label>
+                <Slider
+                  value={[data.photoPosition.y]}
+                  onValueChange={(value) => onChange("photoPosition.y", value[0])}
+                  min={0}
+                  max={100}
+                  step={1}
+                />
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
