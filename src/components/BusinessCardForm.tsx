@@ -5,7 +5,8 @@ import { SocialSection } from "./business-card/SocialSection";
 import { ColorSection } from "./business-card/ColorSection";
 import { PhotoSection } from "./business-card/PhotoSection";
 import { LogoSection } from "./business-card/LogoSection";
-import { memo } from "react";
+import { memo, useEffect } from "react";
+import { STORAGE_KEY } from "@/constants/businessCard";
 
 export interface BusinessCardData {
   name: string;
@@ -51,6 +52,18 @@ interface Props {
 }
 
 export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        onChange(parsedData);
+      }
+    } catch (error) {
+      console.error('Error loading data from localStorage:', error);
+    }
+  }, []);
+
   const handleChange = (field: string, value: string | any) => {
     if (field.includes(".")) {
       const [parent, child] = field.split(".");
