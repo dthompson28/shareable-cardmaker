@@ -37,7 +37,9 @@ export const CompactCardLayout = ({
       <div className="relative -mt-24 px-6">
         <div className="flex flex-col items-start">
           <div 
-            className="w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white"
+            className={`w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white ${
+              isLogoBottomLeft() ? 'ml-auto' : ''
+            }`}
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
@@ -46,7 +48,9 @@ export const CompactCardLayout = ({
           >
             <div className="absolute inset-0 bg-black/10 rounded-full" />
           </div>
-          <CardHeader data={data} />
+          <div className={`w-full ${isLogoBottomLeft() ? '' : ''}`}>
+            <CardHeader data={data} />
+          </div>
         </div>
       </div>
       <div className="p-6 space-y-6">
