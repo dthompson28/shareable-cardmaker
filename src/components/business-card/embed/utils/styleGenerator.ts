@@ -14,9 +14,6 @@ export const generateStyles = (data: BusinessCardData) => `
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  .card-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -24,9 +21,14 @@ export const generateStyles = (data: BusinessCardData) => `
     padding: 1rem;
   }
 
+  .card-container {
+    width: 100%;
+    max-width: 28rem;
+    margin: 0 auto;
+  }
+
   .business-card {
     background: white;
-    max-width: 28rem;
     width: 100%;
     border-radius: 0.75rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -40,7 +42,7 @@ export const generateStyles = (data: BusinessCardData) => `
     position: relative;
     background-image: ${data.photo ? `url(${data.photo})` : 'none'};
     background-size: cover;
-    background-position: center;
+    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
   }
 
   .header::after {
@@ -71,6 +73,10 @@ export const generateStyles = (data: BusinessCardData) => `
     padding: ${data.photoStyle === 'full' ? '0 2rem 2rem' : '0 2rem'};
     text-align: ${data.photoStyle === 'full' ? 'left' : 'center'};
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
   }
 
   .profile-image {
@@ -78,7 +84,7 @@ export const generateStyles = (data: BusinessCardData) => `
     height: 8rem;
     border-radius: 50%;
     border: 4px solid white;
-    margin: ${data.photoStyle === 'full' ? '0' : '-4rem auto 0'};
+    margin: ${data.photoStyle === 'full' ? '0' : '-4rem auto 1rem'};
     object-fit: cover;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     display: ${data.photoStyle === 'full' ? 'none' : 'block'};
@@ -88,9 +94,7 @@ export const generateStyles = (data: BusinessCardData) => `
     color: ${data.photoStyle === 'full' ? 'white' : data.colors.primary};
     font-size: 2rem;
     font-weight: bold;
-    margin: ${data.photoStyle === 'full' ? '0' : '1rem 0 0.5rem'};
-    position: ${data.photoStyle === 'full' ? 'absolute' : 'relative'};
-    bottom: ${data.photoStyle === 'full' ? '4rem' : 'auto'};
+    margin-bottom: 0.5rem;
     text-shadow: ${data.photoStyle === 'full' ? '0 2px 4px rgba(0,0,0,0.2)' : 'none'};
   }
 
@@ -98,8 +102,6 @@ export const generateStyles = (data: BusinessCardData) => `
     color: ${data.photoStyle === 'full' ? 'rgba(255,255,255,0.9)' : data.colors.secondary};
     font-size: 1.25rem;
     margin-bottom: 0.25rem;
-    position: ${data.photoStyle === 'full' ? 'absolute' : 'relative'};
-    bottom: ${data.photoStyle === 'full' ? '2.5rem' : 'auto'};
     text-shadow: ${data.photoStyle === 'full' ? '0 1px 2px rgba(0,0,0,0.2)' : 'none'};
   }
 
@@ -107,8 +109,6 @@ export const generateStyles = (data: BusinessCardData) => `
     color: ${data.photoStyle === 'full' ? 'rgba(255,255,255,0.9)' : data.colors.secondary};
     font-size: 1.125rem;
     margin-bottom: ${data.photoStyle === 'full' ? '0' : '2rem'};
-    position: ${data.photoStyle === 'full' ? 'absolute' : 'relative'};
-    bottom: ${data.photoStyle === 'full' ? '1rem' : 'auto'};
     text-shadow: ${data.photoStyle === 'full' ? '0 1px 2px rgba(0,0,0,0.2)' : 'none'};
   }
 
@@ -177,10 +177,6 @@ export const generateStyles = (data: BusinessCardData) => `
 
   .save-button {
     background-color: ${data.colors.accent};
-  }
-
-  .save-button:hover {
-    background-color: ${data.colors.accent}dd;
   }
 
   .loading {
