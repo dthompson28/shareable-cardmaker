@@ -1,12 +1,18 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateStyles = (data: BusinessCardData) => `
-  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .card-container {
@@ -19,6 +25,7 @@ export const generateStyles = (data: BusinessCardData) => `
   }
 
   .business-card {
+    position: relative;
     width: 100%;
     max-width: 28rem;
     margin: 0 auto;
@@ -32,6 +39,7 @@ export const generateStyles = (data: BusinessCardData) => `
     position: relative;
     width: 100%;
     background-color: ${data.colors.secondary};
+    padding: ${data.photoStyle === 'full' ? '0' : '2rem'};
   }
 
   .logo {
@@ -40,6 +48,11 @@ export const generateStyles = (data: BusinessCardData) => `
     height: 4rem;
     object-fit: contain;
     z-index: 10;
+    ${data.logoPosition ? `
+      top: ${data.logoPosition.y}%;
+      left: ${data.logoPosition.x}%;
+      transform: translate(-50%, -50%);
+    ` : ''}
   }
 
   .profile {
@@ -54,6 +67,7 @@ export const generateStyles = (data: BusinessCardData) => `
     margin: 0 auto 1rem;
     object-fit: cover;
     border: 4px solid white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 
   .name {
@@ -82,106 +96,37 @@ export const generateStyles = (data: BusinessCardData) => `
     padding: 0 2rem;
   }
 
-  .contact-item {
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: ${data.colors.primary};
-    text-decoration: none;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    transition: color 0.2s ease;
-  }
-
-  .contact-item:hover {
-    color: ${data.colors.secondary};
-  }
-
-  .social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    padding: 1.5rem 2rem;
-  }
-
-  .social-link {
-    color: ${data.colors.primary};
-    transition: color 0.2s ease;
-  }
-
-  .social-link:hover {
-    color: ${data.colors.secondary};
-  }
-
-  .additional-links {
-    padding: 0 2rem 1.5rem;
-  }
-
-  .additional-link {
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: ${data.colors.secondary};
-    text-decoration: none;
-    margin-bottom: 0.75rem;
-    font-size: 1rem;
-    transition: color 0.2s ease;
-  }
-
-  .additional-link:hover {
-    color: ${data.colors.accent};
-  }
-
   .buttons {
     display: flex;
     gap: 1rem;
     padding: 1.5rem 2rem 2rem;
   }
 
-  .button {
-    font-family: 'Open Sans', sans-serif;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-
-  .share-button {
-    background-color: ${data.colors.primary};
-    color: white;
-    border: none;
-  }
-
-  .share-button:hover {
-    background-color: ${data.colors.secondary};
-  }
-
-  .save-button {
-    background-color: transparent;
-    color: ${data.colors.accent};
-    border: 2px solid ${data.colors.accent};
-  }
-
-  .save-button:hover {
-    background-color: ${data.colors.accent};
-    color: white;
-  }
-
   .loading {
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s ease;
   }
 
   .loaded {
     opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    .card-container {
+      padding: 1rem;
+    }
+
+    .business-card {
+      max-width: 100%;
+    }
+
+    .buttons {
+      flex-direction: column;
+    }
+
+    .profile-image {
+      width: 10rem;
+      height: 10rem;
+    }
   }
 `;
