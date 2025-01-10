@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { BusinessCardForm, BusinessCardData } from "@/components/BusinessCardForm";
 import { BusinessCard } from "@/components/BusinessCard";
 import { PageLayout } from "@/components/layout/PageLayout";
@@ -42,9 +42,18 @@ const initialData: BusinessCardData = {
   },
 };
 
+const STORAGE_KEY = 'businessCardFormData';
+
 const Index = () => {
   const [step, setStep] = useState(1);
-  const [data, setData] = useState<BusinessCardData>(initialData);
+  const [data, setData] = useState<BusinessCardData>(() => {
+    const savedData = localStorage.getItem(STORAGE_KEY);
+    return savedData ? JSON.parse(savedData) : initialData;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }, [data]);
 
   const handleEdit = useCallback(() => {
     setStep(1);
