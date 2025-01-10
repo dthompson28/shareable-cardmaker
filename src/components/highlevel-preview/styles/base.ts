@@ -21,15 +21,25 @@ export const baseStyles = `
     min-height: 100vh;
     padding: 1rem;
     background-color: var(--background);
+    width: 100%;
   }
 
   .business-card {
     width: 100%;
-    max-width: 22rem;
+    max-width: min(90vw, 400px);
+    min-width: 280px;
     background-color: white;
     border-radius: 0.75rem;
     overflow: hidden;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .business-card {
+      width: 90%;
+      max-width: 360px;
+    }
   }
 
   .content {

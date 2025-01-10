@@ -2,10 +2,16 @@ export const headerStyles = `
   .header {
     position: relative;
     width: 100%;
-    height: 250px;
+    height: clamp(200px, 30vh, 250px);
     background-image: url('https://storage.googleapis.com/msgsndr/MZWdQlgITZo9mm1376Dv/media/67492bc96a2894272f8c25d7.jpeg');
     background-size: cover;
     background-position: center;
+  }
+
+  @media (min-width: 768px) {
+    .header {
+      height: 250px;
+    }
   }
 
   .header-overlay {
