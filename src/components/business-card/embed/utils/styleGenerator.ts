@@ -91,6 +91,11 @@ export const generateStyles = (data: BusinessCardData) => `
     text-decoration: none;
     margin-bottom: 1rem;
     font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .contact-item:hover {
+    color: ${data.colors.secondary};
   }
 
   .social-links {
@@ -102,11 +107,11 @@ export const generateStyles = (data: BusinessCardData) => `
 
   .social-link {
     color: ${data.colors.primary};
-    transition: opacity 0.2s;
+    transition: color 0.2s ease;
   }
 
   .social-link:hover {
-    opacity: 0.8;
+    color: ${data.colors.secondary};
   }
 
   .additional-links {
@@ -122,6 +127,11 @@ export const generateStyles = (data: BusinessCardData) => `
     text-decoration: none;
     margin-bottom: 0.75rem;
     font-size: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .additional-link:hover {
+    color: ${data.colors.accent};
   }
 
   .buttons {
@@ -142,7 +152,7 @@ export const generateStyles = (data: BusinessCardData) => `
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: all 0.2s ease;
   }
 
   .share-button {
@@ -151,14 +161,19 @@ export const generateStyles = (data: BusinessCardData) => `
     border: none;
   }
 
+  .share-button:hover {
+    background-color: ${data.colors.secondary};
+  }
+
   .save-button {
     background-color: transparent;
     color: ${data.colors.accent};
     border: 2px solid ${data.colors.accent};
   }
 
-  .button:hover {
-    opacity: 0.9;
+  .save-button:hover {
+    background-color: ${data.colors.accent};
+    color: white;
   }
 
   .loading {
