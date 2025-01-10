@@ -1,176 +1,155 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
-import { generateStyles } from "./styleGenerator";
-import {
-  generateHeaderHTML,
-  generateContactHTML,
-  generateSocialHTML,
-  generateActionButtonsHTML,
-  generateScriptHTML,
-} from "./utils/htmlGenerator";
 
-export const generateEmbedCode = (data: BusinessCardData) => {
-  const styles = generateStyles(data);
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>${data.name} - Digital Business Card</title>
-  <meta name="description" content="Digital Business Card for ${data.name}">
-  <meta name="author" content="${data.name}">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    ${styles}
-    .business-card {
-      width: 100%;
-      max-width: 28rem;
-      margin: 0 auto;
-      font-family: 'Open Sans', sans-serif;
-      background-color: ${data.colors.background};
-      border-radius: 0.75rem;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    }
-    .button {
-      font-family: 'Open Sans', sans-serif;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: none;
-      width: 100%;
-    }
-    .share-button {
-      background-color: ${data.colors.primary};
-      color: white;
-    }
-    .share-button:hover {
-      background-color: ${data.colors.secondary};
-      opacity: 0.9;
-    }
-    .save-button {
-      background-color: transparent;
-      color: ${data.colors.accent};
-      border: 2px solid ${data.colors.accent};
-    }
-    .save-button:hover {
-      background-color: ${data.colors.accent};
-      color: white;
-    }
-    .contact-item {
-      font-family: 'Open Sans', sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: ${data.colors.primary};
-      text-decoration: none;
-      padding: 0.5rem;
-      border-radius: 0.375rem;
-      transition: all 0.2s ease;
-    }
-    .contact-item:hover {
-      background-color: ${data.colors.background};
-      color: ${data.colors.secondary};
-    }
-    .social-link {
-      color: ${data.colors.primary};
-      transition: all 0.2s ease;
-    }
-    .social-link:hover {
-      color: ${data.colors.secondary};
-      transform: translateY(-2px);
-    }
-    .name {
-      font-family: 'Playfair Display', serif;
-      color: ${data.colors.primary};
-    }
-    .job-title {
-      font-family: 'Playfair Display', serif;
-      color: ${data.colors.secondary};
-    }
-    .company {
-      font-family: 'Playfair Display', serif;
-      color: ${data.colors.accent};
-    }
-  </style>
-</head>
-<body>
-  <div class="card-container">
-    <div class="business-card">
-      ${generateHeaderHTML(data)}
-      ${generateContactHTML(data)}
-      ${generateSocialHTML(data)}
-      ${generateActionButtonsHTML()}
+export const generateHeaderHTML = (data: BusinessCardData) => {
+  return `
+    <div class="header">
+      ${data.logo ? `
+        <img 
+          src="${data.logo}" 
+          alt="Logo" 
+          class="logo"
+          loading="eager"
+          decoding="async"
+        />
+      ` : ''}
+      ${data.photoStyle === 'full' ? `
+        <div class="profile">
+          <h1 class="name">${data.name}</h1>
+          ${data.jobTitle ? `<h2 class="job-title">${data.jobTitle}</h2>` : ''}
+          ${data.company ? `<h2 class="company">${data.company}</h2>` : ''}
+        </div>
+      ` : ''}
     </div>
-  </div>
-  ${generateScriptHTML(data)}
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const container = document.querySelector('.card-container');
-      if (container) {
-        container.classList.remove('loading');
-        container.classList.add('loaded');
-      }
-    });
-
-    const preloadImages = () => {
-      const images = [
-        ${data.logo ? `'${data.logo}',` : ''}
-        ${data.photo ? `'${data.photo}'` : ''}
-      ].filter(Boolean);
-      
-      images.forEach(src => {
-        const img = new Image();
-        img.src = src;
-      });
-    };
-
-    preloadImages();
-  </script>
-</body>
-</html>`;
-};
-
-export const generateHeaderHTML = (data: BusinessCardData) => `
-  <div class="header">
-    ${data.logo ? `
-      <img 
-        src="${data.logo}" 
-        alt="Logo" 
-        class="logo"
-        loading="eager"
-        decoding="async"
-      />
-    ` : ''}
-    ${data.photoStyle === 'full' ? `
+    ${data.photoStyle !== 'full' ? `
       <div class="profile">
+        ${data.photo ? `
+          <img 
+            src="${data.photo}" 
+            alt="${data.name}" 
+            class="profile-image"
+            loading="eager"
+            decoding="async"
+          />
+        ` : ''}
         <h1 class="name">${data.name}</h1>
         ${data.jobTitle ? `<h2 class="job-title">${data.jobTitle}</h2>` : ''}
         ${data.company ? `<h2 class="company">${data.company}</h2>` : ''}
       </div>
     ` : ''}
-  </div>
-  ${data.photoStyle !== 'full' ? `
-    <div class="profile">
-      ${data.photo ? `
-        <img 
-          src="${data.photo}" 
-          alt="${data.name}" 
-          class="profile-image"
-          loading="eager"
-          decoding="async"
-        />
+  `;
+};
+
+export const generateContactHTML = (data: BusinessCardData) => {
+  return `
+    <div class="contact-info">
+      ${data.email ? `
+        <a href="mailto:${data.email}" class="contact-item">
+          <i data-lucide="mail" class="w-5 h-5"></i>
+          ${data.email}
+        </a>
       ` : ''}
-      <h1 class="name">${data.name}</h1>
-      ${data.jobTitle ? `<h2 class="job-title">${data.jobTitle}</h2>` : ''}
-      ${data.company ? `<h2 class="company">${data.company}</h2>` : ''}
+      ${data.phone ? `
+        <a href="tel:${data.phone}" class="contact-item">
+          <i data-lucide="phone" class="w-5 h-5"></i>
+          ${data.phone}
+        </a>
+      ` : ''}
+      ${data.website ? `
+        <a href="${data.website}" target="_blank" rel="noopener noreferrer" class="contact-item">
+          <i data-lucide="globe" class="w-5 h-5"></i>
+          ${data.website}
+        </a>
+      ` : ''}
     </div>
-  ` : ''}
-`;
+  `;
+};
+
+export const generateSocialHTML = (data: BusinessCardData) => {
+  const socialLinks = Object.entries(data.social)
+    .filter(([key, value]) => key !== 'additionalLinks' && value)
+    .map(([platform, url]) => `
+      <a href="${url}" target="_blank" rel="noopener noreferrer" class="social-link">
+        <i data-lucide="${platform}" class="w-6 h-6"></i>
+      </a>
+    `).join('');
+
+  const additionalLinks = data.social.additionalLinks?.map(link => `
+    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="contact-item">
+      <i data-lucide="link" class="w-5 h-5"></i>
+      ${link.title}
+    </a>
+  `).join('') || '';
+
+  return `
+    <div class="social-links">
+      ${socialLinks}
+      ${additionalLinks}
+    </div>
+  `;
+};
+
+export const generateActionButtonsHTML = () => {
+  return `
+    <div class="buttons">
+      <button class="button share-button" onclick="shareCard()">
+        <i data-lucide="share-2" class="w-5 h-5"></i>
+        Share
+      </button>
+      <button class="button save-button" onclick="saveContact()">
+        <i data-lucide="download" class="w-5 h-5"></i>
+        Save Contact
+      </button>
+    </div>
+  `;
+};
+
+export const generateScriptHTML = (data: BusinessCardData) => {
+  return `
+    <script>
+      function shareCard() {
+        if (navigator.share) {
+          navigator.share({
+            title: '${data.name} - Digital Business Card',
+            text: 'Check out my digital business card!',
+            url: window.location.href
+          }).catch(console.error);
+        } else {
+          navigator.clipboard.writeText(window.location.href)
+            .then(() => alert('Link copied to clipboard!'))
+            .catch(console.error);
+        }
+      }
+
+      function saveContact() {
+        const vcard = generateVCard();
+        const blob = new Blob([vcard], { type: 'text/vcard' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '${data.name.replace(/\s+/g, '_')}_contact.vcf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+
+      function generateVCard() {
+        return \`BEGIN:VCARD
+VERSION:3.0
+FN:${data.name}
+${data.jobTitle ? `TITLE:${data.jobTitle}\n` : ''}
+${data.company ? `ORG:${data.company}\n` : ''}
+${data.email ? `EMAIL:${data.email}\n` : ''}
+${data.phone ? `TEL:${data.phone}\n` : ''}
+${data.website ? `URL:${data.website}\n` : ''}
+END:VCARD\`;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.querySelector('.card-container');
+        if (container) {
+          container.classList.remove('loading');
+          container.classList.add('loaded');
+        }
+      });
+    </script>
+  `;
+};
