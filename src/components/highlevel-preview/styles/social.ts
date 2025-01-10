@@ -6,26 +6,18 @@ export const socialStyles = `
     margin: 2rem 0;
   }
 
-  .social-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    color: white;
-    background-color: var(--primary);
-    border-radius: 50%;
-    transition: all 0.2s ease;
+  .social-icon {
+    color: var(--primary);
+    transition: color 0.2s ease;
   }
 
-  .social-link:hover {
-    background-color: var(--secondary);
-    transform: translateY(-2px);
+  .social-icon:hover {
+    color: var(--secondary);
   }
 
-  .social-link svg {
-    width: 1.25rem;
-    height: 1.25rem;
+  .social-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .action-buttons {
