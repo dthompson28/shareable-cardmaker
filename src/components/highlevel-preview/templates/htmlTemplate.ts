@@ -9,9 +9,8 @@ export const htmlTemplate = `<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
-  <title>Dani Thompson - Digital Business Card</title>
-  <meta name="description" content="Digital Business Card for Dani Thompson">
-  <meta name="author" content="Dani Thompson">
+  <title>Digital Business Card</title>
+  <meta name="description" content="Digital Business Card">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -21,14 +20,6 @@ export const htmlTemplate = `<!DOCTYPE html>
       <div class="content">
         ${contactTemplate}
         ${socialTemplate}
-        <div class="additional-links">
-          <a href="https://danithompsonltd.com/schedule-a-call-danithompson" target="_blank" rel="noopener noreferrer" class="additional-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-            <span>Schedule a Call</span>
-          </a>
-        </div>
         ${actionsTemplate}
       </div>
     </div>
@@ -38,21 +29,26 @@ export const htmlTemplate = `<!DOCTYPE html>
     function saveContact() {
       const vcard = \`BEGIN:VCARD
 VERSION:3.0
-FN:Dani Thompson
-TITLE:Marketing Strategist
-ORG:Thompson Marketing Solutions
-EMAIL;TYPE=WORK:dani@danithompsonltd.com
-TEL;TYPE=WORK,VOICE:+14405038011
-URL:https://danithompsonltd.com/schedule-a-call-danithompson
-X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/danielle-thompson-cleveland/
-X-SOCIALPROFILE;TYPE=facebook:https://www.facebook.com/danithomp2014
-X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/danithompsoncle/
+FN:\${document.querySelector('h1').textContent}
+N:\${document.querySelector('h1').textContent};;;
+\${document.querySelector('.job-title') ? \`TITLE:\${document.querySelector('.job-title').textContent}\n\` : ''}
+\${document.querySelector('.company') ? \`ORG:\${document.querySelector('.company').textContent}\n\` : ''}
+\${document.querySelector('[href^="tel:"]') ? \`TEL;TYPE=work,voice:\${document.querySelector('[href^="tel:"]').getAttribute('href').replace('tel:', '')}\n\` : ''}
+\${document.querySelector('[href^="mailto:"]') ? \`EMAIL;TYPE=work:\${document.querySelector('[href^="mailto:"]').getAttribute('href').replace('mailto:', '')}\n\` : ''}
+\${document.querySelector('[href^="http"]') ? \`URL;TYPE=work:\${document.querySelector('[href^="http"]').getAttribute('href')}\n\` : ''}
+\${document.querySelector('.header img') ? \`PHOTO;VALUE=URL:\${document.querySelector('.header img').getAttribute('src')}\n\` : ''}
+\${document.querySelector('[href*="linkedin"]') ? \`X-SOCIALPROFILE;TYPE=linkedin:\${document.querySelector('[href*="linkedin"]').getAttribute('href')}\n\` : ''}
+\${document.querySelector('[href*="facebook"]') ? \`X-SOCIALPROFILE;TYPE=facebook:\${document.querySelector('[href*="facebook"]').getAttribute('href')}\n\` : ''}
+\${document.querySelector('[href*="instagram"]') ? \`X-SOCIALPROFILE;TYPE=instagram:\${document.querySelector('[href*="instagram"]').getAttribute('href')}\n\` : ''}
+\${document.querySelector('[href*="twitter"]') ? \`X-SOCIALPROFILE;TYPE=twitter:\${document.querySelector('[href*="twitter"]').getAttribute('href')}\n\` : ''}
+\${document.querySelector('[href*="youtube"]') ? \`X-SOCIALPROFILE;TYPE=youtube:\${document.querySelector('[href*="youtube"]').getAttribute('href')}\n\` : ''}
+\${document.querySelector('[href*="tiktok"]') ? \`X-SOCIALPROFILE;TYPE=tiktok:\${document.querySelector('[href*="tiktok"]').getAttribute('href')}\n\` : ''}
 END:VCARD\`;
       const blob = new Blob([vcard], { type: 'text/vcard' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'Dani_Thompson_Contact.vcf';
+      link.download = document.querySelector('h1').textContent.replace(/\\s+/g, '_') + '_contact.vcf';
       link.click();
       URL.revokeObjectURL(url);
     }
@@ -60,7 +56,7 @@ END:VCARD\`;
     function shareCard() {
       if (navigator.share) {
         navigator.share({
-          title: 'Dani Thompson - Digital Business Card',
+          title: document.querySelector('h1').textContent + ' - Digital Business Card',
           text: 'Check out my digital business card!',
           url: window.location.href
         }).catch(console.error);
@@ -74,6 +70,13 @@ END:VCARD\`;
         alert('Link copied to clipboard!');
       }
     }
+
+    // HighLevel compatibility
+    window.addEventListener('load', function() {
+      if (window.parent) {
+        window.parent.postMessage('embed_ready', '*');
+      }
+    });
   </script>
 </body>
 </html>`;
