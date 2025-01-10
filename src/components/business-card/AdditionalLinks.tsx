@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { BusinessCardData } from "../BusinessCardForm";
 
 interface AdditionalLinksProps {
@@ -19,7 +19,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
           className="flex items-center gap-2 hover:opacity-75 transition-colors"
           style={{ color: data.colors.secondary }}
         >
-          <ExternalLink className="w-4 h-4" style={{ color: data.colors.accent }} />
+          <ArrowRight className="w-4 h-4" style={{ color: data.colors.accent }} />
           <span>{link.title}</span>
         </a>
       ))}
