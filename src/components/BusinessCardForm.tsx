@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { ContactSection } from "./business-card/ContactSection";
-import { SocialSection } from "./business-card/SocialSection";
-import { ColorSection } from "./business-card/ColorSection";
-import { PhotoSection } from "./business-card/PhotoSection";
-import { LogoSection } from "./business-card/LogoSection";
+import { ContactSection } from "./business-card/form/ContactSection";
+import { SocialSection } from "./business-card/form/SocialSection";
+import { ColorSection } from "./business-card/form/ColorSection";
+import { PhotoSection } from "./business-card/form/PhotoSection";
+import { LogoSection } from "./business-card/form/LogoSection";
 import { memo, useEffect } from "react";
 import { STORAGE_KEY } from "@/constants/businessCard";
 
