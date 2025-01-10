@@ -62,7 +62,7 @@ export const CardActions = ({ data }: CardActionsProps) => {
   return (
     <div className="flex gap-4 mt-6">
       <Button 
-        className="flex-1"
+        className="flex-1 font-opensans"
         style={{ 
           backgroundColor: data.colors.primary,
           color: "#FFFFFF"
@@ -73,7 +73,7 @@ export const CardActions = ({ data }: CardActionsProps) => {
         Share
       </Button>
       <Button
-        className="flex-1 transition-colors duration-200"
+        className="flex-1 font-opensans transition-colors duration-200"
         variant="outline"
         style={{ 
           borderColor: data.colors.accent,
