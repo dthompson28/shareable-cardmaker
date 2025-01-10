@@ -13,8 +13,7 @@ interface Props {
 export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
   const [showEmbedCode, setShowEmbedCode] = useState(false);
 
-  const handleCopyEmbedCode = () => {
-    const embedCode = `
+  const generateEmbedCode = () => `
 <div style="max-width: 500px; margin: 0 auto;">
   <div style="background-color: ${data.colors.background}; border-radius: 0.75rem; overflow: hidden; box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);">
     <div style="height: 12rem; background-color: ${data.colors.secondary}; position: relative;">
@@ -34,6 +33,8 @@ export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
   </div>
 </div>`;
 
+  const handleCopyEmbedCode = () => {
+    const embedCode = generateEmbedCode();
     navigator.clipboard.writeText(embedCode);
     toast.success("Embed code copied to clipboard!");
     setShowEmbedCode(false);
@@ -85,9 +86,7 @@ export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
               Copy the code below to embed this business card on your website:
             </p>
             <pre className="bg-secondary p-4 rounded-md overflow-x-auto">
-              <code className="text-sm">{`<div style="max-width: 500px; margin: 0 auto;">
-  <!-- Business Card HTML will be generated here -->
-</div>`}</code>
+              <code className="text-sm">{generateEmbedCode()}</code>
             </pre>
             <button
               onClick={handleCopyEmbedCode}
