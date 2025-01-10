@@ -4,6 +4,8 @@ import { BusinessCard } from "@/components/BusinessCard";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Header } from "@/components/layout/Header";
 import { ContentContainer } from "@/components/layout/ContentContainer";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const initialData: BusinessCardData = {
   name: "",
@@ -71,10 +73,25 @@ const Index = () => {
     setStep(2);
   }, []);
 
+  const handleReset = useCallback(() => {
+    localStorage.removeItem(STORAGE_KEY);
+    setData(initialData);
+    toast.success("Form data has been reset");
+  }, []);
+
   return (
     <PageLayout>
       <Header />
       <ContentContainer>
+        <div className="flex justify-end mb-4">
+          <Button 
+            variant="outline" 
+            onClick={handleReset}
+            className="text-sm"
+          >
+            Reset Form
+          </Button>
+        </div>
         {step === 1 ? (
           <BusinessCardForm
             data={data}
