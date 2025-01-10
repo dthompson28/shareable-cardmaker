@@ -33,7 +33,7 @@ export const CompactCardLayout = ({
         style={{ backgroundColor: data.colors.secondary }}
       >
         {isLogoBottomLeft() ? (
-          <div className="absolute bottom-0 left-4">
+          <div className="absolute bottom-[-48px] left-4 z-10">
             {renderLogo()}
           </div>
         ) : renderLogo()}
