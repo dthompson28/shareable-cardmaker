@@ -1,4 +1,5 @@
 import { BusinessCardData } from "../../BusinessCardForm";
+import { getRootDomain } from "@/components/business-card/utils/urlUtils";
 
 interface ContactInfoProps {
   data: BusinessCardData;
@@ -60,7 +61,7 @@ export const ContactInfo = ({ data }: ContactInfoProps) => {
             <path d="M2 12h20" />
             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
           </svg>
-          <span className="text-base font-opensans" style={{ color: data.colors.primary }}>{data.website}</span>
+          <span className="text-base font-opensans" style={{ color: data.colors.primary }}>{getRootDomain(data.website)}</span>
         </a>
       )}
     </div>
