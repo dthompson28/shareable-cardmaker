@@ -11,3 +11,5 @@ export const DEFAULT_COLORS = {
   accent: "#be5103",
   background: "#f3f3f3",
 } as const;
+
+export const STORAGE_KEY = 'businessCard';
