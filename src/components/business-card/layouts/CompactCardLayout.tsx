@@ -33,13 +33,13 @@ export const CompactCardLayout = ({
         style={{ backgroundColor: data.colors.secondary }}
       >
         {isLogoBottomLeft() ? (
-          <div className="absolute bottom-[-32px] left-4">
+          <div className="absolute bottom-0 left-4">
             {renderLogo()}
           </div>
         ) : renderLogo()}
       </div>
-      <div className="relative -mt-24 px-6">
-        <div className="flex flex-col items-start">
+      <div className="relative px-6">
+        <div className="flex flex-col items-start -mt-24">
           <div 
             className={`w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white ${
               isLogoBottomLeft() ? 'ml-auto' : ''
