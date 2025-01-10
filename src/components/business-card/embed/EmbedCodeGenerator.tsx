@@ -8,10 +8,8 @@ import {
   generateScriptHTML,
 } from "./utils/htmlGenerator";
 
-export const generateEmbedCode = (data: BusinessCardData) => {
-  const styles = generateStyles(data);
-
-  return `<!DOCTYPE html>
+export const generateEmbedCode = (data: BusinessCardData) => `
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -20,9 +18,6 @@ export const generateEmbedCode = (data: BusinessCardData) => {
   <meta name="description" content="Digital Business Card for ${data.name}">
   <meta name="author" content="${data.name}">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    ${styles}
-  </style>
 </head>
 <body>
   <div class="bc-card-container">
@@ -36,4 +31,5 @@ export const generateEmbedCode = (data: BusinessCardData) => {
   ${generateScriptHTML(data)}
 </body>
 </html>`;
-};
+
+export { generateStyles };
