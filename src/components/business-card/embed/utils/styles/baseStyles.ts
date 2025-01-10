@@ -1,80 +1,45 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateBaseStyles = (data: BusinessCardData) => `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-  .business-card {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 2rem;
+  :root {
+    --primary: ${data.colors.primary};
+    --secondary: ${data.colors.secondary};
+    --accent: ${data.colors.accent};
+    --background: ${data.colors.background};
   }
 
-  .card {
-    position: relative;
-    border-radius: 1rem;
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--background);
+  }
+
+  .bc-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    background-color: var(--background);
+  }
+
+  .bc-business-card {
+    width: 100%;
+    max-width: 22rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    background-color: ${data.colors.background};
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
 
-  .photo-header {
-    position: relative;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-  }
+  @media (max-width: 640px) {
+    .bc-card-container {
+      padding: 0.5rem;
+    }
 
-  .photo-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  .photo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('${data.photo}');
-    background-size: cover;
-    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
-  }
-
-  .photo::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70%;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-  }
-
-  .header-content {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
-    z-index: 10;
-  }
-
-  .name {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-
-  .job-title {
-    font-size: 1.5rem;
-    color: rgba(255,255,255,0.9);
-    margin-bottom: 0.25rem;
-  }
-
-  .company {
-    font-size: 1.25rem;
-    color: rgba(255,255,255,0.9);
+    .bc-business-card {
+      max-width: 18rem;
+    }
   }
 `;
