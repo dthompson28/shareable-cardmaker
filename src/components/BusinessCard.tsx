@@ -15,7 +15,9 @@ export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      <CardPreview data={data} />
+      <div id="business-card-preview" className="w-full">
+        <CardPreview data={data} />
+      </div>
       <ActionButtons
         data={data}
         onBack={onBack}
