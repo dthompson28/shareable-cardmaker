@@ -11,7 +11,6 @@ interface CompactCardLayoutProps {
   hasSocialLinks: boolean;
   hasAdditionalLinks: boolean;
   renderLogo: () => React.ReactNode;
-  isLogoBottomLeft: () => boolean;
 }
 
 export const CompactCardLayout = ({
