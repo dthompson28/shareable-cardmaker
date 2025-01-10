@@ -104,203 +104,153 @@ END:VCARD\`;
 </html>`;
 
 export const cssCode = `
-  :root {
-    --primary: #00674f;
-    --secondary: #326872;
-    --accent: #be5103;
-    --background: #cecabe;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: var(--background);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .container {
-    width: 100%;
-    max-width: 28rem;
-    margin: 0 auto;
-  }
-
-  .business-card {
-    background-color: #cecabe;
-    border-radius: 1rem;
-    overflow: hidden;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
-
-.header {
-  position: relative;
-  height: 250px;
-  background-image: url('https://storage.googleapis.com/msgsndr/MZWdQlgITZo9mm1376Dv/media/67492bc96a2894272f8c25d7.jpeg');
-  background-size: cover;
-  background-position: center;
+.business-card-wrapper {
+  --primary: #00674f;
+  --secondary: #326872;
+  --accent: #be5103;
+  --background: #cecabe;
 }
 
-.header-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+.business-card-wrapper * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.header-content {
-  position: relative;
-  height: 100%;
-  padding: 1.5rem;
+.business-card-wrapper body {
+  background-color: var(--background);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.business-card-wrapper .card-container {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
 
-.header-logo {
-  align-self: flex-end;
-  width: 4rem;
+.business-card-wrapper .business-card {
+  background: white;
+  max-width: 28rem;
+  width: 100%;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.business-card-wrapper .header {
+  background-color: var(--primary);
+  height: 12rem;
+  position: relative;
+}
+
+.business-card-wrapper .logo {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   height: 4rem;
+  width: 4rem;
   object-fit: contain;
+  background: white;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 
-.header-text {
+.business-card-wrapper .profile {
+  margin-top: -4rem;
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.business-card-wrapper .profile-image {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  border: 4px solid white;
+  margin: 0 auto;
+  object-fit: cover;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.business-card-wrapper .name {
+  color: var(--primary);
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 0.5rem;
+}
+
+.business-card-wrapper .company {
+  color: var(--secondary);
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+}
+
+.business-card-wrapper .contact-info {
+  padding: 0 2rem;
+}
+
+.business-card-wrapper .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #4b5563;
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color 0.2s;
+}
+
+.business-card-wrapper .contact-item:hover {
+  color: var(--secondary);
+}
+
+.business-card-wrapper .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.business-card-wrapper .social-link {
+  color: var(--secondary);
+  transition: color 0.2s;
+}
+
+.business-card-wrapper .social-link:hover {
+  color: var(--primary);
+}
+
+.business-card-wrapper .buttons {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.business-card-wrapper .button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.2s;
 }
 
-.header-text h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.75rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.header-text p {
-  font-size: 1rem;
+.business-card-wrapper .button:hover {
   opacity: 0.9;
 }
 
-.content {
-  padding: 1.5rem;
-}
-
-.contact-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--primary);
-  text-decoration: none;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.contact-link:hover {
-  background-color: rgba(0, 103, 79, 0.1);
-}
-
-.social-links {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin: 1.5rem 0;
-}
-
-.social-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  color: white;
-  background-color: var(--primary);
-  border-radius: 50%;
-  transition: all 0.2s ease;
-}
-
-.social-link:hover {
-  transform: translateY(-2px);
+.business-card-wrapper .share-button {
   background-color: var(--secondary);
 }
 
-.additional-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 500;
-  margin: 1rem 0;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s ease;
-}
-
-.additional-link:hover {
-  background-color: rgba(0, 103, 79, 0.1);
-}
-
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
-.action-button {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.share-button {
-  background-color: var(--primary);
-  color: white;
-}
-
-.share-button:hover {
-  background-color: var(--secondary);
-}
-
-.save-button {
+.business-card-wrapper .save-button {
   background-color: var(--accent);
-  color: white;
-}
-
-.save-button:hover {
-  background-color: var(--primary);
-}
-
-@media (max-width: 640px) {
-  .container {
-    padding: 0;
-  }
-  
-  .business-card {
-    border-radius: 0;
-    box-shadow: none;
-  }
 }`;
