@@ -19,17 +19,19 @@ export const EmbedCodeDialog = ({ open, onOpenChange, data }: EmbedCodeDialogPro
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="max-h-[80vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle>Embed Code</DialogTitle>
         </DialogHeader>
-        <div className="mt-4">
+        <div className="mt-4 flex-1 overflow-hidden flex flex-col">
           <p className="text-sm text-muted-foreground mb-4">
             Copy the code below to embed this business card on your website:
           </p>
-          <pre className="bg-secondary p-4 rounded-md overflow-x-auto">
-            <code className="text-sm">{generateEmbedCode(data)}</code>
-          </pre>
+          <div className="flex-1 overflow-y-auto">
+            <pre className="bg-secondary p-4 rounded-md overflow-x-auto whitespace-pre-wrap">
+              <code className="text-sm">{generateEmbedCode(data)}</code>
+            </pre>
+          </div>
           <button
             onClick={handleCopyEmbedCode}
             className="mt-4 w-full px-6 py-3 text-base font-medium rounded-md transition-all duration-300 hover:opacity-90"
