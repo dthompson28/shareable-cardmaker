@@ -3,54 +3,65 @@ export const htmlCode = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Dani Thompson - Digital Business Card</title>
-  <meta name="description" content="Digital Business Card for Dani Thompson">
-  <meta name="author" content="Dani Thompson">
+  <title>Digital Business Card</title>
+  <meta name="description" content="Digital Business Card">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="styles.css"> <!-- Optional external CSS -->
 </head>
 <body>
-  <div class="business-card-wrapper">
+  <div class="container">
     <div class="business-card">
       <div class="header">
         <div class="header-overlay"></div>
-        <img src="https://storage.googleapis.com/msgsndr/MZWdQlgITZo9mm1376Dv/media/674922593447a59599123157.png" alt="Logo" class="header-logo" />
-        <div class="header-text">
-          <h1>Dani Thompson</h1>
-          <p>Marketer</p>
-          <p>Thompson Limited</p>
+        <div class="header-content">
+          <img src="https://storage.googleapis.com/msgsndr/MZWdQlgITZo9mm1376Dv/media/674922593447a59599123157.png" alt="Logo" class="header-logo" />
+          <div class="header-text">
+            <h1>Dani Thompson</h1>
+            <p>Marketer</p>
+            <p>Thompson Limited</p>
+          </div>
         </div>
       </div>
-      <div class="contact-info">
-        <a href="tel:440-503-8011"><i class="fas fa-phone"></i> 440-503-8011</a>
-        <a href="mailto:dani@danithompsonltd.com"><i class="fas fa-envelope"></i> dani@danithompsonltd.com</a>
-        <a href="https://danithompsonltd.com/schedule-a-call-danithompson" target="_blank">
-          <i class="fas fa-link"></i> danithompsonltd.com
+      <div class="content">
+        <div class="contact-info">
+          <a href="tel:440-503-8011" class="contact-link">
+            <i class="fas fa-phone"></i>
+            <span>440-503-8011</span>
+          </a>
+          <a href="mailto:dani@danithompsonltd.com" class="contact-link">
+            <i class="fas fa-envelope"></i>
+            <span>dani@danithompsonltd.com</span>
+          </a>
+          <a href="https://danithompsonltd.com/schedule-a-call-danithompson" target="_blank" class="contact-link">
+            <i class="fas fa-link"></i>
+            <span>danithompsonltd.com</span>
+          </a>
+        </div>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/danielle-thompson-cleveland/" target="_blank" class="social-link">
+            <i class="fab fa-linkedin"></i>
+          </a>
+          <a href="https://www.facebook.com/danithomp2014" target="_blank" class="social-link">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="https://www.instagram.com/danithompsoncle/" target="_blank" class="social-link">
+            <i class="fab fa-instagram"></i>
+          </a>
+        </div>
+        <a href="https://danithompsonltd.com/schedule-a-call-danithompson" target="_blank" class="additional-link">
+          <i class="fas fa-arrow-right"></i>
+          <span>Schedule a Call with Me!</span>
         </a>
-      </div>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/danielle-thompson-cleveland/" target="_blank">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="https://www.facebook.com/danithomp2014" target="_blank">
-          <i class="fab fa-facebook"></i>
-        </a>
-        <a href="https://www.instagram.com/danithompsoncle/" target="_blank">
-          <i class="fab fa-instagram"></i>
-        </a>
-      </div>
-      <a href="https://danithompsonltd.com/schedule-a-call-danithompson" target="_blank" class="additional-link">
-        <i class="fas fa-arrow-right"></i> Schedule a Call with Me!
-      </a>
-      <div class="action-buttons">
-        <button onclick="shareCard()" class="action-button share-button">
-          <i class="fas fa-share-alt"></i> Share
-        </button>
-        <button onclick="saveContact()" class="action-button save-button">
-          <i class="fas fa-download"></i> Save Contact
-        </button>
+        <div class="action-buttons">
+          <button onclick="shareCard()" class="action-button share-button">
+            <i class="fas fa-share-alt"></i>
+            Share
+          </button>
+          <button onclick="saveContact()" class="action-button save-button">
+            <i class="fas fa-download"></i>
+            Save Contact
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -92,137 +103,143 @@ END:VCARD\`;
 </body>
 </html>`;
 
-export const cssCode = `.business-card-wrapper {
+export const cssCode = `
+:root {
   --primary: #00674f;
   --secondary: #326872;
   --accent: #be5103;
   --background: #cecabe;
 }
 
-.business-card-wrapper * {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.business-card-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 100vw;
-  padding: 1rem;
+body {
+  font-family: 'Open Sans', sans-serif;
   background-color: var(--background);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
 }
 
 .business-card {
-  width: 100%;
-  max-width: 22rem;
-  background-color: var(--background);
-  border-radius: 0.75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 1rem;
   overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.business-card .header {
+.header {
   position: relative;
   height: 250px;
   background-image: url('https://storage.googleapis.com/msgsndr/MZWdQlgITZo9mm1376Dv/media/67492bc96a2894272f8c25d7.jpeg');
   background-size: cover;
-  background-position: 65% 28%;
+  background-position: center;
 }
 
-.business-card .header-overlay {
+.header-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
 }
 
-.business-card .header-logo {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
+.header-content {
+  position: relative;
+  height: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header-logo {
+  align-self: flex-end;
   width: 4rem;
   height: 4rem;
   object-fit: contain;
 }
 
-.business-card .header-text {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+.header-text {
   color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.business-card .header-text h1 {
+.header-text h1 {
+  font-family: 'Playfair Display', serif;
   font-size: 1.75rem;
   font-weight: 700;
-  font-family: 'Playfair Display', serif;
+  margin-bottom: 0.5rem;
 }
 
-.business-card .header-text p {
+.header-text p {
   font-size: 1rem;
-  font-weight: 500;
+  opacity: 0.9;
 }
 
-.business-card .contact-info a {
+.content {
+  padding: 1.5rem;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.contact-link {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   color: var(--primary);
   text-decoration: none;
-  font-weight: 400;
-  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
 }
 
-.business-card .contact-info a:hover {
-  color: var(--secondary);
+.contact-link:hover {
+  background-color: rgba(0, 103, 79, 0.1);
 }
 
-.business-card .social-links a {
-  font-size: 1.5rem;
-  color: var(--primary);
-  transition: transform 0.2s ease, color 0.2s ease;
-  margin: 0.5rem;
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
 }
 
-.business-card .social-links a:hover {
-  color: var(--secondary);
-  transform: scale(1.2);
-}
-
-.business-card .action-buttons button {
+.social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-weight: 500;
-  gap: 0.5rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.business-card .action-buttons .save-button {
-  background-color: var(--accent);
+  width: 2.5rem;
+  height: 2.5rem;
   color: white;
-}
-
-.business-card .action-buttons .save-button:hover {
   background-color: var(--primary);
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
-.business-card .action-buttons .share-button {
-  background-color: var(--primary);
-  color: white;
-}
-
-.business-card .action-buttons .share-button:hover {
+.social-link:hover {
+  transform: translateY(-2px);
   background-color: var(--secondary);
 }
 
-.business-card .additional-link {
+.additional-link {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -230,8 +247,60 @@ export const cssCode = `.business-card-wrapper {
   text-decoration: none;
   font-weight: 500;
   margin: 1rem 0;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
 }
 
-.business-card .additional-link:hover {
-  color: var(--secondary);
+.additional-link:hover {
+  background-color: rgba(0, 103, 79, 0.1);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.action-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.share-button {
+  background-color: var(--primary);
+  color: white;
+}
+
+.share-button:hover {
+  background-color: var(--secondary);
+}
+
+.save-button {
+  background-color: var(--accent);
+  color: white;
+}
+
+.save-button:hover {
+  background-color: var(--primary);
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0;
+  }
+  
+  .business-card {
+    border-radius: 0;
+    box-shadow: none;
+  }
 }`;
