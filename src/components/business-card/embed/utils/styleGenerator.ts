@@ -1,183 +1,212 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateStyles = (data: BusinessCardData) => `
-  .bc-card-container {
+  :root {
+    --primary: ${data.colors.primary};
+    --secondary: ${data.colors.secondary};
+    --accent: ${data.colors.accent};
+    --background: ${data.colors.background};
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--background);
+  }
+
+  .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100%;
-    padding: 2rem;
-    background-color: transparent;
+    min-height: 100vh;
+    padding: 1rem;
   }
 
-  .bc-business-card {
-    position: relative;
+  .card {
     width: 100%;
     max-width: 28rem;
-    margin: 0 auto;
-    font-family: 'Open Sans', sans-serif;
-    background-color: ${data.colors.background};
+    background-color: white;
     border-radius: 0.75rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
 
-  .bc-header {
+  .header {
     position: relative;
     width: 100%;
-    background-color: ${data.colors.secondary};
-    padding: ${data.photoStyle === 'full' ? '0' : '2rem'};
+    height: 400px;
+    background-image: url('${data.photo}');
+    background-size: cover;
+    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
   }
 
-  .bc-logo {
+  .header-overlay {
     position: absolute;
-    width: 4rem;
-    height: 4rem;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+  }
+
+  .header-logo {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 5rem;
+    height: 5rem;
     object-fit: contain;
-    z-index: 10;
-    ${data.logoPosition ? `
-      top: ${data.logoPosition.y}%;
-      left: ${data.logoPosition.x}%;
-      transform: translate(-50%, -50%);
-    ` : ''}
   }
 
-  .bc-profile {
-    padding: 2rem;
-    text-align: center;
+  .header-text {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    color: white;
   }
 
-  .bc-profile-image {
-    width: 12rem;
-    height: 12rem;
-    border-radius: 50%;
-    margin: 0 auto 1rem;
-    object-fit: cover;
-    border: 4px solid white;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-
-  .bc-name {
+  .header-text h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    font-weight: 700;
-    color: ${data.colors.primary};
-    margin: 0 0 0.5rem;
-  }
-
-  .bc-job-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    color: ${data.colors.secondary};
-    margin: 0 0 0.25rem;
-  }
-
-  .bc-company {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.125rem;
-    color: ${data.colors.accent};
     margin: 0;
+    font-weight: 700;
   }
 
-  .bc-contact-info {
-    padding: 0 2rem;
+  .header-text p {
+    font-family: 'Playfair Display', serif;
+    margin: 0.25rem 0;
+    font-size: 1.25rem;
   }
 
-  .bc-buttons {
+  .content {
+    padding: 1.5rem;
+  }
+
+  .contact-info {
+    margin-bottom: 2rem;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    color: var(--primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 0.5rem;
+  }
+
+  .contact-link:hover {
+    background-color: var(--background);
+    color: var(--secondary);
+  }
+
+  .contact-link svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: white;
+    background-color: var(--primary);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+  }
+
+  .social-link:hover {
+    background-color: var(--secondary);
+    transform: translateY(-2px);
+  }
+
+  .social-link svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .additional-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 1rem;
+    transition: color 0.2s ease;
+  }
+
+  .additional-link:hover {
+    color: var(--secondary);
+  }
+
+  .additional-link-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .action-buttons {
     display: flex;
     gap: 1rem;
-    padding: 1.5rem 2rem 2rem;
+    margin-top: 2rem;
   }
 
-  .bc-button {
+  .action-button {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem;
     border-radius: 0.5rem;
-    font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     transition: all 0.2s ease;
-    border: none;
-    width: 100%;
-    font-family: 'Open Sans', sans-serif;
   }
 
-  .bc-share-button {
-    background-color: ${data.colors.primary};
-    color: white;
+  .button-icon {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
-  .bc-share-button:hover {
-    opacity: 0.9;
-  }
-
-  .bc-save-button {
+  .save-button {
     background-color: transparent;
-    color: ${data.colors.accent};
-    border: 2px solid ${data.colors.accent};
+    color: var(--accent);
+    border: 2px solid var(--accent);
   }
 
-  .bc-save-button:hover {
-    background-color: ${data.colors.accent};
+  .save-button:hover {
+    background-color: var(--accent);
     color: white;
   }
 
-  .bc-contact-item {
-    font-family: 'Open Sans', sans-serif;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: ${data.colors.primary};
-    text-decoration: none;
-    padding: 0.5rem;
-    border-radius: 0.375rem;
-    transition: all 0.2s ease;
-    margin-bottom: 0.5rem;
+  .share-button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
   }
 
-  .bc-contact-item:hover {
-    background-color: ${data.colors.background};
-    color: ${data.colors.secondary};
-  }
-
-  .bc-social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;
-  }
-
-  .bc-social-link {
-    color: ${data.colors.primary};
-    transition: all 0.2s ease;
-  }
-
-  .bc-social-link:hover {
-    color: ${data.colors.secondary};
-    transform: translateY(-2px);
+  .share-button:hover {
+    background-color: var(--secondary);
   }
 
   @media (max-width: 640px) {
-    .bc-card-container {
-      padding: 1rem;
+    .container {
+      padding: 0.5rem;
     }
 
-    .bc-business-card {
-      max-width: 100%;
-    }
-
-    .bc-buttons {
+    .action-buttons {
       flex-direction: column;
-    }
-
-    .bc-profile-image {
-      width: 10rem;
-      height: 10rem;
     }
   }
 `;
