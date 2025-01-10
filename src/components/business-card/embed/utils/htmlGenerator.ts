@@ -1,5 +1,163 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
+export const generateHeaderHTML = (data: BusinessCardData) => {
+  return `
+  <div class="bc-header" style="position: relative;">
+    ${data.photoStyle === 'full' ? `
+      <div class="bc-full-photo" style="
+        position: relative;
+        width: 100%;
+        height: 16rem;
+        background-image: url('${data.photo}');
+        background-size: cover;
+        background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
+      ">
+        <div class="bc-photo-overlay"></div>
+        ${data.logo ? `
+          <div 
+            class="bc-logo"
+            style="
+              background-image: url('${data.logo}');
+              top: ${data.logoPosition.y}%;
+              left: ${data.logoPosition.x}%;
+              transform: translate(-50%, -50%);
+            "
+          ></div>
+        ` : ''}
+        <div class="bc-text-content">
+          <h1 class="bc-name">${data.name}</h1>
+          ${data.jobTitle ? `<h2 class="bc-job-title">${data.jobTitle}</h2>` : ''}
+          ${data.company ? `<h2 class="bc-company">${data.company}</h2>` : ''}
+        </div>
+      </div>
+    ` : `
+      <div class="bc-profile">
+        ${data.photo ? `<img src="${data.photo}" alt="${data.name}" class="bc-profile-image" />` : ''}
+        ${data.logo ? `
+          <div 
+            class="bc-logo"
+            style="
+              background-image: url('${data.logo}');
+              top: ${data.logoPosition.y}%;
+              left: ${data.logoPosition.x}%;
+              transform: translate(-50%, -50%);
+            "
+          ></div>
+        ` : ''}
+        <h1 class="bc-name">${data.name}</h1>
+        ${data.jobTitle ? `<h2 class="bc-job-title">${data.jobTitle}</h2>` : ''}
+        ${data.company ? `<h2 class="bc-company">${data.company}</h2>` : ''}
+      </div>
+    `}
+  </div>`;
+};
+
+export const generateContactHTML = (data: BusinessCardData) => {
+  return `
+  <div class="bc-contact-section">
+    ${data.phone ? `<a href="tel:${data.phone}" class="bc-contact-item">${data.phone}</a>` : ''}
+    ${data.email ? `<a href="mailto:${data.email}" class="bc-contact-item">${data.email}</a>` : ''}
+    ${data.website ? `<a href="${data.website}" target="_blank" rel="noopener noreferrer" class="bc-contact-item">${data.website}</a>` : ''}
+  </div>`;
+};
+
+export const generateSocialHTML = (data: BusinessCardData) => {
+  const socialLinks = Object.entries(data.social)
+    .filter(([key, value]) => key !== 'additionalLinks' && value)
+    .map(([platform, url]) => `
+      <a href="${url}" target="_blank" rel="noopener noreferrer" class="bc-social-link">
+        ${getSocialIcon(platform)}
+      </a>
+    `).join('');
+
+  const additionalLinks = data.social.additionalLinks?.map(link => `
+    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="bc-contact-item">
+      ${link.title}
+    </a>
+  `).join('') || '';
+
+  return `
+  <div class="bc-social-section">
+    <div class="bc-social-links">
+      ${socialLinks}
+    </div>
+    ${additionalLinks ? `
+      <div class="bc-additional-links">
+        ${additionalLinks}
+      </div>
+    ` : ''}
+  </div>`;
+};
+
+export const generateActionButtonsHTML = () => {
+  return `
+  <div class="bc-action-buttons">
+    <button onclick="bcShareCard()" class="bc-button bc-share-button">Share</button>
+    <button onclick="bcSaveContact()" class="bc-button bc-save-button">Save Contact</button>
+  </div>`;
+};
+
+export const generateScriptHTML = (data: BusinessCardData) => {
+  return `
+  <script>
+    (function() {
+      window.bcShareCard = function() {
+        if (navigator.share) {
+          navigator.share({
+            title: '${data.name} - Digital Business Card',
+            text: 'Check out my digital business card!',
+            url: window.location.href
+          }).catch(console.error);
+        } else {
+          navigator.clipboard.writeText(window.location.href)
+            .then(() => alert('Link copied to clipboard!'))
+            .catch(console.error);
+        }
+      };
+
+      window.bcSaveContact = function() {
+        const vcard = \`BEGIN:VCARD
+VERSION:3.0
+FN:${data.name}
+${data.jobTitle ? `TITLE:${data.jobTitle}\n` : ''}
+${data.company ? `ORG:${data.company}\n` : ''}
+${data.email ? `EMAIL:${data.email}\n` : ''}
+${data.phone ? `TEL:${data.phone}\n` : ''}
+${data.website ? `URL:${data.website}\n` : ''}
+END:VCARD\`;
+
+        const blob = new Blob([vcard], { type: 'text/vcard' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = '${data.name.replace(/\s+/g, '_')}_contact.vcf';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      };
+    })();
+  </script>`;
+};
+
+// Helper function to get social media icons
+const getSocialIcon = (platform: string) => {
+  const icons = {
+    linkedin: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+      <rect width="4" height="12" x="2" y="9"/>
+      <circle cx="4" cy="4" r="2"/>
+    </svg>`,
+    facebook: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </svg>`,
+    instagram: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+    </svg>`,
+  };
+  return icons[platform as keyof typeof icons] || '';
+};
+
 export const generateEmbedCode = (data: BusinessCardData) => {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -337,25 +495,4 @@ END:VCARD\`;
   </script>
 </body>
 </html>`;
-};
-
-// Helper function to get social media icons
-const getSocialIcon = (platform) => {
-  const icons = {
-    linkedin: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-      <rect width="4" height="12" x="2" y="9"/>
-      <circle cx="4" cy="4" r="2"/>
-    </svg>`,
-    facebook: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-    </svg>`,
-    instagram: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-    </svg>`,
-    // Add other platforms as needed
-  };
-  return icons[platform] || '';
 };
