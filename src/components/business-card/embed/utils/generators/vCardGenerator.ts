@@ -24,7 +24,7 @@ export const generateVCard = (data: BusinessCardData): string => {
   return vCardLines;
 };
 
-export const generateVCardScript = (data: BusinessCardData) => `
+export const generateVCardScript = (data: BusinessCardData): string => `
   function saveContact() {
     const vcard = \`${generateVCard(data)}\`;
     const blob = new Blob([vcard], { type: 'text/vcard' });
