@@ -19,7 +19,18 @@ export const generateHeaderSection = (data: BusinessCardData) => `
   </div>
 `;
 
-export const generateContactSection = (data: BusinessCardData) => `
+export const generateContactSection = (data: BusinessCardData) => {
+  // Function to extract root domain from URL
+  const getRootDomain = (url: string) => {
+    try {
+      const domain = new URL(url).hostname.replace('www.', '');
+      return domain;
+    } catch {
+      return url;
+    }
+  };
+
+  return `
   <div class="contact-info">
     ${data.phone ? `
       <a href="tel:${data.phone}" class="contact-link">
@@ -45,11 +56,12 @@ export const generateContactSection = (data: BusinessCardData) => `
           <line x1="2" y1="12" x2="22" y2="12"/>
           <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
         </svg>
-        Website
+        ${getRootDomain(data.website)}
       </a>
     ` : ''}
   </div>
 `;
+};
 
 export const generateSocialSection = (data: BusinessCardData) => {
   const socialLinks = Object.entries(data.social)
