@@ -2,6 +2,12 @@ import { BusinessCardData } from "@/components/BusinessCardForm";
 import { generateHeaderSection, generateContactSection, generateSocialSection, generateAdditionalLinksSection, generateActionButtonsSection } from "./generators/htmlSections";
 import { generateScriptContent } from "./generators/scriptGenerator";
 
+export const generateHeaderHTML = (data: BusinessCardData) => generateHeaderSection(data);
+export const generateContactHTML = (data: BusinessCardData) => generateContactSection(data);
+export const generateSocialHTML = (data: BusinessCardData) => generateSocialSection(data);
+export const generateActionButtonsHTML = (data: BusinessCardData) => generateActionButtonsSection(data);
+export const generateScriptHTML = (data: BusinessCardData) => `<script>${generateScriptContent(data)}</script>`;
+
 export const generateEmbedCode = (data: BusinessCardData) => {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -39,18 +45,15 @@ export const generateEmbedCode = (data: BusinessCardData) => {
 <body>
   <div class="min-h-screen p-4 md:p-8">
     <div class="max-w-lg mx-auto bg-white shadow-xl rounded-3xl overflow-hidden">
-      ${generateHeaderSection(data)}
+      ${generateHeaderHTML(data)}
       <div class="relative">
-        ${generateContactSection(data)}
-        ${generateSocialSection(data)}
-        ${generateAdditionalLinksSection(data)}
-        ${generateActionButtonsSection(data)}
+        ${generateContactHTML(data)}
+        ${generateSocialHTML(data)}
+        ${generateActionButtonsHTML(data)}
       </div>
     </div>
   </div>
-  <script>
-    ${generateScriptContent(data)}
-  </script>
+  ${generateScriptHTML(data)}
 </body>
 </html>`;
 };
