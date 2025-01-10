@@ -1,5 +1,5 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
-import { generateHeaderSection, generateContactSection, generateSocialSection, generateAdditionalLinksSection, generateActionButtonsSection } from "./generators/htmlSections";
+import { generateHeaderSection, generateContactSection, generateSocialSection, generateActionButtonsSection } from "./generators/htmlSections";
 import { generateScriptContent } from "./generators/scriptGenerator";
 
 export const generateHeaderHTML = (data: BusinessCardData) => generateHeaderSection(data);
