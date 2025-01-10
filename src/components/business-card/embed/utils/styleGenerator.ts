@@ -10,7 +10,7 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     background-color: ${data.colors.background};
     border-radius: 0.75rem;
     overflow: hidden;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     position: relative;
     min-height: 500px;
   }`;
@@ -70,24 +70,20 @@ export const generateContentStyles = (data: BusinessCardData) => `
 
 export const generateContactStyles = (data: BusinessCardData) => `
   .contact-info {
-    margin: 1.5rem 0;
+    margin: 1rem 0;
     text-align: left;
   }
   .contact-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin: 1rem 0;
+    margin: 0.75rem 0;
     color: ${data.colors.primary};
     text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .contact-item:hover {
-    opacity: 0.8;
   }
   .contact-item svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
   }
   .contact-item span {
@@ -97,25 +93,19 @@ export const generateContactStyles = (data: BusinessCardData) => `
 export const generateSocialStyles = (data: BusinessCardData) => `
   .social-links {
     display: flex;
-    justify-content: flex-start;
     gap: 1rem;
-    margin: 1.5rem 0;
+    margin: 1rem 0;
   }
   .social-link {
     color: ${data.colors.primary};
     text-decoration: none;
-    transition: opacity 0.2s;
-  }
-  .social-link:hover {
-    opacity: 0.8;
   }
   .social-link svg {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
   }
   .additional-links {
-    margin-top: 1.5rem;
-    text-align: left;
+    margin-top: 1rem;
   }
   .additional-link {
     display: flex;
@@ -124,10 +114,6 @@ export const generateSocialStyles = (data: BusinessCardData) => `
     color: ${data.colors.secondary};
     text-decoration: none;
     margin: 0.5rem 0;
-    transition: opacity 0.2s;
-  }
-  .additional-link:hover {
-    opacity: 0.8;
   }`;
 
 export const generateLogoStyles = (data: BusinessCardData) => `
@@ -139,9 +125,12 @@ export const generateLogoStyles = (data: BusinessCardData) => `
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    ${data.logoPosition.x === 0 && data.logoPosition.y === 0 ? 'top: 1rem; left: 1rem;' : ''}
-    ${data.logoPosition.x === 100 && data.logoPosition.y === 0 ? 'top: 1rem; right: 1rem;' : ''}
-    ${data.logoPosition.x === 0 && data.logoPosition.y === 100 ? 'bottom: 1rem; left: 1rem;' : ''}
-    ${data.logoPosition.x === 100 && data.logoPosition.y === 100 ? 'bottom: 1rem; right: 1rem;' : ''}
+    ${data.logoPosition.x <= 25 && data.logoPosition.y <= 25 ? 'top: 1rem; left: 1rem;' : ''}
+    ${data.logoPosition.x >= 75 && data.logoPosition.y <= 25 ? 'top: 1rem; right: 1rem;' : ''}
+    ${data.logoPosition.x <= 25 && data.logoPosition.y >= 75 ? 'bottom: 1rem; left: 1rem;' : ''}
+    ${data.logoPosition.x >= 75 && data.logoPosition.y >= 75 ? 'bottom: 1rem; right: 1rem;' : ''}
+    ${(data.logoPosition.x > 25 && data.logoPosition.x < 75) || (data.logoPosition.y > 25 && data.logoPosition.y < 75) 
+      ? `top: ${data.logoPosition.y}%; left: ${data.logoPosition.x}%;` 
+      : ''}
     z-index: 20;
   }`;
