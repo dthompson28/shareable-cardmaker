@@ -41,11 +41,14 @@ export const generateSocialHTML = (data: BusinessCardData) => `
   <div class="social-links">
     ${Object.entries(data.social)
       .filter(([key, value]) => key !== 'additionalLinks' && value)
-      .map(([key, value]) => `
-        <a href="${value}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="${key}"></i>
-        </a>
-      `).join('')}
+      .map(([key, value]) => {
+        const iconName = key === 'twitter' ? 'twitter-x' : key;
+        return `
+          <a href="${value}" target="_blank" rel="noopener noreferrer" class="social-link">
+            <i data-lucide="${iconName}" class="social-icon"></i>
+          </a>
+        `;
+      }).join('')}
   </div>
 `;
 
@@ -56,7 +59,7 @@ export const generateAdditionalLinksHTML = (data: BusinessCardData) => {
     <div class="additional-links">
       ${data.social.additionalLinks.map(link => `
         <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="additional-link">
-          <i data-lucide="arrow-right"></i>
+          <i data-lucide="arrow-right" class="additional-link-icon"></i>
           <span>${link.title}</span>
         </a>
       `).join('')}

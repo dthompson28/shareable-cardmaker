@@ -77,12 +77,13 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     font-size: 1.25rem;
     color: rgba(255,255,255,0.9);
   }
-`;
 
-export const generateContactStyles = (data: BusinessCardData) => `
-  .contact-info {
+  .content {
     padding: 2rem;
-    background-color: ${data.colors.background};
+  }
+
+  .contact-info {
+    margin-bottom: 2rem;
   }
 
   .contact-item {
@@ -90,7 +91,6 @@ export const generateContactStyles = (data: BusinessCardData) => `
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
-    color: ${data.colors.primary};
   }
 
   .contact-icon {
@@ -100,22 +100,16 @@ export const generateContactStyles = (data: BusinessCardData) => `
   }
 
   .contact-info a {
-    color: inherit;
+    color: ${data.colors.primary};
     text-decoration: none;
     font-size: 1.125rem;
     transition: opacity 0.2s;
   }
 
-  .contact-info a:hover {
-    opacity: 0.8;
-  }
-`;
-
-export const generateSocialStyles = (data: BusinessCardData) => `
   .social-links {
     display: flex;
-    gap: 2rem;
     justify-content: center;
+    gap: 1.5rem;
     margin: 2rem 0;
   }
 
@@ -124,13 +118,9 @@ export const generateSocialStyles = (data: BusinessCardData) => `
     transition: opacity 0.2s;
   }
 
-  .social-link i {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-
-  .social-link:hover {
-    opacity: 0.8;
+  .social-icon {
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .additional-links {
@@ -144,26 +134,17 @@ export const generateSocialStyles = (data: BusinessCardData) => `
     color: ${data.colors.primary};
     text-decoration: none;
     margin-bottom: 0.75rem;
-    font-size: 1.125rem;
-    transition: opacity 0.2s;
   }
 
-  .additional-link i {
+  .additional-link-icon {
     width: 1.25rem;
     height: 1.25rem;
-    color: ${data.colors.accent};
   }
 
-  .additional-link:hover {
-    opacity: 0.8;
-  }
-`;
-
-export const generateActionButtonStyles = (data: BusinessCardData) => `
   .action-buttons {
     display: flex;
     gap: 1rem;
-    margin: 2rem;
+    margin-top: 2rem;
   }
 
   .action-buttons button {
@@ -175,14 +156,8 @@ export const generateActionButtonStyles = (data: BusinessCardData) => `
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
     font-weight: 500;
-    font-size: 1rem;
     cursor: pointer;
     transition: opacity 0.2s;
-  }
-
-  .action-buttons button i {
-    width: 1.25rem;
-    height: 1.25rem;
   }
 
   .share-button {
@@ -204,7 +179,4 @@ export const generateActionButtonStyles = (data: BusinessCardData) => `
 
 export const generateStyles = (data: BusinessCardData) => `
   ${generateBaseStyles(data)}
-  ${generateContactStyles(data)}
-  ${generateSocialStyles(data)}
-  ${generateActionButtonStyles(data)}
 `;
