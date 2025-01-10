@@ -49,12 +49,15 @@ const STORAGE_KEY = 'businessCardFormData';
 const Index = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<BusinessCardData>(() => {
+    if (typeof window === 'undefined') return initialData;
     const savedData = localStorage.getItem(STORAGE_KEY);
     return savedData ? JSON.parse(savedData) : initialData;
   });
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    if (data !== initialData) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
   }, [data]);
 
   const handleEdit = useCallback(() => {
