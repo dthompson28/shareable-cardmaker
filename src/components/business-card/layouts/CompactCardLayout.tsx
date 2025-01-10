@@ -28,10 +28,14 @@ export const CompactCardLayout = ({
         backgroundColor: data.colors.background 
       }}
     >
-      <div className="relative pt-6 px-6">
+      <div 
+        className="w-full h-32 relative"
+        style={{ backgroundColor: data.colors.secondary }}
+      />
+      <div className="relative -mt-16 px-6">
         <div className="flex flex-col items-start">
           <div 
-            className="w-48 h-48 rounded-full bg-cover bg-center relative mb-4"
+            className="w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white"
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
