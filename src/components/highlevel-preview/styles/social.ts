@@ -1,4 +1,5 @@
 export const socialStyles = `
+  /* Social Links */
   .social-links {
     display: flex;
     justify-content: center;
@@ -23,35 +24,37 @@ export const socialStyles = `
     background-color: var(--secondary);
   }
 
-  .business-card-wrapper .contact-item svg,
-  .business-card-wrapper .social-link svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    transition: color 0.2s;
-  }
-
-  .business-card-wrapper .social-link svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .additional-link {
+  /* Action Buttons */
+  .action-buttons .action-button {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 500;
-    margin: 1rem 0;
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
     border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
     transition: all 0.2s ease;
   }
 
-  .additional-link:hover {
-    background-color: rgba(0, 103, 79, 0.1);
+  .action-buttons .share-button {
+    background-color: var(--primary);
+    color: white;
+  }
+
+  .action-buttons .save-button {
+    background-color: var(--accent);
+    color: white;
+  }
+
+  .action-buttons .action-button:hover {
+    opacity: 0.9;
+  }
+
+  /* Inline SVG Styling */
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
   }
 `;
