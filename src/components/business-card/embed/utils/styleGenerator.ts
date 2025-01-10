@@ -15,17 +15,18 @@ export const generateStyles = (data: BusinessCardData) => `
     background-color: var(--background);
   }
 
-  .container {
+  .bc-card-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     padding: 1rem;
+    background-color: var(--background);
   }
 
-  .card {
+  .bc-business-card {
     width: 100%;
-    max-width: 28rem;
+    max-width: 22rem;
     background-color: white;
     border-radius: 0.75rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -35,7 +36,7 @@ export const generateStyles = (data: BusinessCardData) => `
   .header {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 300px;
     background-image: url('${data.photo}');
     background-size: cover;
     background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
@@ -80,11 +81,7 @@ export const generateStyles = (data: BusinessCardData) => `
     padding: 1.5rem;
   }
 
-  .contact-info {
-    margin-bottom: 2rem;
-  }
-
-  .contact-link {
+  .contact-info a {
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -95,12 +92,12 @@ export const generateStyles = (data: BusinessCardData) => `
     border-radius: 0.5rem;
   }
 
-  .contact-link:hover {
+  .contact-info a:hover {
     background-color: var(--background);
     color: var(--secondary);
   }
 
-  .contact-link svg {
+  .contact-info svg {
     width: 1.5rem;
     height: 1.5rem;
   }
@@ -149,11 +146,6 @@ export const generateStyles = (data: BusinessCardData) => `
     color: var(--secondary);
   }
 
-  .additional-link-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
   .action-buttons {
     display: flex;
     gap: 1rem;
@@ -169,40 +161,21 @@ export const generateStyles = (data: BusinessCardData) => `
     padding: 0.75rem;
     border-radius: 0.5rem;
     font-weight: 600;
-    font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     transition: all 0.2s ease;
   }
 
-  .button-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
-
-  .save-button {
-    background-color: transparent;
-    color: var(--accent);
-    border: 2px solid var(--accent);
-  }
-
-  .save-button:hover {
-    background-color: var(--accent);
-    color: white;
-  }
-
-  .share-button {
-    background-color: var(--primary);
-    color: white;
-    border: none;
-  }
-
-  .share-button:hover {
-    background-color: var(--secondary);
-  }
-
   @media (max-width: 640px) {
-    .container {
+    .bc-card-container {
       padding: 0.5rem;
+    }
+
+    .bc-business-card {
+      max-width: 18rem;
+    }
+
+    .header {
+      height: 250px;
     }
 
     .action-buttons {
