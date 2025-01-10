@@ -1,187 +1,169 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateStyles = (data: BusinessCardData) => `
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
-  * {
+  body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: ${data.colors.background};
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    font-family: 'Open Sans', sans-serif;
   }
 
   .card-container {
-    width: 100%;
-    max-width: 28rem;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f5f5f5;
   }
 
   .business-card {
-    background: white;
     width: 100%;
+    max-width: 28rem;
+    margin: 0 auto;
+    background-color: ${data.colors.background};
     border-radius: 0.75rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    contain: content;
   }
 
   .header {
-    background-color: ${data.colors.primary};
-    height: ${data.photoStyle === 'full' ? '16rem' : '12rem'};
     position: relative;
-    background-image: ${data.photo ? `url(${data.photo})` : 'none'};
-    background-size: cover;
-    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
-  }
-
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70%;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    width: 100%;
+    background-color: ${data.colors.secondary};
   }
 
   .logo {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    height: 4rem;
     width: 4rem;
+    height: 4rem;
     object-fit: contain;
-    background: white;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
     z-index: 10;
   }
 
   .profile {
-    position: relative;
-    padding: ${data.photoStyle === 'full' ? '0 2rem 2rem' : '0 2rem'};
-    text-align: ${data.photoStyle === 'full' ? 'left' : 'center'};
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 100%;
+    padding: 2rem;
+    text-align: center;
   }
 
   .profile-image {
-    width: 8rem;
-    height: 8rem;
+    width: 12rem;
+    height: 12rem;
     border-radius: 50%;
-    border: 4px solid white;
-    margin: ${data.photoStyle === 'full' ? '0' : '-4rem auto 1rem'};
+    margin: 0 auto 1rem;
     object-fit: cover;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    display: ${data.photoStyle === 'full' ? 'none' : 'block'};
+    border: 4px solid white;
   }
 
   .name {
-    color: ${data.photoStyle === 'full' ? 'white' : data.colors.primary};
+    font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    text-shadow: ${data.photoStyle === 'full' ? '0 2px 4px rgba(0,0,0,0.2)' : 'none'};
+    font-weight: 700;
+    color: ${data.colors.primary};
+    margin: 0 0 0.5rem;
   }
 
   .job-title {
-    color: ${data.photoStyle === 'full' ? 'rgba(255,255,255,0.9)' : data.colors.secondary};
+    font-family: 'Playfair Display', serif;
     font-size: 1.25rem;
-    margin-bottom: 0.25rem;
-    text-shadow: ${data.photoStyle === 'full' ? '0 1px 2px rgba(0,0,0,0.2)' : 'none'};
+    color: ${data.colors.secondary};
+    margin: 0 0 0.25rem;
   }
 
   .company {
-    color: ${data.photoStyle === 'full' ? 'rgba(255,255,255,0.9)' : data.colors.secondary};
+    font-family: 'Playfair Display', serif;
     font-size: 1.125rem;
-    margin-bottom: ${data.photoStyle === 'full' ? '0' : '2rem'};
-    text-shadow: ${data.photoStyle === 'full' ? '0 1px 2px rgba(0,0,0,0.2)' : 'none'};
+    color: ${data.colors.accent};
+    margin: 0;
   }
 
   .contact-info {
-    padding: 2rem;
+    padding: 0 2rem;
   }
 
   .contact-item {
+    font-family: 'Open Sans', sans-serif;
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: ${data.colors.secondary};
+    color: ${data.colors.primary};
     text-decoration: none;
     margin-bottom: 1rem;
-    transition: color 0.2s;
-  }
-
-  .contact-item:hover {
-    color: ${data.colors.primary};
+    font-size: 1rem;
   }
 
   .social-links {
     display: flex;
     justify-content: center;
     gap: 1.5rem;
-    margin: 2rem 0;
+    padding: 1.5rem 2rem;
   }
 
   .social-link {
-    color: ${data.colors.secondary};
-    transition: color 0.2s;
+    color: ${data.colors.primary};
+    transition: opacity 0.2s;
   }
 
   .social-link:hover {
-    color: ${data.colors.primary};
+    opacity: 0.8;
+  }
+
+  .additional-links {
+    padding: 0 2rem 1.5rem;
+  }
+
+  .additional-link {
+    font-family: 'Open Sans', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: ${data.colors.secondary};
+    text-decoration: none;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
   }
 
   .buttons {
     display: flex;
     gap: 1rem;
-    padding: 0 1.5rem 1.5rem;
+    padding: 1.5rem 2rem 2rem;
   }
 
   .button {
+    font-family: 'Open Sans', sans-serif;
     flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
     transition: opacity 0.2s;
+  }
+
+  .share-button {
+    background-color: ${data.colors.primary};
+    color: white;
+    border: none;
+  }
+
+  .save-button {
+    background-color: transparent;
+    color: ${data.colors.accent};
+    border: 2px solid ${data.colors.accent};
   }
 
   .button:hover {
     opacity: 0.9;
   }
 
-  .share-button {
-    background-color: ${data.colors.primary};
-  }
-
-  .save-button {
-    background-color: ${data.colors.accent};
-  }
-
   .loading {
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s;
   }
 
   .loaded {
