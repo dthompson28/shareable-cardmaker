@@ -49,6 +49,7 @@ export const generateContentStyles = (data: BusinessCardData) => `
   .content {
     padding: 1.5rem;
     ${data.photoStyle === 'compact' ? 'padding-top: 4rem;' : ''}
+    text-align: left;
   }
   .name {
     font-size: 1.875rem;
@@ -70,6 +71,7 @@ export const generateContentStyles = (data: BusinessCardData) => `
 export const generateContactStyles = (data: BusinessCardData) => `
   .contact-info {
     margin: 1.5rem 0;
+    text-align: left;
   }
   .contact-item {
     display: flex;
@@ -82,12 +84,20 @@ export const generateContactStyles = (data: BusinessCardData) => `
   }
   .contact-item:hover {
     opacity: 0.8;
+  }
+  .contact-item svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+  .contact-item span {
+    word-break: break-word;
   }`;
 
 export const generateSocialStyles = (data: BusinessCardData) => `
   .social-links {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1rem;
     margin: 1.5rem 0;
   }
@@ -99,8 +109,13 @@ export const generateSocialStyles = (data: BusinessCardData) => `
   .social-link:hover {
     opacity: 0.8;
   }
+  .social-link svg {
+    width: 24px;
+    height: 24px;
+  }
   .additional-links {
     margin-top: 1.5rem;
+    text-align: left;
   }
   .additional-link {
     display: flex;
