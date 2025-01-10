@@ -31,7 +31,9 @@ export const CompactCardLayout = ({
       <div 
         className="w-full h-48 relative"
         style={{ backgroundColor: data.colors.secondary }}
-      />
+      >
+        {renderLogo()}
+      </div>
       <div className="relative -mt-24 px-6">
         <div className="flex flex-col items-start">
           <div 
@@ -44,7 +46,6 @@ export const CompactCardLayout = ({
           >
             <div className="absolute inset-0 bg-black/10 rounded-full" />
           </div>
-          {renderLogo()}
           <CardHeader data={data} />
         </div>
       </div>
