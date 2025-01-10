@@ -8,20 +8,33 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     --background: ${data.colors.background};
   }
 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
     background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .bc-card-container {
+    width: 100%;
+    max-width: 100vw;
+    padding: 1rem;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    padding: 0.5rem;
-    background-color: var(--background);
   }
 
   .bc-business-card {
@@ -31,6 +44,18 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     border-radius: 0.75rem;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    position: relative;
+  }
+
+  @media (max-width: 640px) {
+    .bc-card-container {
+      padding: 0.5rem;
+    }
+    
+    .bc-business-card {
+      border-radius: 0;
+      box-shadow: none;
+    }
   }
 
   .content {
@@ -51,10 +76,11 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     gap: 0.5rem;
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
-    font-weight: 600;
+    font-weight: 500;
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
     transition: all 0.2s ease;
+    min-height: 44px;
   }
 
   .save-button {
@@ -76,5 +102,30 @@ export const generateBaseStyles = (data: BusinessCardData) => `
 
   .share-button:hover {
     background-color: var(--secondary);
+  }
+
+  /* HighLevel specific optimizations */
+  .highlevel-form {
+    margin-top: 2rem;
+  }
+
+  button, 
+  a {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  @media screen and (max-width: 768px) {
+    input,
+    button,
+    a {
+      min-height: 44px;
+    }
+  }
+
+  a[href^="tel"] {
+    color: inherit;
+    text-decoration: none;
   }
 `;
