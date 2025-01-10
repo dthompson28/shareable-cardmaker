@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/Header";
 import { ContentContainer } from "@/components/layout/ContentContainer";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { STORAGE_KEY } from "@/constants/businessCard";
 
 const initialData: BusinessCardData = {
   name: "",
@@ -44,20 +45,17 @@ const initialData: BusinessCardData = {
   },
 };
 
-const STORAGE_KEY = 'businessCardFormData';
-
 const Index = () => {
   const [step, setStep] = useState(1);
-  const [data, setData] = useState<BusinessCardData>(initialData);
-
-  // Clear localStorage on component mount
-  useEffect(() => {
+  const [data, setData] = useState<BusinessCardData>(() => {
     try {
-      localStorage.removeItem(STORAGE_KEY);
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      return savedData ? JSON.parse(savedData) : initialData;
     } catch (error) {
-      console.error('Error clearing localStorage:', error);
+      console.error('Error loading data from localStorage:', error);
+      return initialData;
     }
-  }, []);
+  });
 
   const handleEdit = useCallback(() => {
     setStep(1);
@@ -72,7 +70,6 @@ const Index = () => {
   }, []);
 
   const handleNext = useCallback(() => {
-    // Save to localStorage when form is submitted
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       toast.success("Form data saved successfully");
