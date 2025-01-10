@@ -4,7 +4,7 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
   .header {
     position: relative;
     width: 100%;
-    height: 300px;
+    height: 250px;
     background-image: url('${data.photo}');
     background-size: cover;
     background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
@@ -20,8 +20,8 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
     position: absolute;
     top: 1rem;
     right: 1rem;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     object-fit: contain;
   }
 
@@ -33,7 +33,7 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
   }
 
   .header-text h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
     margin: 0;
     font-weight: 700;
     font-family: 'Playfair Display', serif;
@@ -41,13 +41,7 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
 
   .header-text p {
     margin: 0.25rem 0;
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-family: 'Playfair Display', serif;
-  }
-
-  @media (max-width: 640px) {
-    .header {
-      height: 250px;
-    }
   }
 `;
