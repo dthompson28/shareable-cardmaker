@@ -49,14 +49,37 @@ const STORAGE_KEY = 'businessCardFormData';
 const Index = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<BusinessCardData>(() => {
-    if (typeof window === 'undefined') return initialData;
-    const savedData = localStorage.getItem(STORAGE_KEY);
-    return savedData ? JSON.parse(savedData) : initialData;
+    try {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        const parsedData = JSON.parse(savedData);
+        // Validate that the parsed data has all required fields
+        if (
+          typeof parsedData === 'object' &&
+          parsedData !== null &&
+          'name' in parsedData &&
+          'colors' in parsedData &&
+          'social' in parsedData
+        ) {
+          toast.success("Form data restored from local storage");
+          return parsedData as BusinessCardData;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading data from localStorage:', error);
+      toast.error("Could not load saved data");
+    }
+    return initialData;
   });
 
   useEffect(() => {
-    if (data !== initialData) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    try {
+      if (JSON.stringify(data) !== JSON.stringify(initialData)) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+    } catch (error) {
+      console.error('Error saving data to localStorage:', error);
+      toast.error("Could not save form data");
     }
   }, [data]);
 
@@ -77,9 +100,14 @@ const Index = () => {
   }, []);
 
   const handleReset = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    setData(initialData);
-    toast.success("Form data has been reset");
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      setData(initialData);
+      toast.success("Form data has been reset");
+    } catch (error) {
+      console.error('Error resetting data:', error);
+      toast.error("Could not reset form data");
+    }
   }, []);
 
   return (
