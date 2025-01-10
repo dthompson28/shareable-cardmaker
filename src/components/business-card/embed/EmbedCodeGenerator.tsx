@@ -1,27 +1,16 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 import { 
-  generateBaseStyles,
-  generatePhotoStyles,
-  generateContentStyles,
-  generateContactStyles,
-  generateSocialStyles,
-  generateLogoStyles,
+  generateStyles,
 } from "./utils/styleGenerator";
 import {
   generateContactHTML,
   generateSocialHTML,
   generateAdditionalLinksHTML,
+  generateActionButtonsHTML,
 } from "./utils/htmlGenerator";
 
 export const generateEmbedCode = (data: BusinessCardData) => {
-  const styles = [
-    generateBaseStyles(data),
-    generatePhotoStyles(data),
-    generateContentStyles(data),
-    generateContactStyles(data),
-    generateSocialStyles(data),
-    generateLogoStyles(data),
-  ].join('\n');
+  const styles = generateStyles(data);
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -46,6 +35,7 @@ ${data.company ? `<p class="company">${data.company}</p>` : ''}
 ${generateContactHTML(data)}
 ${generateSocialHTML(data)}
 ${generateAdditionalLinksHTML(data)}
+${generateActionButtonsHTML()}
 </div>
 </div>
 </div>
