@@ -161,13 +161,20 @@ export const generateScriptHTML = (data: BusinessCardData) => {
             title: '${data.name} - Digital Business Card',
             text: 'Check out my digital business card!',
             url: window.location.href
-          }).catch(console.error);
+          }).catch((error) => {
+            console.error('Error sharing:', error);
+            copyToClipboard();
+          });
         } else {
-          navigator.clipboard.writeText(window.location.href)
-            .then(() => alert('Link copied to clipboard!'))
-            .catch(console.error);
+          copyToClipboard();
         }
       };
+
+      function copyToClipboard() {
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => alert('Link copied to clipboard! You can now share it.'))
+          .catch(err => console.error('Failed to copy:', err));
+      }
 
       window.bcSaveContact = function() {
         const vcard = \`BEGIN:VCARD
@@ -175,9 +182,17 @@ VERSION:3.0
 FN:${data.name}
 ${data.jobTitle ? `TITLE:${data.jobTitle}\n` : ''}
 ${data.company ? `ORG:${data.company}\n` : ''}
-${data.email ? `EMAIL:${data.email}\n` : ''}
-${data.phone ? `TEL:${data.phone}\n` : ''}
+${data.email ? `EMAIL;TYPE=WORK:${data.email}\n` : ''}
+${data.phone ? `TEL;TYPE=WORK,VOICE:${data.phone}\n` : ''}
 ${data.website ? `URL:${data.website}\n` : ''}
+${data.address ? `ADR;TYPE=WORK:;;${data.address}\n` : ''}
+${data.social.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${data.social.linkedin}\n` : ''}
+${data.social.facebook ? `X-SOCIALPROFILE;TYPE=facebook:${data.social.facebook}\n` : ''}
+${data.social.instagram ? `X-SOCIALPROFILE;TYPE=instagram:${data.social.instagram}\n` : ''}
+${data.social.twitter ? `X-SOCIALPROFILE;TYPE=twitter:${data.social.twitter}\n` : ''}
+${data.social.youtube ? `X-SOCIALPROFILE;TYPE=youtube:${data.social.youtube}\n` : ''}
+${data.social.tiktok ? `X-SOCIALPROFILE;TYPE=tiktok:${data.social.tiktok}\n` : ''}
+${data.social.whatsapp ? `X-SOCIALPROFILE;TYPE=whatsapp:${data.social.whatsapp}\n` : ''}
 END:VCARD\`;
 
         const blob = new Blob([vcard], { type: 'text/vcard' });
