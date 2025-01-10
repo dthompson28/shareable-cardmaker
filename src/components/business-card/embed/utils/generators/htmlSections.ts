@@ -1,6 +1,7 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 import { getSocialIcon } from "./socialIcons";
 import { getRootDomain } from "../../../utils/urlUtils";
+import { generateVCard } from "@/utils/vCardGenerator";
 
 export const generateHeaderSection = (data: BusinessCardData) => `
   <div class="header">
