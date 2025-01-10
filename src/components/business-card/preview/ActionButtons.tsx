@@ -1,4 +1,5 @@
 import { BusinessCardData } from "../../BusinessCardForm";
+import { useNavigate } from "react-router-dom";
 
 interface ActionButtonsProps {
   data: BusinessCardData;
@@ -8,6 +9,12 @@ interface ActionButtonsProps {
 }
 
 export const ActionButtons = ({ data, onBack, onEdit, onEmbed }: ActionButtonsProps) => {
+  const navigate = useNavigate();
+
+  const handlePreview = () => {
+    navigate("/preview", { state: { data } });
+  };
+
   return (
     <div className="flex justify-center gap-4">
       <button
@@ -39,6 +46,16 @@ export const ActionButtons = ({ data, onBack, onEdit, onEmbed }: ActionButtonsPr
         }}
       >
         Get Embed Code
+      </button>
+      <button
+        onClick={handlePreview}
+        className="px-6 py-3 text-base font-medium border rounded-md transition-all duration-300 hover:bg-brand-primary/5"
+        style={{ 
+          borderColor: data.colors.secondary,
+          color: data.colors.secondary
+        }}
+      >
+        Preview
       </button>
     </div>
   );

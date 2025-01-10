@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 
 const Index = lazy(() => import("./pages/Index"));
+const Preview = lazy(() => import("./pages/Preview"));
 
 const LoadingFallback = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -27,7 +28,6 @@ const ErrorFallback = ({ error }: { error: Error }) => (
   </div>
 );
 
-// Create a new QueryClient instance outside of the component
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -39,7 +39,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Make App a function component to ensure hooks work properly
 function App() {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallback}>
@@ -51,6 +50,7 @@ function App() {
             <Suspense fallback={<LoadingFallback />}>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/preview" element={<Preview />} />
               </Routes>
             </Suspense>
           </BrowserRouter>
