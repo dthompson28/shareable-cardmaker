@@ -29,7 +29,7 @@ export const CompactCardLayout = ({
       }}
     >
       <div className="relative pt-6">
-        <div className={`absolute ${isLogoBottomLeft() ? 'right-6' : 'left-6'}`}>
+        <div className="absolute left-6">
           <div 
             className="w-48 h-48 rounded-full bg-cover bg-center relative"
             style={{ 
