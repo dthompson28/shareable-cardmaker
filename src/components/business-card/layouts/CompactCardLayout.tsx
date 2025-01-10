@@ -28,10 +28,10 @@ export const CompactCardLayout = ({
         backgroundColor: data.colors.background 
       }}
     >
-      <div className="relative pt-6">
-        <div className="absolute left-6">
+      <div className="relative pt-6 px-6">
+        <div className="flex flex-col items-start">
           <div 
-            className="w-48 h-48 rounded-full bg-cover bg-center relative"
+            className="w-48 h-48 rounded-full bg-cover bg-center relative mb-4"
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
@@ -40,11 +40,11 @@ export const CompactCardLayout = ({
           >
             <div className="absolute inset-0 bg-black/10 rounded-full" />
           </div>
+          {renderLogo()}
+          <CardHeader data={data} />
         </div>
-        {renderLogo()}
-        <CardHeader data={data} />
       </div>
-      <div className="mt-20 p-6 space-y-6">
+      <div className="p-6 space-y-6">
         <ContactInfo data={data} />
         {(hasSocialLinks || hasAdditionalLinks) && (
           <div className="space-y-4">
