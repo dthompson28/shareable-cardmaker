@@ -16,7 +16,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
           href={link.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 hover:opacity-75"
+          className="flex items-center gap-2 hover:opacity-75 transition-colors"
           style={{ color: data.colors.secondary }}
         >
           <ExternalLink className="w-4 h-4" style={{ color: data.colors.accent }} />

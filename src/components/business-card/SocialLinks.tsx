@@ -7,7 +7,6 @@ interface SocialLinksProps {
   data: BusinessCardData;
 }
 
-// Define TikTok icon as a proper Lucide-compatible component using forwardRef
 const TikTokIcon: LucideIcon = forwardRef<SVGSVGElement, LucideProps>((props, ref) => (
   <svg
     ref={ref}
@@ -42,7 +41,7 @@ export const SocialLinks = memo(({ data }: SocialLinksProps) => {
         .filter(([key, value]) => key !== 'additionalLinks' && value)
         .map(([key, value]) => {
           const IconComponent = socialIcons[key];
-          if (!IconComponent) return null;
+          if (!IconComponent || !value) return null;
 
           return (
             <a 
@@ -50,10 +49,8 @@ export const SocialLinks = memo(({ data }: SocialLinksProps) => {
               href={value as string} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="transition-colors duration-200"
+              className="transition-colors duration-200 hover:opacity-75"
               style={{ color: data.colors.primary }}
-              onMouseEnter={(e) => e.currentTarget.style.color = data.colors.accent}
-              onMouseLeave={(e) => e.currentTarget.style.color = data.colors.primary}
             >
               <IconComponent className="w-6 h-6" />
             </a>
