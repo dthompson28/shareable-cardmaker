@@ -179,6 +179,10 @@ export const generateStyles = (data: BusinessCardData) => `
     background-color: ${data.colors.accent};
   }
 
+  .save-button:hover {
+    background-color: ${data.colors.accent}dd;
+  }
+
   .loading {
     opacity: 0;
     transition: opacity 0.3s ease;
