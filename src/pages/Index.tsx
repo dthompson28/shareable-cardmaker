@@ -8,12 +8,12 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const initialData: BusinessCardData = {
-  name: "",
-  company: "",
-  jobTitle: "",
-  phone: "",
-  email: "",
-  website: "",
+  name: "John Doe",
+  company: "Tech Solutions Inc.",
+  jobTitle: "Senior Developer",
+  phone: "+1 (555) 123-4567",
+  email: "john.doe@techsolutions.com",
+  website: "www.techsolutions.com",
   photo: "",
   photoStyle: "full",
   photoPosition: {
@@ -25,16 +25,21 @@ const initialData: BusinessCardData = {
     x: 50,
     y: 50
   },
-  address: "",
+  address: "123 Tech Street, Silicon Valley, CA 94025",
   social: {
-    linkedin: "",
-    facebook: "",
-    instagram: "",
+    linkedin: "https://linkedin.com/in/johndoe",
+    facebook: "https://facebook.com/johndoe",
+    instagram: "https://instagram.com/johndoe",
     youtube: "",
-    twitter: "",
+    twitter: "https://twitter.com/johndoe",
     tiktok: "",
-    whatsapp: "",
-    additionalLinks: [],
+    whatsapp: "+15551234567",
+    additionalLinks: [
+      {
+        title: "Portfolio",
+        url: "https://johndoe-portfolio.com"
+      }
+    ],
   },
   colors: {
     primary: "#00674f",
