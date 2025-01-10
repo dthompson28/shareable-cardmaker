@@ -78,8 +78,7 @@ export const generateStyles = (data: BusinessCardData) => `
     height: 8rem;
     border-radius: 50%;
     border: 4px solid white;
-    margin: ${data.photoStyle === 'full' ? '0' : '0 auto'};
-    margin-top: ${data.photoStyle === 'full' ? '0' : '-4rem'};
+    margin: ${data.photoStyle === 'full' ? '0' : '-4rem auto 0'};
     object-fit: cover;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     display: ${data.photoStyle === 'full' ? 'none' : 'block'};
