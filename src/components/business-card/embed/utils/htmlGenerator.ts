@@ -109,7 +109,7 @@ export const generateActionButtonsHTML = () => `
         <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/>
         <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>
       </svg>
-      Share
+      <span>Share</span>
     </button>
     <button onclick="downloadContact()" class="button save-button">
       <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -117,7 +117,7 @@ export const generateActionButtonsHTML = () => `
         <polyline points="7 10 12 15 17 10"/>
         <line x1="12" x2="12" y1="15" y2="3"/>
       </svg>
-      Save Contact
+      <span>Save Contact</span>
     </button>
   </div>
 `;
