@@ -58,7 +58,6 @@ const Index = () => {
       const savedData = localStorage.getItem(STORAGE_KEY);
       if (savedData) {
         const parsedData = JSON.parse(savedData);
-        // Validate that the parsed data has all required fields
         if (
           typeof parsedData === 'object' &&
           parsedData !== null &&
@@ -107,13 +106,45 @@ const Index = () => {
   const handleReset = useCallback(() => {
     try {
       localStorage.removeItem(STORAGE_KEY);
-      setData(initialData);
+      // Create a new data object with empty fields but preserve colors
+      const resetData: BusinessCardData = {
+        name: "",
+        company: "",
+        jobTitle: "",
+        phone: "",
+        email: "",
+        website: "",
+        photo: "",
+        photoStyle: "full",
+        photoPosition: {
+          x: 50,
+          y: 50
+        },
+        logo: "",
+        logoPosition: {
+          x: 50,
+          y: 50
+        },
+        address: "",
+        social: {
+          linkedin: "",
+          facebook: "",
+          instagram: "",
+          youtube: "",
+          twitter: "",
+          tiktok: "",
+          whatsapp: "",
+          additionalLinks: [],
+        },
+        colors: { ...data.colors }, // Preserve existing colors
+      };
+      setData(resetData);
       toast.success("Form data has been reset");
     } catch (error) {
       console.error('Error resetting data:', error);
       toast.error("Could not reset form data");
     }
-  }, []);
+  }, [data.colors]);
 
   return (
     <PageLayout>
