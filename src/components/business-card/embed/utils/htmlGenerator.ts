@@ -8,8 +8,8 @@ export const generateSocialHTML = (data: BusinessCardData) => generateSocialSect
 export const generateActionButtonsHTML = (data: BusinessCardData) => generateActionButtonsSection(data);
 export const generateScriptHTML = (data: BusinessCardData) => `<script>${generateScriptContent(data)}</script>`;
 
-export const generateEmbedCode = (data: BusinessCardData) => {
-  return `<!DOCTYPE html>
+export const generateEmbedCode = (data: BusinessCardData) => `
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -18,35 +18,13 @@ export const generateEmbedCode = (data: BusinessCardData) => {
   <meta name="description" content="Digital Business Card for ${data.name}">
   <meta name="author" content="${data.name}">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --card-primary: ${data.colors.primary};
-      --card-secondary: ${data.colors.secondary};
-      --card-accent: ${data.colors.accent};
-      --card-background: ${data.colors.background};
-    }
-    
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: var(--card-background);
-      font-family: 'Open Sans', sans-serif;
-    }
-
-    .font-playfair {
-      font-family: 'Playfair Display', serif;
-    }
-
-    .font-opensans {
-      font-family: 'Open Sans', sans-serif;
-    }
-  </style>
+  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 </head>
 <body>
-  <div class="min-h-screen p-4 md:p-8">
-    <div class="max-w-lg mx-auto bg-white shadow-xl rounded-3xl overflow-hidden">
+  <div class="bc-card-container">
+    <div class="bc-business-card">
       ${generateHeaderHTML(data)}
-      <div class="relative">
+      <div class="content">
         ${generateContactHTML(data)}
         ${generateSocialHTML(data)}
         ${generateActionButtonsHTML(data)}
@@ -56,4 +34,3 @@ export const generateEmbedCode = (data: BusinessCardData) => {
   ${generateScriptHTML(data)}
 </body>
 </html>`;
-};
