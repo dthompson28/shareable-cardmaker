@@ -35,7 +35,7 @@ export const CompactCardLayout = ({
         {renderLogo()}
       </div>
       <div className="relative -mt-24 px-6">
-        <div className="flex flex-col items-start">
+        <div className="flex flex-row-reverse items-start justify-between">
           <div 
             className="w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white"
             style={{ 
