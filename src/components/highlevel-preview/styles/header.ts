@@ -3,7 +3,7 @@ export const headerStyles = `
     position: relative;
     width: 100%;
     height: 250px;
-    background-image: url('${process.env.VITE_DEFAULT_PHOTO_URL || ''}');
+    background-image: url('${import.meta.env.VITE_DEFAULT_PHOTO_URL || '/placeholder.svg'}');
     background-size: cover;
     background-position: center;
   }
