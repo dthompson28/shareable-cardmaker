@@ -13,8 +13,8 @@ export const CardActions = ({ data }: CardActionsProps) => {
 
   const handleShare = async () => {
     const shareData = {
-      title: 'Business Card',
-      text: 'Check out my business card!',
+      title: data.name,
+      text: `Contact information for ${data.name}`,
       url: window.location.href
     };
 
@@ -60,38 +60,19 @@ export const CardActions = ({ data }: CardActionsProps) => {
   };
 
   return (
-    <div className="flex gap-4 mt-6">
+    <div className="flex gap-4">
       <Button 
-        className="flex-1"
-        style={{ 
-          backgroundColor: data.colors.primary,
-          color: "#FFFFFF"
-        }}
+        className="flex-1 bg-[#326872] hover:opacity-90 transition-opacity"
         onClick={handleShare}
       >
-        <Share2 className="w-4 h-4 mr-2" />
+        <Share2 className="w-5 h-5 mr-2" />
         Share
       </Button>
       <Button
-        className="flex-1 transition-colors duration-200"
-        variant="outline"
-        style={{ 
-          borderColor: data.colors.accent,
-          borderWidth: '2px',
-          color: data.colors.accent,
-          backgroundColor: data.colors.background,
-        }}
+        className="flex-1 bg-[#be5103] hover:opacity-90 transition-opacity"
         onClick={handleSaveContact}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = data.colors.secondary;
-          e.currentTarget.style.color = data.colors.background;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = data.colors.background;
-          e.currentTarget.style.color = data.colors.accent;
-        }}
       >
-        <Download className="w-4 h-4 mr-2" />
+        <Download className="w-5 h-5 mr-2" />
         Save Contact
       </Button>
     </div>
