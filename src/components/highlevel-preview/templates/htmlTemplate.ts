@@ -18,8 +18,8 @@ export const htmlTemplate = `<!DOCTYPE html>
           <img src="https://storage.googleapis.com/msgsndr/MZWdQlgITZo9mm1376Dv/media/674922593447a59599123157.png" alt="Logo" class="header-logo" />
           <div class="header-text">
             <h1 class="font-playfair">Dani Thompson</h1>
-            <p class="font-playfair">Marketing Strategist</p>
-            <p class="font-playfair">Thompson Marketing Solutions</p>
+            <p class="font-playfair">Marketer</p>
+            <p class="font-playfair">Thompson Limited</p>
           </div>
         </div>
       </div>
@@ -31,20 +31,20 @@ export const htmlTemplate = `<!DOCTYPE html>
             </svg>
             +1 (440) 503-8011
           </a>
-          <a href="mailto:dani@thompsonmarketingsolutions.com" class="contact-link font-normal">
+          <a href="mailto:dani@danithompsonltd.com" class="contact-link font-normal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
-            dani@thompsonmarketingsolutions.com
+            dani@danithompsonltd.com
           </a>
-          <a href="https://thompsonmarketingsolutions.com" target="_blank" rel="noopener noreferrer" class="contact-link font-normal">
+          <a href="https://danithompsonltd.com/schedule-a-call-danithompson" target="_blank" rel="noopener noreferrer" class="contact-link font-normal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10"/>
               <line x1="2" y1="12" x2="22" y2="12"/>
               <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
             </svg>
-            thompsonmarketingsolutions.com
+            danithompsonltd.com
           </a>
         </div>
 
@@ -101,9 +101,9 @@ VERSION:3.0
 FN:Dani Thompson
 TITLE:Marketing Strategist
 ORG:Thompson Marketing Solutions
-EMAIL;TYPE=WORK:dani@thompsonmarketingsolutions.com
+EMAIL;TYPE=WORK:dani@danithompsonltd.com
 TEL;TYPE=WORK,VOICE:+14405038011
-URL:https://thompsonmarketingsolutions.com
+URL:https://danithompsonltd.com/schedule-a-call-danithompson
 X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/danielle-thompson-cleveland/
 X-SOCIALPROFILE;TYPE=facebook:https://www.facebook.com/danithomp2014
 X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/danithompsoncle/
