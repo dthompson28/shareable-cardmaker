@@ -94,7 +94,7 @@ export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
       </div>
       <Button 
         type="submit" 
-        className="w-full h-12 text-lg bg-gradient-to-r from-brand-primary via-brand-secondary to-brand-accent hover:opacity-90 transition-opacity"
+        className="w-full h-12 text-lg bg-brand-primary hover:bg-brand-primary/90 transition-opacity"
       >
         Preview Card
       </Button>
