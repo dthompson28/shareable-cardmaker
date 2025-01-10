@@ -23,104 +23,10 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <meta name="author" content="${data.name}">
   <title>${data.name} - Digital Business Card</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: ${data.colors.primary};
-      --secondary: ${data.colors.secondary};
-      --accent: ${data.colors.accent};
-      --background: ${data.colors.background};
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Open Sans', sans-serif;
-      background-color: var(--background);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .bc-card-container {
-      width: 100%;
-      max-width: 100vw;
-      padding: 1rem;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .bc-business-card {
-      width: 100%;
-      max-width: 22rem;
-      background-color: var(--background);
-      border-radius: 0.75rem;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      position: relative;
-    }
-
-    @media (max-width: 640px) {
-      .bc-card-container {
-        padding: 0.5rem;
-      }
-      
-      .bc-business-card {
-        border-radius: 0;
-        box-shadow: none;
-      }
-    }
-
-    .font-playfair {
-      font-family: 'Playfair Display', serif;
-    }
-
-    .font-opensans {
-      font-family: 'Open Sans', sans-serif;
-    }
-
-    /* Prevent iOS telephone number styling */
-    a[href^="tel"] {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    /* HighLevel specific optimizations */
-    .highlevel-form {
-      margin-top: 2rem;
-    }
-
-    /* Ensure buttons work well with HighLevel's click tracking */
-    button, 
-    a {
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-    }
-
-    /* Optimize for HighLevel's mobile view */
-    @media screen and (max-width: 768px) {
-      input,
-      button,
-      a {
-        min-height: 44px; /* Better touch targets */
-      }
-    }
-  </style>
 </head>
 <body>
-  <div class="bc-card-container">
-    <div class="bc-business-card">
+  <div class="business-card-wrapper">
+    <div class="business-card">
       ${generateHeaderSection(data)}
       <div class="content">
         ${generateContactSection(data)}
@@ -161,7 +67,6 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 
     // HighLevel compatibility
     window.addEventListener('load', function() {
-      // Notify HighLevel that the embed is ready
       if (window.parent) {
         window.parent.postMessage('embed_ready', '*');
       }
