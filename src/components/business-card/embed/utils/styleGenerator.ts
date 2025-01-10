@@ -116,7 +116,22 @@ export const generateSocialStyles = (data: BusinessCardData) => `
     margin: 0.5rem 0;
   }`;
 
-export const generateLogoStyles = (data: BusinessCardData) => `
+export const generateLogoStyles = (data: BusinessCardData) => {
+  // Get the position based on the logoPosition values
+  let position = '';
+  if (data.logoPosition.x >= 75 && data.logoPosition.y <= 25) {
+    position = 'top: 1rem; right: 1rem;'; // Force top-right position
+  } else if (data.logoPosition.x <= 25 && data.logoPosition.y <= 25) {
+    position = 'top: 1rem; left: 1rem;';
+  } else if (data.logoPosition.x <= 25 && data.logoPosition.y >= 75) {
+    position = 'bottom: 1rem; left: 1rem;';
+  } else if (data.logoPosition.x >= 75 && data.logoPosition.y >= 75) {
+    position = 'bottom: 1rem; right: 1rem;';
+  } else {
+    position = 'top: 1rem; right: 1rem;'; // Default to top-right
+  }
+
+  return `
   .logo {
     position: absolute;
     width: 4rem;
@@ -125,12 +140,7 @@ export const generateLogoStyles = (data: BusinessCardData) => `
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-    ${data.logoPosition.x <= 25 && data.logoPosition.y <= 25 ? 'top: 1rem; left: 1rem;' : ''}
-    ${data.logoPosition.x >= 75 && data.logoPosition.y <= 25 ? 'top: 1rem; right: 1rem;' : ''}
-    ${data.logoPosition.x <= 25 && data.logoPosition.y >= 75 ? 'bottom: 1rem; left: 1rem;' : ''}
-    ${data.logoPosition.x >= 75 && data.logoPosition.y >= 75 ? 'bottom: 1rem; right: 1rem;' : ''}
-    ${(data.logoPosition.x > 25 && data.logoPosition.x < 75) || (data.logoPosition.y > 25 && data.logoPosition.y < 75) 
-      ? `top: ${data.logoPosition.y}%; left: ${data.logoPosition.x}%;` 
-      : ''}
+    ${position}
     z-index: 20;
   }`;
+};
