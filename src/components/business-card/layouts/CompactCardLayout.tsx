@@ -21,34 +21,42 @@ export const CompactCardLayout = ({
 }: CompactCardLayoutProps) => {
   return (
     <div 
-      className="flex flex-col w-full max-w-[28rem] mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300 bg-brand-background" 
+      className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
       style={{ 
         minHeight: '500px',
+        backgroundColor: data.colors.background 
       }}
     >
       <div 
-        className="w-full h-48 relative bg-brand-primary"
+        className="w-full h-48 relative"
+        style={{ backgroundColor: data.colors.secondary }}
       >
-        <div className="absolute top-4 right-4 w-16 h-16 bg-white rounded-lg p-2">
-          {renderLogo()}
-        </div>
+        {isLogoBottomLeft(data.logoPosition) ? (
+          <div className="absolute bottom-[-96px] left-4 z-10">
+            {renderLogo()}
+          </div>
+        ) : renderLogo()}
       </div>
-      <div className="relative px-8">
-        <div className="flex flex-col items-center -mt-16">
+      <div className="relative px-6">
+        <div className="flex flex-col items-start -mt-24">
           <div 
-            className="w-32 h-32 rounded-full bg-cover bg-center relative mb-4 border-4 border-white shadow-lg"
+            className={`w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white ${
+              isLogoBottomLeft(data.logoPosition) ? 'ml-auto' : ''
+            }`}
             style={{ 
               backgroundImage: `url(${data.photo})`,
               backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
               backgroundSize: 'cover'
             }}
-          />
-          <div className="w-full text-center">
+          >
+            <div className="absolute inset-0 bg-black/10 rounded-full" />
+          </div>
+          <div className={`w-full ${isLogoBottomLeft(data.logoPosition) ? '' : ''}`}>
             <CardHeader data={data} />
           </div>
         </div>
       </div>
-      <div className="p-8 space-y-6">
+      <div className="p-6 space-y-6">
         <ContactInfo data={data} />
         {(hasSocialLinks || hasAdditionalLinks) && (
           <div className="space-y-4">

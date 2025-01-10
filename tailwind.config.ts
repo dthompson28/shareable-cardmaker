@@ -22,13 +22,13 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "#cecabe",
+        background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         brand: {
           primary: "#00674f",
-          secondary: "#326872",
-          accent: "#be5103",
-          background: "#ffffff",
+          secondary: "#ff8c00",
+          background: "#f3f3f3",
+          accent: "#F56565",
         },
         card: {
           DEFAULT: "hsl(var(--card))",
@@ -39,11 +39,11 @@ export default {
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#326872",
+          DEFAULT: "#ff8c00",
           foreground: "#FFFFFF",
         },
         accent: {
-          DEFAULT: "#be5103",
+          DEFAULT: "#F56565",
           foreground: "#FFFFFF",
         },
         destructive: {

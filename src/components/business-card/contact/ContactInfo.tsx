@@ -11,20 +11,20 @@ export const ContactInfo = ({ data }: ContactInfoProps) => {
       {data.phone && (
         <a 
           href={`tel:${data.phone}`} 
-          className="flex items-center gap-3 text-gray-600 hover:text-brand-secondary transition-colors"
+          className="flex items-center gap-3 text-gray-600 hover:text-[#326872] transition-colors"
         >
           <Phone className="w-5 h-5" />
-          <span className="text-lg">{data.phone}</span>
+          <span>{data.phone}</span>
         </a>
       )}
       
       {data.email && (
         <a 
           href={`mailto:${data.email}`} 
-          className="flex items-center gap-3 text-gray-600 hover:text-brand-secondary transition-colors"
+          className="flex items-center gap-3 text-gray-600 hover:text-[#326872] transition-colors"
         >
           <Mail className="w-5 h-5" />
-          <span className="text-lg">{data.email}</span>
+          <span>{data.email}</span>
         </a>
       )}
       
@@ -33,10 +33,10 @@ export const ContactInfo = ({ data }: ContactInfoProps) => {
           href={data.website} 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="flex items-center gap-3 text-gray-600 hover:text-brand-secondary transition-colors"
+          className="flex items-center gap-3 text-gray-600 hover:text-[#326872] transition-colors"
         >
           <Globe className="w-5 h-5" />
-          <span className="text-lg">{data.website}</span>
+          <span>Schedule a Call</span>
         </a>
       )}
     </div>
