@@ -23,6 +23,21 @@ export const socialStyles = `
     background-color: var(--secondary);
   }
 
+  .business-card-wrapper .contact-item svg,
+  .business-card-wrapper .social-link svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: color 0.2s;
+  }
+
+  .business-card-wrapper .social-link svg {
+    width: 24px;
+    height: 24px;
+  }
+
   .additional-link {
     display: flex;
     align-items: center;
