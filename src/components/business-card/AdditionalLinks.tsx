@@ -19,7 +19,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
           style={{ color: data.colors.secondary }}
         >
           <svg 
-            className="w-4 h-4" 
+            className="w-5 h-5" 
             viewBox="0 0 24 24" 
             fill="none" 
             stroke="currentColor" 
@@ -30,7 +30,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
           >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
-          <span>{link.title}</span>
+          <span className="text-base">{link.title}</span>
         </a>
       ))}
     </div>

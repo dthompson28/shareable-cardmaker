@@ -66,7 +66,7 @@ export const SocialLinks = memo(({ data }: SocialLinksProps) => {
               className="transition-colors duration-200 hover:opacity-75"
               style={{ color: data.colors.primary }}
             >
-              <IconComponent className="w-6 h-6" />
+              <IconComponent className="w-5 h-5" />
             </a>
           );
         })}
