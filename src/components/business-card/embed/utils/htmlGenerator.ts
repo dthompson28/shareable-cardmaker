@@ -23,6 +23,20 @@ export const generateContactHTML = (data: BusinessCardData) => `
   </div>
 `;
 
+export const generateHeaderHTML = (data: BusinessCardData) => `
+  <div class="photo-header">
+    <div class="photo-container">
+      ${data.photo ? '<div class="photo"></div>' : ''}
+      <div class="header-content">
+        <h2 class="name">${data.name}</h2>
+        ${data.jobTitle ? `<p class="job-title">${data.jobTitle}</p>` : ''}
+        ${data.company ? `<p class="company">${data.company}</p>` : ''}
+      </div>
+    </div>
+    ${data.logo ? '<div class="logo"></div>' : ''}
+  </div>
+`;
+
 export const generateSocialHTML = (data: BusinessCardData) => `
   <div class="social-links">
     ${Object.entries(data.social)

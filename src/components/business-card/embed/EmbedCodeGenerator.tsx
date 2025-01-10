@@ -1,9 +1,8 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
-import { 
-  generateStyles,
-} from "./utils/styleGenerator";
+import { generateStyles } from "./utils/styleGenerator";
 import {
   generateContactHTML,
+  generateHeaderHTML,
   generateSocialHTML,
   generateAdditionalLinksHTML,
   generateActionButtonsHTML,
@@ -24,14 +23,8 @@ export const generateEmbedCode = (data: BusinessCardData) => {
 <body>
 <div class="business-card">
 <div class="card">
-<div class="photo-container">
-${data.photo ? '<div class="photo"></div>' : ''}
-${data.logo ? '<div class="logo"></div>' : ''}
-</div>
+${generateHeaderHTML(data)}
 <div class="content">
-<h2 class="name">${data.name}</h2>
-${data.jobTitle ? `<p class="job-title">${data.jobTitle}</p>` : ''}
-${data.company ? `<p class="company">${data.company}</p>` : ''}
 ${generateContactHTML(data)}
 ${generateSocialHTML(data)}
 ${generateAdditionalLinksHTML(data)}

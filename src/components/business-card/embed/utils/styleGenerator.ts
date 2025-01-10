@@ -17,14 +17,18 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     background-color: ${data.colors.background};
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   }
-`;
 
-export const generatePhotoStyles = (data: BusinessCardData) => `
+  .photo-header {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+
   .photo-container {
     position: relative;
     width: 100%;
-    padding-top: 56.25%;
-    overflow: hidden;
+    height: 100%;
   }
 
   .photo {
@@ -35,7 +39,7 @@ export const generatePhotoStyles = (data: BusinessCardData) => `
     height: 100%;
     background-image: url('${data.photo}');
     background-size: cover;
-    background-position: center;
+    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
   }
 
   .photo::after {
@@ -48,30 +52,10 @@ export const generatePhotoStyles = (data: BusinessCardData) => `
     background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
   }
 
-  .logo {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 80px;
-    height: 80px;
-    background-image: url('${data.logo}');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: 10;
-  }
-`;
-
-export const generateContentStyles = (data: BusinessCardData) => `
-  .content {
-    padding: 2rem;
-  }
-
   .header-content {
     position: absolute;
     bottom: 2rem;
     left: 2rem;
-    color: white;
     z-index: 10;
   }
 
@@ -220,8 +204,6 @@ export const generateActionButtonStyles = (data: BusinessCardData) => `
 
 export const generateStyles = (data: BusinessCardData) => `
   ${generateBaseStyles(data)}
-  ${generatePhotoStyles(data)}
-  ${generateContentStyles(data)}
   ${generateContactStyles(data)}
   ${generateSocialStyles(data)}
   ${generateActionButtonStyles(data)}
