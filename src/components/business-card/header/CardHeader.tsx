@@ -7,9 +7,9 @@ interface CardHeaderProps {
 export const CardHeader = ({ data }: CardHeaderProps) => {
   if (data.photoStyle === 'compact') {
     return (
-      <div className="text-left ml-32">
+      <div className="text-left ml-64">
         <h1 
-          className="text-3xl font-bold mb-1"
+          className="text-3xl font-bold mb-2"
           style={{ color: data.colors.primary }}
         >
           {data.name}
@@ -35,8 +35,8 @@ export const CardHeader = ({ data }: CardHeaderProps) => {
   }
 
   return (
-    <div className="absolute bottom-4 left-4 text-left z-10">
-      <h1 className="text-3xl font-bold text-white mb-1 drop-shadow-lg">{data.name}</h1>
+    <div className="absolute bottom-6 left-6 text-left z-10">
+      <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">{data.name}</h1>
       {data.jobTitle && (
         <p className="text-xl text-white/90 mb-1 drop-shadow-lg">{data.jobTitle}</p>
       )}
