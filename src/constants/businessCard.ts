@@ -9,5 +9,5 @@ export const DEFAULT_COLORS = {
   primary: "#00674f",
   secondary: "#326872",
   accent: "#be5103",
-  background: "#cecabe",
+  background: "#f3f3f3",
 } as const;
