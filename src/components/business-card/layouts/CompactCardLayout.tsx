@@ -1,9 +1,10 @@
 import { BusinessCardData } from "../../BusinessCardForm";
-import { CardActions } from "../preview/CardActions";
 import { CardHeader } from "../header/CardHeader";
 import { ContactInfo } from "../contact/ContactInfo";
 import { SocialLinks } from "../SocialLinks";
 import { AdditionalLinks } from "../AdditionalLinks";
+import { CardActions } from "../preview/CardActions";
+import { isLogoBottomLeft } from "@/utils/positionUtils";
 
 interface CompactCardLayoutProps {
   data: BusinessCardData;
@@ -18,7 +19,6 @@ export const CompactCardLayout = ({
   hasSocialLinks,
   hasAdditionalLinks,
   renderLogo,
-  isLogoBottomLeft,
 }: CompactCardLayoutProps) => {
   return (
     <div 
@@ -32,7 +32,7 @@ export const CompactCardLayout = ({
         className="w-full h-48 relative"
         style={{ backgroundColor: data.colors.secondary }}
       >
-        {isLogoBottomLeft() ? (
+        {isLogoBottomLeft(data.logoPosition) ? (
           <div className="absolute bottom-[-96px] left-4 z-10">
             {renderLogo()}
           </div>
@@ -42,7 +42,7 @@ export const CompactCardLayout = ({
         <div className="flex flex-col items-start -mt-24">
           <div 
             className={`w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white ${
-              isLogoBottomLeft() ? 'ml-auto' : ''
+              isLogoBottomLeft(data.logoPosition) ? 'ml-auto' : ''
             }`}
             style={{ 
               backgroundImage: `url(${data.photo})`,
@@ -52,7 +52,7 @@ export const CompactCardLayout = ({
           >
             <div className="absolute inset-0 bg-black/10 rounded-full" />
           </div>
-          <div className={`w-full ${isLogoBottomLeft() ? '' : ''}`}>
+          <div className={`w-full ${isLogoBottomLeft(data.logoPosition) ? '' : ''}`}>
             <CardHeader data={data} />
           </div>
         </div>

@@ -2,6 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { BusinessCardData } from "../../BusinessCardForm";
+import { LOGO_POSITIONS } from "@/constants/businessCard";
+import { getCurrentLogoPosition } from "@/utils/positionUtils";
 
 interface LogoFormFieldsProps {
   data: BusinessCardData;
@@ -11,22 +13,13 @@ interface LogoFormFieldsProps {
 export const LogoFormFields = ({ data, onChange }: LogoFormFieldsProps) => {
   const handlePositionChange = (value: string) => {
     const positions = {
-      'top-left': { x: 0, y: 0 },
-      'top-right': { x: 100, y: 0 },
-      'bottom-left': { x: 0, y: 100 },
-      'bottom-right': { x: 100, y: 100 },
+      'top-left': LOGO_POSITIONS.TOP_LEFT,
+      'top-right': LOGO_POSITIONS.TOP_RIGHT,
+      'bottom-left': LOGO_POSITIONS.BOTTOM_LEFT,
+      'bottom-right': LOGO_POSITIONS.BOTTOM_RIGHT,
     };
     
     onChange("logoPosition", positions[value as keyof typeof positions]);
-  };
-
-  const getCurrentPosition = () => {
-    const { x = 50, y = 50 } = data.logoPosition || {};
-    if (x === 0 && y === 0) return 'top-left';
-    if (x === 100 && y === 0) return 'top-right';
-    if (x === 0 && y === 100) return 'bottom-left';
-    if (x === 100 && y === 100) return 'bottom-right';
-    return 'top-right';
   };
 
   return (
@@ -59,7 +52,7 @@ export const LogoFormFields = ({ data, onChange }: LogoFormFieldsProps) => {
           <div className="space-y-4">
             <Label>Logo Position</Label>
             <RadioGroup
-              value={getCurrentPosition()}
+              value={getCurrentLogoPosition(data.logoPosition)}
               onValueChange={handlePositionChange}
               className="grid grid-cols-2 gap-4"
             >

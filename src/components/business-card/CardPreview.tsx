@@ -2,6 +2,7 @@ import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
 import { CompactCardLayout } from "./layouts/CompactCardLayout";
 import { FullCardLayout } from "./layouts/FullCardLayout";
+import { getLogoPosition, isLogoBottomLeft } from "@/utils/positionUtils";
 
 interface CardPreviewProps {
   data: BusinessCardData;
@@ -13,25 +14,11 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     typeof value === 'string' && value.length > 0
   );
 
-  const getLogoPosition = () => {
-    const { x = 50, y = 50 } = data.logoPosition || {};
-    if (x === 0 && y === 0) return 'top-4 left-4';
-    if (x === 100 && y === 0) return 'top-4 right-4';
-    if (x === 0 && y === 100) return 'bottom-32 left-4';
-    if (x === 100 && y === 100) return 'bottom-4 right-4';
-    return 'top-4 right-4';
-  };
-
-  const isLogoBottomLeft = () => {
-    const { x = 50, y = 50 } = data.logoPosition || {};
-    return x === 0 && y === 100;
-  };
-
   const renderLogo = () => {
     if (!data.logo) return null;
     return (
       <div 
-        className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition()}`}
+        className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition(data.logoPosition)}`}
         style={{ backgroundImage: `url(${data.logo})` }}
       />
     );
@@ -44,7 +31,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
         hasSocialLinks={hasSocialLinks}
         hasAdditionalLinks={hasAdditionalLinks}
         renderLogo={renderLogo}
-        isLogoBottomLeft={isLogoBottomLeft}
+        isLogoBottomLeft={() => isLogoBottomLeft(data.logoPosition)}
       />
     );
   }
