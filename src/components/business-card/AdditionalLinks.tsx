@@ -30,7 +30,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
           >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
-          <span className="text-base">{link.title}</span>
+          <span className="text-base font-playfair">{link.title}</span>
         </a>
       ))}
     </div>
