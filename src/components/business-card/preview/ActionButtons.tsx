@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Code2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import { BusinessCardData } from "../../BusinessCardForm";
 
 interface ActionButtonsProps {
@@ -11,8 +10,6 @@ interface ActionButtonsProps {
 }
 
 export const ActionButtons = ({ data, onBack, onEdit, onEmbed }: ActionButtonsProps) => {
-  const navigate = useNavigate();
-
   return (
     <div className="flex flex-wrap gap-4">
       <Button variant="outline" onClick={onBack}>
@@ -23,14 +20,7 @@ export const ActionButtons = ({ data, onBack, onEdit, onEmbed }: ActionButtonsPr
       </Button>
       <Button onClick={onEmbed}>
         <Code2 className="w-4 h-4 mr-2" />
-        Embed
-      </Button>
-      <Button 
-        variant="secondary"
-        onClick={() => navigate('/highlevel-preview')}
-      >
-        <Code2 className="w-4 h-4 mr-2" />
-        HighLevel Code
+        Get Embed Code
       </Button>
     </div>
   );

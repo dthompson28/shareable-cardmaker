@@ -67,6 +67,11 @@ const Index = () => {
 
   const handleDataChange = useCallback((newData: BusinessCardData) => {
     setData(newData);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+    } catch (error) {
+      console.error('Error saving data to localStorage:', error);
+    }
   }, []);
 
   const handleNext = useCallback(() => {
@@ -84,6 +89,7 @@ const Index = () => {
     try {
       localStorage.removeItem(STORAGE_KEY);
       setData(initialData);
+      setStep(1);
       toast.success("Form data has been reset");
     } catch (error) {
       console.error('Error resetting data:', error);
