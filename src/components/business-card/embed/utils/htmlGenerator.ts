@@ -1,91 +1,94 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
+import { generateStyles } from "./styleGenerator";
 
-export const generateContactHTML = (data: BusinessCardData) => `
-  <div class="contact-info">
-    ${data.phone ? `
-      <a href="tel:${data.phone}" class="contact-item">
-        <i data-lucide="phone"></i>
-        <span>${data.phone}</span>
-      </a>
-    ` : ''}
-    ${data.email ? `
-      <a href="mailto:${data.email}" class="contact-item">
-        <i data-lucide="mail"></i>
-        <span>${data.email}</span>
-      </a>
-    ` : ''}
-    ${data.website ? `
-      <a href="${data.website}" target="_blank" rel="noopener noreferrer" class="contact-item">
-        <i data-lucide="globe"></i>
-        <span>${data.website}</span>
-      </a>
-    ` : ''}
-    ${data.address ? `
-      <div class="contact-item">
-        <i data-lucide="map-pin"></i>
-        <span>${data.address}</span>
+export const generateEmbedHtml = (data: BusinessCardData) => {
+  const styles = generateStyles(data);
+  
+  return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${data.name}'s Business Card</title>
+  <style>${styles}</style>
+</head>
+<body>
+  <div class="card-container">
+    ${data.logo ? '<div class="logo"></div>' : ''}
+    ${data.photo ? '<div class="photo"></div>' : ''}
+    <div class="content">
+      <div class="header">
+        <h1>${data.name}</h1>
+        ${data.jobTitle ? `<h2>${data.jobTitle}</h2>` : ''}
+        ${data.company ? `<h3>${data.company}</h3>` : ''}
       </div>
-    ` : ''}
-  </div>`;
+      
+      <div class="contact-info">
+        ${data.phone ? `<p><a href="tel:${data.phone}">${data.phone}</a></p>` : ''}
+        ${data.email ? `<p><a href="mailto:${data.email}">${data.email}</a></p>` : ''}
+        ${data.website ? `<p><a href="${data.website}" target="_blank">${data.website}</a></p>` : ''}
+        ${data.address ? `<p>${data.address}</p>` : ''}
+      </div>
 
-export const generateSocialHTML = (data: BusinessCardData) => {
-  const socialLinks = Object.entries(data.social)
-    .filter(([key, value]) => key !== 'additionalLinks' && value);
+      <div class="social-links">
+        ${Object.entries(data.social)
+          .filter(([key, value]) => key !== 'additionalLinks' && value)
+          .map(([key, value]) => `
+            <a href="${value}" target="_blank" rel="noopener noreferrer" class="social-icon ${key}"></a>
+          `).join('')}
+      </div>
 
-  if (socialLinks.length === 0) return '';
+      <div class="action-buttons">
+        <button onclick="shareCard()" class="share-button">Share</button>
+        <button onclick="saveContact()" class="save-contact-button">Save Contact</button>
+      </div>
+    </div>
+  </div>
 
-  return `
-    <div class="social-links">
-      ${data.social.linkedin ? `
-        <a href="${data.social.linkedin}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="linkedin"></i>
-        </a>
-      ` : ''}
-      ${data.social.facebook ? `
-        <a href="${data.social.facebook}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="facebook"></i>
-        </a>
-      ` : ''}
-      ${data.social.instagram ? `
-        <a href="${data.social.instagram}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="instagram"></i>
-        </a>
-      ` : ''}
-      ${data.social.twitter ? `
-        <a href="${data.social.twitter}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="twitter"></i>
-        </a>
-      ` : ''}
-      ${data.social.youtube ? `
-        <a href="${data.social.youtube}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="youtube"></i>
-        </a>
-      ` : ''}
-      ${data.social.tiktok ? `
-        <a href="${data.social.tiktok}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-          </svg>
-        </a>
-      ` : ''}
-      ${data.social.whatsapp ? `
-        <a href="${data.social.whatsapp}" target="_blank" rel="noopener noreferrer" class="social-link">
-          <i data-lucide="phone"></i>
-        </a>
-      ` : ''}
-    </div>`;
-};
+  <script>
+    async function shareCard() {
+      const shareData = {
+        title: '${data.name}\'s Business Card',
+        text: 'Check out my business card!',
+        url: window.location.href
+      };
 
-export const generateAdditionalLinksHTML = (data: BusinessCardData) => {
-  if (!data.social.additionalLinks?.length) return '';
+      try {
+        if (navigator.share && navigator.canShare(shareData)) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(window.location.href);
+          alert('Link copied to clipboard!');
+        }
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    }
 
-  return `
-    <div class="additional-links">
-      ${data.social.additionalLinks.map(link => `
-        <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="additional-link">
-          <i data-lucide="external-link"></i>
-          <span>${link.title}</span>
-        </a>
-      `).join('')}
-    </div>`;
+    function saveContact() {
+      const vcard = \`BEGIN:VCARD
+VERSION:3.0
+FN:${data.name}
+${data.company ? `ORG:${data.company}` : ''}
+${data.jobTitle ? `TITLE:${data.jobTitle}` : ''}
+${data.phone ? `TEL;TYPE=work,voice:${data.phone}` : ''}
+${data.email ? `EMAIL;TYPE=work:${data.email}` : ''}
+${data.website ? `URL;TYPE=work:${data.website}` : ''}
+${data.address ? `ADR;TYPE=work:;;${data.address}` : ''}
+END:VCARD\`;
+
+      const blob = new Blob([vcard], { type: 'text/vcard' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', '${data.name.replace(/\s+/g, '_')}_contact.vcf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>`;
 };
