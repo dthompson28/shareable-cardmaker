@@ -1,10 +1,9 @@
 export const socialStyles = `
-  /* Social Links */
   .social-links {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin: 1.5rem 0;
+    gap: 1.5rem;
+    margin: 2rem 0;
   }
 
   .social-link {
@@ -20,12 +19,23 @@ export const socialStyles = `
   }
 
   .social-link:hover {
-    transform: translateY(-2px);
     background-color: var(--secondary);
+    transform: translateY(-2px);
   }
 
-  /* Action Buttons */
-  .action-buttons .action-button {
+  .social-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .action-button {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,28 +43,25 @@ export const socialStyles = `
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
     font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    transition: opacity 0.2s;
   }
 
-  .action-buttons .share-button {
+  .action-button svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .share-button {
     background-color: var(--primary);
     color: white;
   }
 
-  .action-buttons .save-button {
+  .save-button {
     background-color: var(--accent);
     color: white;
   }
 
-  .action-buttons .action-button:hover {
+  .action-button:hover {
     opacity: 0.9;
-  }
-
-  /* Inline SVG Styling */
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-    fill: currentColor;
   }
 `;
