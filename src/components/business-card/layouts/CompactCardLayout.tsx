@@ -32,7 +32,11 @@ export const CompactCardLayout = ({
         className="w-full h-48 relative"
         style={{ backgroundColor: data.colors.secondary }}
       >
-        {renderLogo()}
+        {isLogoBottomLeft() ? (
+          <div className="absolute bottom-4 left-4">
+            {renderLogo()}
+          </div>
+        ) : renderLogo()}
       </div>
       <div className="relative -mt-24 px-6">
         <div className="flex flex-col items-start">
