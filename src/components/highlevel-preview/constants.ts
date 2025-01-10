@@ -104,43 +104,43 @@ END:VCARD\`;
 </html>`;
 
 export const cssCode = `
-:root {
-  --primary: #00674f;
-  --secondary: #326872;
-  --accent: #be5103;
-  --background: #cecabe;
-}
+  :root {
+    --primary: #00674f;
+    --secondary: #326872;
+    --accent: #be5103;
+    --background: #cecabe;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-body {
-  font-family: 'Open Sans', sans-serif;
-  background-color: var(--background);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
 
-.container {
-  width: 100%;
-  max-width: 28rem;
-  margin: 0 auto;
-}
+  .container {
+    width: 100%;
+    max-width: 28rem;
+    margin: 0 auto;
+  }
 
-.business-card {
-  background-color: white;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
+  .business-card {
+    background-color: #cecabe;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
 
 .header {
   position: relative;
@@ -304,3 +304,4 @@ body {
     box-shadow: none;
   }
 }`;
+`;
