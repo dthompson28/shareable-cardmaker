@@ -7,7 +7,7 @@ export const generateBaseStyles = (data: BusinessCardData) => `
     margin: 0 auto;
     padding: 2rem;
     background-color: ${data.colors.background};
-    color: ${data.colors.text};
+    color: ${data.colors.primary};
   }
 
   .card {

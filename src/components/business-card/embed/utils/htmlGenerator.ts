@@ -27,7 +27,7 @@ export const generateAdditionalLinksHTML = (data: BusinessCardData) => {
   return `
     <div class="additional-links">
       ${data.social.additionalLinks.map(link => `
-        <a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.label}</a>
+        <a href="${link.url}" target="_blank" rel="noopener noreferrer">${link.title}</a>
       `).join('')}
     </div>
   `;
