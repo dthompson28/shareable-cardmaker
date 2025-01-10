@@ -21,13 +21,15 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 </head>
 <body>
-  <div class="bc-card-container">
-    <div class="bc-business-card">
-      ${generateHeaderHTML(data)}
-      <div class="content">
-        ${generateContactHTML(data)}
-        ${generateSocialHTML(data)}
-        ${generateActionButtonsHTML(data)}
+  <div id="digital-business-card-root" class="dbc-wrapper">
+    <div class="dbc-container">
+      <div class="dbc-business-card">
+        ${generateHeaderHTML(data)}
+        <div class="dbc-content">
+          ${generateContactHTML(data)}
+          ${generateSocialHTML(data)}
+          ${generateActionButtonsHTML(data)}
+        </div>
       </div>
     </div>
   </div>

@@ -1,15 +1,18 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateBaseStyles = (data: BusinessCardData) => `
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+#digital-business-card-root.dbc-wrapper {
+  all: initial;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.business-card-wrapper {
+#digital-business-card-root.dbc-wrapper * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#digital-business-card-root .dbc-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +22,7 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   background-color: ${data.colors.background};
 }
 
-.business-card {
+#digital-business-card-root .dbc-business-card {
   width: 100%;
   max-width: 32rem;
   margin: 0 auto;
@@ -28,10 +31,9 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   overflow: hidden;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   position: relative;
-  transition: all 0.3s ease;
 }
 
-.header {
+#digital-business-card-root .dbc-header {
   position: relative;
   width: 100%;
   height: 16rem;
@@ -40,13 +42,13 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   ${data.photo ? `background-image: url('${data.photo}');` : ''}
 }
 
-.header-overlay {
+#digital-business-card-root .dbc-header-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
 }
 
-.header-logo {
+#digital-business-card-root .dbc-header-logo {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -56,7 +58,7 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   z-index: 10;
 }
 
-.header-text {
+#digital-business-card-root .dbc-header-text {
   position: absolute;
   bottom: 1.5rem;
   left: 1.5rem;
@@ -64,33 +66,18 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   z-index: 10;
 }
 
-.header-text h1 {
-  font-size: 1.875rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  font-family: 'Playfair Display', serif;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.header-text p {
-  font-size: 1.25rem;
-  margin: 0.25rem 0;
-  font-family: 'Playfair Display', serif;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.content {
+#digital-business-card-root .dbc-content {
   padding: 1.5rem;
 }
 
-.contact-info {
+#digital-business-card-root .dbc-contact-info {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 2rem;
 }
 
-.contact-link {
+#digital-business-card-root .dbc-contact-link {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -99,27 +86,16 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   text-decoration: none;
   transition: all 0.2s ease;
   border-radius: 0.5rem;
-  font-family: 'Open Sans', sans-serif;
 }
 
-.contact-link:hover {
-  background-color: ${data.colors.background};
-}
-
-.contact-link svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  stroke: ${data.colors.primary};
-}
-
-.social-links {
+#digital-business-card-root .dbc-social-links {
   display: flex;
   justify-content: center;
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
-.social-link {
+#digital-business-card-root .dbc-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,106 +107,35 @@ export const generateBaseStyles = (data: BusinessCardData) => `
   transition: all 0.2s ease;
 }
 
-.social-link:hover {
-  background-color: ${data.colors.secondary};
-  transform: translateY(-2px);
-}
-
-.social-link svg {
-  width: 1.25rem;
-  height: 1.25rem;
-  stroke: currentColor;
-}
-
-.additional-links {
+#digital-business-card-root .dbc-additional-links {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 1.5rem;
 }
 
-.additional-link {
+#digital-business-card-root .dbc-additional-link {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: ${data.colors.secondary};
   text-decoration: none;
-  font-family: 'Open Sans', sans-serif;
   transition: color 0.2s ease;
 }
 
-.additional-link:hover {
-  color: ${data.colors.accent};
-}
-
-.additional-link svg {
-  width: 1.25rem;
-  height: 1.25rem;
-  stroke: ${data.colors.accent};
-}
-
-.action-buttons {
-  display: flex;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.action-button {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: 'Open Sans', sans-serif;
-}
-
-.action-button.save-button {
-  background-color: transparent;
-  color: ${data.colors.accent};
-  border: 2px solid ${data.colors.accent};
-}
-
-.action-button.save-button:hover {
-  background-color: ${data.colors.accent};
-  color: white;
-}
-
-.action-button.share-button {
-  background-color: ${data.colors.primary};
-  color: white;
-  border: none;
-}
-
-.action-button.share-button:hover {
-  background-color: ${data.colors.secondary};
-}
-
 @media (max-width: 640px) {
-  .business-card {
+  #digital-business-card-root .dbc-business-card {
     max-width: 100%;
     border-radius: 0;
     box-shadow: none;
   }
   
-  .business-card-wrapper {
+  #digital-business-card-root .dbc-container {
     padding: 0;
   }
   
-  .header {
+  #digital-business-card-root .dbc-header {
     height: 14rem;
-  }
-  
-  .header-text h1 {
-    font-size: 1.5rem;
-  }
-  
-  .header-text p {
-    font-size: 1rem;
   }
 }
 `;
