@@ -30,7 +30,7 @@ export const generateEmbedCode = (data: BusinessCardData) => {
       ${generateHeaderHTML(data)}
       ${generateContactHTML(data)}
       ${generateSocialHTML(data)}
-      ${generateActionButtonsHTML()}
+      ${generateActionButtonsHTML(data)}
     </div>
   </div>
   ${generateScriptHTML(data)}
