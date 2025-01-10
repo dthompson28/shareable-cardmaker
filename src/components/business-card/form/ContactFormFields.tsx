@@ -18,6 +18,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.name}
           onChange={(e) => onChange("name", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="name"
         />
       </div>
 
@@ -28,6 +29,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.company}
           onChange={(e) => onChange("company", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="organization"
         />
       </div>
 
@@ -38,6 +40,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.jobTitle}
           onChange={(e) => onChange("jobTitle", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="organization-title"
         />
       </div>
 
@@ -50,6 +53,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.phone}
           onChange={(e) => onChange("phone", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="tel"
         />
       </div>
 
@@ -62,6 +66,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.email}
           onChange={(e) => onChange("email", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="email"
         />
       </div>
 
@@ -73,6 +78,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.website}
           onChange={(e) => onChange("website", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="url"
         />
       </div>
 
@@ -83,6 +89,7 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           value={data.address}
           onChange={(e) => onChange("address", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
+          autoComplete="street-address"
         />
       </div>
     </div>
