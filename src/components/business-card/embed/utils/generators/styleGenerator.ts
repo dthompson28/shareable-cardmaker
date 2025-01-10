@@ -1,41 +1,56 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateStyles = (data: BusinessCardData) => `
-  body {
-    font-family: 'Open Sans', sans-serif;
+  :root {
+    --primary: ${data.colors.primary};
+    --secondary: ${data.colors.secondary};
+    --accent: ${data.colors.accent};
+    --background: ${data.colors.background};
+  }
+
+  * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2 {
-    font-family: 'Playfair Display', serif;
+  body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.5;
+    color: var(--primary);
+    background-color: var(--background);
   }
 
-  .container {
+  .business-card-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: ${data.colors.background};
     padding: 1rem;
+    background-color: var(--background);
+    width: 100%;
   }
 
-  .card {
+  .business-card {
     width: 100%;
-    max-width: 28rem;
-    background-color: ${data.colors.background};
+    max-width: min(90vw, 400px);
+    min-width: 280px;
+    background-color: var(--background);
     border-radius: 0.75rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
   }
 
   .header {
     position: relative;
     width: 100%;
-    height: 400px;
-    background-image: url('${data.photo}');
+    height: clamp(200px, 30vh, 250px);
     background-size: cover;
-    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
+    background-position: center;
+    ${data.photo ? `background-image: url('${data.photo}');` : ''}
   }
 
   .header-overlay {
@@ -44,122 +59,166 @@ export const generateStyles = (data: BusinessCardData) => `
     background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
   }
 
+  .header-content {
+    position: relative;
+    height: 100%;
+  }
+
   .header-logo {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     object-fit: contain;
   }
 
   .header-text {
     position: absolute;
-    bottom: 1rem;
-    left: 1rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
     color: white;
   }
 
   .header-text h1 {
-    font-size: 2rem;
-    margin: 0;
+    font-size: 1.75rem;
+    margin-bottom: 0.25rem;
+    font-weight: 700;
   }
 
   .header-text p {
-    margin: 0.25rem 0;
-    font-size: 1.25rem;
+    font-size: 1.125rem;
+    margin: 0.125rem 0;
+    opacity: 0.9;
   }
 
   .content {
     padding: 1.5rem;
   }
 
-  .contact-info a {
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-link {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
+    gap: 0.75rem;
+    color: var(--primary);
     text-decoration: none;
-    color: ${data.colors.primary};
-    transition: color 0.2s;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
   }
 
-  .contact-info a:hover {
-    color: ${data.colors.secondary};
-  }
-
-  .contact-info a svg {
-    margin-right: 0.5rem;
-    width: 1rem;
-    height: 1rem;
+  .contact-link:hover {
+    background-color: rgba(0, 103, 79, 0.1);
   }
 
   .social-links {
     display: flex;
-    justify-content: center;
     gap: 1rem;
-    margin: 1rem 0;
-  }
-
-  .social-links a {
-    display: flex;
-    align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    color: white;
-    background-color: ${data.colors.primary};
-    border-radius: 50%;
-    transition: background-color 0.2s;
+    margin: 2rem 0;
   }
 
-  .social-links a:hover {
-    background-color: ${data.colors.secondary};
+  .social-icon {
+    color: var(--primary);
+    transition: color 0.2s ease;
   }
 
-  .social-links a svg {
+  .social-icon:hover {
+    color: var(--secondary);
+  }
+
+  .social-icon svg {
     width: 1.5rem;
     height: 1.5rem;
   }
 
-  .action-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-
-  .action-buttons button {
-    flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    color: white;
-    font-weight: bold;
-    background-color: ${data.colors.primary};
-    cursor: pointer;
-    transition: background-color 0.2s;
-  }
-
-  .action-buttons button:hover {
-    background-color: ${data.colors.secondary};
+  .additional-links {
+    margin: 1.5rem 0;
   }
 
   .additional-link {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    text-decoration: none;
-    color: ${data.colors.primary};
-    font-weight: bold;
-    margin-top: 1rem;
-    transition: color 0.2s;
+    color: var(--secondary);
+    padding: 0.5rem;
+    transition: color 0.2s ease;
   }
 
   .additional-link:hover {
-    color: ${data.colors.secondary};
+    color: var(--accent);
   }
 
-  .additional-link-icon {
-    width: 1rem;
-    height: 1rem;
+  .additional-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--accent);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .action-button {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .share-button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+  }
+
+  .share-button:hover {
+    background-color: var(--secondary);
+  }
+
+  .save-button {
+    background-color: var(--background);
+    color: var(--accent);
+    border: 2px solid var(--accent);
+  }
+
+  .save-button:hover {
+    background-color: var(--secondary);
+    color: white;
+    border-color: var(--secondary);
+  }
+
+  @media (max-width: 640px) {
+    .container {
+      padding: 0;
+    }
+
+    .business-card {
+      border-radius: 0;
+      box-shadow: none;
+    }
+  }
+
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-normal {
+    font-weight: 400;
   }
 `;

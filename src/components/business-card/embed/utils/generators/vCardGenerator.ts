@@ -1,21 +1,46 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
-export const generateVCard = (data: BusinessCardData) => {
-  return `BEGIN:VCARD
+export const generateVCardScript = (data: BusinessCardData) => `
+  function saveContact() {
+    const vcard = \`BEGIN:VCARD
 VERSION:3.0
 FN:${data.name}
-${data.jobTitle ? `TITLE:${data.jobTitle}\n` : ''}
-${data.company ? `ORG:${data.company}\n` : ''}
-${data.email ? `EMAIL;TYPE=WORK:${data.email}\n` : ''}
-${data.phone ? `TEL;TYPE=WORK,VOICE:${data.phone}\n` : ''}
-${data.website ? `URL:${data.website}\n` : ''}
-${data.address ? `ADR;TYPE=WORK:;;${data.address}\n` : ''}
-${data.social.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${data.social.linkedin}\n` : ''}
-${data.social.facebook ? `X-SOCIALPROFILE;TYPE=facebook:${data.social.facebook}\n` : ''}
-${data.social.instagram ? `X-SOCIALPROFILE;TYPE=instagram:${data.social.instagram}\n` : ''}
-${data.social.twitter ? `X-SOCIALPROFILE;TYPE=twitter:${data.social.twitter}\n` : ''}
-${data.social.youtube ? `X-SOCIALPROFILE;TYPE=youtube:${data.social.youtube}\n` : ''}
-${data.social.tiktok ? `X-SOCIALPROFILE;TYPE=tiktok:${data.social.tiktok}\n` : ''}
-${data.social.whatsapp ? `X-SOCIALPROFILE;TYPE=whatsapp:${data.social.whatsapp}\n` : ''}
-END:VCARD`;
-};
+TITLE:${data.jobTitle}
+ORG:${data.company}
+EMAIL;TYPE=WORK:${data.email}
+TEL;TYPE=WORK,VOICE:${data.phone}
+URL:${data.website}
+${data.social.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${data.social.linkedin}` : ''}
+${data.social.facebook ? `X-SOCIALPROFILE;TYPE=facebook:${data.social.facebook}` : ''}
+${data.social.instagram ? `X-SOCIALPROFILE;TYPE=instagram:${data.social.instagram}` : ''}
+${data.social.twitter ? `X-SOCIALPROFILE;TYPE=twitter:${data.social.twitter}` : ''}
+${data.social.youtube ? `X-SOCIALPROFILE;TYPE=youtube:${data.social.youtube}` : ''}
+${data.social.tiktok ? `X-SOCIALPROFILE;TYPE=tiktok:${data.social.tiktok}` : ''}
+END:VCARD\`;
+    const blob = new Blob([vcard], { type: 'text/vcard' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = '${data.name.replace(/\s+/g, '_')}_Contact.vcf';
+    link.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function shareCard() {
+    if (navigator.share) {
+      navigator.share({
+        title: '${data.name} - Digital Business Card',
+        text: 'Check out my digital business card!',
+        url: window.location.href
+      }).catch(console.error);
+    } else {
+      const tempInput = document.createElement('input');
+      tempInput.value = window.location.href;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      alert('Link copied to clipboard!');
+    }
+  }
+`;
