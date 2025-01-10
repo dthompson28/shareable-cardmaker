@@ -1,3 +1,5 @@
+import { defaultData } from '../data/defaultData';
+
 export const baseStyles = `
   * {
     margin: 0;
@@ -38,9 +40,9 @@ export const baseStyles = `
     position: relative;
     width: 100%;
     height: 400px;
-    background-image: url('${data.photo}');
+    background-image: url('${defaultData.photo}');
     background-size: cover;
-    background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
+    background-position: ${defaultData.photoPosition.x}% ${defaultData.photoPosition.y}%;
   }
 
   .header-overlay {
@@ -84,12 +86,12 @@ export const baseStyles = `
     align-items: center;
     margin-bottom: 1rem;
     text-decoration: none;
-    color: ${data.colors.primary};
+    color: ${defaultData.colors.primary};
     transition: color 0.2s;
   }
 
   .contact-info a:hover {
-    color: ${data.colors.secondary};
+    color: ${defaultData.colors.secondary};
   }
 
   .contact-info a svg {
@@ -112,13 +114,13 @@ export const baseStyles = `
     width: 2.5rem;
     height: 2.5rem;
     color: white;
-    background-color: ${data.colors.primary};
+    background-color: ${defaultData.colors.primary};
     border-radius: 50%;
     transition: background-color 0.2s;
   }
 
   .social-links a:hover {
-    background-color: ${data.colors.secondary};
+    background-color: ${defaultData.colors.secondary};
   }
 
   .social-links a svg {
@@ -139,13 +141,13 @@ export const baseStyles = `
     border-radius: 0.5rem;
     color: white;
     font-weight: bold;
-    background-color: ${data.colors.primary};
+    background-color: ${defaultData.colors.primary};
     cursor: pointer;
     transition: background-color 0.2s;
   }
 
   .action-buttons button:hover {
-    background-color: ${data.colors.secondary};
+    background-color: ${defaultData.colors.secondary};
   }
 
   .additional-link {
@@ -153,14 +155,14 @@ export const baseStyles = `
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
-    color: ${data.colors.primary};
+    color: ${defaultData.colors.primary};
     font-weight: bold;
     margin-top: 1rem;
     transition: color 0.2s;
   }
 
   .additional-link:hover {
-    color: ${data.colors.secondary};
+    color: ${defaultData.colors.secondary};
   }
 
   .additional-link-icon {
