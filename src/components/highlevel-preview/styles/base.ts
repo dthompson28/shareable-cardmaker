@@ -1,5 +1,3 @@
-import { defaultData } from '../data/defaultData';
-
 export const baseStyles = `
   * {
     margin: 0;
@@ -28,145 +26,71 @@ export const baseStyles = `
 
   .business-card {
     width: 100%;
-    max-width: 600px;
-    background-color: var(--background);
+    max-width: min(90vw, 400px);
+    min-width: 280px;
+    background-color: white;
     border-radius: 0.75rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    position: relative;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
   }
 
-  .header {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    background-image: url('${defaultData.photo}');
-    background-size: cover;
-    background-position: ${defaultData.photoPosition.x}% ${defaultData.photoPosition.y}%;
-  }
-
-  .header-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-  }
-
-  .header-logo {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 5rem;
-    height: 5rem;
-    object-fit: contain;
-  }
-
-  .header-text {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    color: white;
-  }
-
-  .header-text h1 {
-    font-size: 2rem;
-    margin: 0;
-  }
-
-  .header-text p {
-    margin: 0.25rem 0;
-    font-size: 1.25rem;
+  @media (min-width: 768px) {
+    .business-card {
+      width: 90%;
+      max-width: 360px;
+    }
   }
 
   .content {
     padding: 1.5rem;
   }
 
-  .contact-info a {
+  .contact-info {
     display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-    text-decoration: none;
-    color: ${defaultData.colors.primary};
-    transition: color 0.2s;
-  }
-
-  .contact-info a:hover {
-    color: ${defaultData.colors.secondary};
-  }
-
-  .contact-info a svg {
-    margin-right: 0.5rem;
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .social-links {
-    display: flex;
-    justify-content: center;
+    flex-direction: column;
     gap: 1rem;
-    margin: 1rem 0;
+    margin-bottom: 2rem;
   }
 
-  .social-links a {
+  .contact-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    color: white;
-    background-color: ${defaultData.colors.primary};
-    border-radius: 50%;
+    gap: 0.75rem;
+    color: var(--primary);
+    text-decoration: none;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
     transition: background-color 0.2s;
   }
 
-  .social-links a:hover {
-    background-color: ${defaultData.colors.secondary};
+  .contact-link:hover {
+    background-color: var(--background);
   }
 
-  .social-links a svg {
+  .contact-link svg {
     width: 1.5rem;
     height: 1.5rem;
+    flex-shrink: 0;
   }
 
-  .action-buttons {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
   }
 
-  .action-buttons button {
-    flex: 1;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 0.5rem;
-    color: white;
-    font-weight: bold;
-    background-color: ${defaultData.colors.primary};
-    cursor: pointer;
-    transition: background-color 0.2s;
+  .font-normal {
+    font-weight: 400;
   }
 
-  .action-buttons button:hover {
-    background-color: ${defaultData.colors.secondary};
-  }
-
-  .additional-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  a {
+    color: inherit;
     text-decoration: none;
-    color: ${defaultData.colors.primary};
-    font-weight: bold;
-    margin-top: 1rem;
-    transition: color 0.2s;
   }
 
-  .additional-link:hover {
-    color: ${defaultData.colors.secondary};
-  }
-
-  .additional-link-icon {
-    width: 1rem;
-    height: 1rem;
+  button {
+    border: none;
+    background: none;
+    font: inherit;
+    cursor: pointer;
   }
 `;
