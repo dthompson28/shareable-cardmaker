@@ -31,7 +31,6 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
         hasSocialLinks={hasSocialLinks}
         hasAdditionalLinks={hasAdditionalLinks}
         renderLogo={renderLogo}
-        isLogoBottomLeft={() => isLogoBottomLeft(data.logoPosition)}
       />
     );
   }
