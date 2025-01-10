@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useEffect, useRef } from "react";
 
 const htmlCode = `<!DOCTYPE html>
 <html lang="en">
@@ -241,19 +242,31 @@ const cssCode = `.business-card-wrapper {
 }`;
 
 const HighLevelPreview = () => {
-  const handleCopyCode = (code: string, type: string) => {
-    navigator.clipboard.writeText(code);
-    toast.success(`${type} code copied to clipboard!`);
-  };
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      const iframeDoc = iframeRef.current.contentDocument;
+      if (iframeDoc) {
+        iframeDoc.open();
+        iframeDoc.write(`
+          ${htmlCode}
+          <style>${cssCode}</style>
+        `);
+        iframeDoc.close();
+      }
+    }
+  }, []);
 
   return (
     <div className="container max-w-6xl mx-auto p-4 py-8">
       <h1 className="text-3xl font-bold mb-8">HighLevel Code Preview</h1>
 
       <Tabs defaultValue="html" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="html">HTML</TabsTrigger>
           <TabsTrigger value="css">CSS</TabsTrigger>
+          <TabsTrigger value="output">Output</TabsTrigger>
         </TabsList>
 
         <TabsContent value="html" className="space-y-4">
@@ -262,7 +275,10 @@ const HighLevelPreview = () => {
               <code className="text-sm">{htmlCode}</code>
             </pre>
             <Button
-              onClick={() => handleCopyCode(htmlCode, "HTML")}
+              onClick={() => {
+                navigator.clipboard.writeText(htmlCode);
+                toast.success("HTML code copied to clipboard!");
+              }}
               className="absolute top-4 right-4"
               variant="secondary"
             >
@@ -277,12 +293,25 @@ const HighLevelPreview = () => {
               <code className="text-sm">{cssCode}</code>
             </pre>
             <Button
-              onClick={() => handleCopyCode(cssCode, "CSS")}
+              onClick={() => {
+                navigator.clipboard.writeText(cssCode);
+                toast.success("CSS code copied to clipboard!");
+              }}
               className="absolute top-4 right-4"
               variant="secondary"
             >
               Copy CSS
             </Button>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="output" className="space-y-4">
+          <div className="relative bg-white rounded-md shadow-md">
+            <iframe
+              ref={iframeRef}
+              className="w-full min-h-[600px] rounded-md"
+              title="Business Card Preview"
+            />
           </div>
         </TabsContent>
       </Tabs>
