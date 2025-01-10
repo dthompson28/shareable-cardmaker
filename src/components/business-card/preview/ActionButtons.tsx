@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Download, Share2, Code2 } from "lucide-react";
+import { Code2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BusinessCardData } from "../../BusinessCardForm";
 
