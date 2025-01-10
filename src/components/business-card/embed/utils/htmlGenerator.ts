@@ -25,9 +25,9 @@ export const generateHeaderHTML = (data: BusinessCardData) => {
           ></div>
         ` : ''}
         <div class="bc-text-content">
-          <h1 class="bc-name">${data.name}</h1>
-          ${data.jobTitle ? `<h2 class="bc-job-title">${data.jobTitle}</h2>` : ''}
-          ${data.company ? `<h2 class="bc-company">${data.company}</h2>` : ''}
+          <h1 class="bc-name font-playfair">${data.name}</h1>
+          ${data.jobTitle ? `<h2 class="bc-job-title font-playfair">${data.jobTitle}</h2>` : ''}
+          ${data.company ? `<h2 class="bc-company font-playfair">${data.company}</h2>` : ''}
         </div>
       </div>
     ` : `
@@ -44,9 +44,9 @@ export const generateHeaderHTML = (data: BusinessCardData) => {
             "
           ></div>
         ` : ''}
-        <h1 class="bc-name">${data.name}</h1>
-        ${data.jobTitle ? `<h2 class="bc-job-title">${data.jobTitle}</h2>` : ''}
-        ${data.company ? `<h2 class="bc-company">${data.company}</h2>` : ''}
+        <h1 class="bc-name font-playfair">${data.name}</h1>
+        ${data.jobTitle ? `<h2 class="bc-job-title font-playfair">${data.jobTitle}</h2>` : ''}
+        ${data.company ? `<h2 class="bc-company font-playfair">${data.company}</h2>` : ''}
       </div>
     `}
   </div>`;
@@ -54,7 +54,7 @@ export const generateHeaderHTML = (data: BusinessCardData) => {
 
 export const generateContactHTML = (data: BusinessCardData) => {
   return `
-  <div class="bc-contact-section">
+  <div class="bc-contact-section font-opensans">
     ${data.phone ? `<a href="tel:${data.phone}" class="bc-contact-item">${data.phone}</a>` : ''}
     ${data.email ? `<a href="mailto:${data.email}" class="bc-contact-item">${data.email}</a>` : ''}
     ${data.website ? `<a href="${data.website}" target="_blank" rel="noopener noreferrer" class="bc-contact-item">${data.website}</a>` : ''}
@@ -71,7 +71,7 @@ export const generateSocialHTML = (data: BusinessCardData) => {
     `).join('');
 
   const additionalLinks = data.social.additionalLinks?.map(link => `
-    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="bc-contact-item">
+    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="bc-contact-item font-opensans">
       ${link.title}
     </a>
   `).join('') || '';
@@ -82,7 +82,7 @@ export const generateSocialHTML = (data: BusinessCardData) => {
       ${socialLinks}
     </div>
     ${additionalLinks ? `
-      <div class="bc-additional-links">
+      <div class="bc-additional-links font-opensans">
         ${additionalLinks}
       </div>
     ` : ''}
@@ -92,8 +92,8 @@ export const generateSocialHTML = (data: BusinessCardData) => {
 export const generateActionButtonsHTML = () => {
   return `
   <div class="bc-action-buttons">
-    <button onclick="bcShareCard()" class="bc-button bc-share-button">Share</button>
-    <button onclick="bcSaveContact()" class="bc-button bc-save-button">Save Contact</button>
+    <button onclick="bcShareCard()" class="bc-button bc-share-button font-opensans">Share</button>
+    <button onclick="bcSaveContact()" class="bc-button bc-save-button font-opensans">Save Contact</button>
   </div>`;
 };
 
@@ -170,10 +170,47 @@ export const generateEmbedCode = (data: BusinessCardData) => {
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bc-primary: ${data.colors.primary};
-      --bc-secondary: ${data.colors.secondary};
-      --bc-accent: ${data.colors.accent};
-      --bc-background: ${data.colors.background};
+      --font-playfair: 'Playfair Display', serif;
+      --font-opensans: 'Open Sans', sans-serif;
+    }
+
+    .font-playfair {
+      font-family: var(--font-playfair);
+    }
+
+    .font-opensans {
+      font-family: var(--font-opensans);
+    }
+
+    .bc-name {
+      font-size: 2rem;
+      font-weight: 700;
+      color: ${data.colors.primary};
+      margin: 0 0 0.5rem;
+    }
+
+    .bc-job-title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: ${data.colors.secondary};
+      margin: 0 0 0.25rem;
+    }
+
+    .bc-company {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: ${data.colors.accent};
+      margin: 0;
+    }
+
+    .bc-contact-item {
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .bc-button {
+      font-size: 1rem;
+      font-weight: 500;
     }
 
     .bc-card-container {
@@ -191,7 +228,7 @@ export const generateEmbedCode = (data: BusinessCardData) => {
       max-width: 28rem;
       margin: 0 auto;
       font-family: 'Open Sans', sans-serif;
-      background-color: var(--bc-background);
+      background-color: ${data.colors.background};
       border-radius: 0.75rem;
       box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
       overflow: hidden;
@@ -229,116 +266,6 @@ export const generateEmbedCode = (data: BusinessCardData) => {
       z-index: 1;
     }
 
-    .bc-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: white;
-      margin: 0 0 0.5rem;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .bc-job-title, .bc-company {
-      font-family: 'Playfair Display', serif;
-      color: rgba(255,255,255,0.9);
-      margin: 0 0 0.25rem;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-
-    .bc-job-title {
-      font-size: 1.25rem;
-    }
-
-    .bc-company {
-      font-size: 1.125rem;
-    }
-
-    .bc-contact-section {
-      padding: 1.5rem;
-    }
-
-    .bc-contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      color: var(--bc-primary);
-      text-decoration: none;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      font-family: 'Open Sans', sans-serif;
-      transition: all 0.2s ease;
-      border-radius: 0.375rem;
-    }
-
-    .bc-contact-item:hover {
-      background-color: var(--bc-background);
-      color: var(--bc-secondary);
-    }
-
-    .bc-social-section {
-      padding: 0 1.5rem;
-    }
-
-    .bc-social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      margin: 1.5rem 0;
-      flex-wrap: wrap;
-    }
-
-    .bc-social-link {
-      color: var(--bc-primary);
-      transition: all 0.2s ease;
-    }
-
-    .bc-social-link:hover {
-      color: var(--bc-secondary);
-      transform: translateY(-2px);
-    }
-
-    .bc-action-buttons {
-      display: flex;
-      gap: 1rem;
-      padding: 1.5rem;
-    }
-
-    .bc-button {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      font-family: 'Open Sans', sans-serif;
-      transition: all 0.2s ease;
-    }
-
-    .bc-share-button {
-      background-color: var(--bc-primary);
-      color: white;
-      border: none;
-    }
-
-    .bc-share-button:hover {
-      opacity: 0.9;
-    }
-
-    .bc-save-button {
-      background-color: transparent;
-      color: var(--bc-accent);
-      border: 2px solid var(--bc-accent);
-    }
-
-    .bc-save-button:hover {
-      background-color: var(--bc-accent);
-      color: white;
-    }
-
     @media (max-width: 640px) {
       .bc-card-container {
         padding: 1rem;
@@ -346,14 +273,6 @@ export const generateEmbedCode = (data: BusinessCardData) => {
 
       .bc-business-card {
         max-width: 100%;
-      }
-
-      .bc-action-buttons {
-        flex-direction: column;
-      }
-
-      .bc-full-photo {
-        height: 14rem;
       }
     }
   </style>
