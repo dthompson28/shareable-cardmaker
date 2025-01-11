@@ -39,9 +39,9 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
           <div class="header-content">
             ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" loading="lazy" />` : ''}
             <div class="header-text">
-              <h1 class="font-playfair text-xl font-bold mb-1">${data.name}</h1>
-              ${data.jobTitle ? `<p class="font-playfair text-sm opacity-90">${data.jobTitle}</p>` : ''}
-              ${data.company ? `<p class="font-playfair text-sm opacity-90">${data.company}</p>` : ''}
+              <h1 class="text-2xl font-bold mb-1">${data.name}</h1>
+              ${data.jobTitle ? `<p class="text-base opacity-90">${data.jobTitle}</p>` : ''}
+              ${data.company ? `<p class="text-base opacity-90">${data.company}</p>` : ''}
             </div>
           </div>
         </div>
@@ -114,23 +114,23 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   --accent: ${data.colors.accent};
                   --background: ${data.colors.background};
                 }
-                ${generateStyles()}
-                .section-highlight {
-                  cursor: pointer;
-                  transition: all 0.2s ease;
+                * {
+                  margin: 0;
+                  padding: 0;
+                  box-sizing: border-box;
                 }
-                .section-highlight:hover {
-                  outline: 2px solid var(--primary);
-                  outline-offset: 2px;
+                body {
+                  font-family: 'Open Sans', sans-serif;
+                  -webkit-font-smoothing: antialiased;
+                  -moz-osx-font-smoothing: grayscale;
                 }
-                .section-selected {
-                  outline: 3px solid var(--accent) !important;
-                  outline-offset: 2px;
-                }
-                .header {
-                  background-size: cover;
-                  background-repeat: no-repeat;
-                  height: 160px;
+                .business-card-wrapper {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  height: 500px;
+                  width: 448px;
+                  overflow: hidden;
                 }
                 .business-card {
                   width: 448px !important;
@@ -139,26 +139,52 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   overflow: hidden !important;
                   display: flex !important;
                   flex-direction: column !important;
+                  background-color: white;
+                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
                 }
-                .business-card-wrapper {
-                  padding: 0;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  height: 500px;
-                  width: 448px;
-                  overflow: hidden;
+                .header {
+                  position: relative;
+                  width: 100%;
+                  height: 160px;
+                  background-size: cover;
+                  background-position: center;
+                  background-repeat: no-repeat;
+                }
+                .header-overlay {
+                  position: absolute;
+                  inset: 0;
+                  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+                }
+                .header-content {
+                  position: relative;
+                  height: 100%;
+                  padding: 1rem;
+                }
+                .header-logo {
+                  position: absolute;
+                  top: 1rem;
+                  right: 1rem;
+                  width: 4rem;
+                  height: 4rem;
+                  object-fit: contain;
+                }
+                .header-text {
+                  position: absolute;
+                  bottom: 1rem;
+                  left: 1rem;
+                  color: white;
                 }
                 .content {
-                  padding: 1rem !important;
-                  flex: 1 !important;
-                  overflow: hidden !important;
+                  flex: 1;
+                  padding: 1rem;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 1rem;
                 }
                 .contact-info {
                   display: flex;
                   flex-direction: column;
                   gap: 0.5rem;
-                  margin-bottom: 1rem;
                 }
                 .contact-link {
                   display: flex;
@@ -166,33 +192,72 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   gap: 0.5rem;
                   color: var(--primary);
                   text-decoration: none;
+                  font-size: 0.875rem;
                   padding: 0.25rem;
                   border-radius: 0.25rem;
-                  font-size: 0.875rem;
+                }
+                .contact-link svg {
+                  width: 1.25rem;
+                  height: 1.25rem;
+                  flex-shrink: 0;
                 }
                 .social-links {
                   display: flex;
-                  gap: 1rem;
                   justify-content: center;
-                  margin: 1rem 0;
+                  gap: 1rem;
+                  margin: 0.5rem 0;
+                }
+                .social-icon {
+                  color: var(--primary);
+                  width: 1.5rem;
+                  height: 1.5rem;
                 }
                 .additional-links {
-                  margin: 1rem 0;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                }
+                .additional-link {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  color: var(--secondary);
+                  text-decoration: none;
                   font-size: 0.875rem;
                 }
                 .action-buttons {
                   display: flex;
                   gap: 0.5rem;
-                  margin-top: 1rem;
+                  margin-top: auto;
                 }
                 .action-button {
                   flex: 1;
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  gap: 0.25rem;
+                  gap: 0.5rem;
                   padding: 0.5rem;
+                  border-radius: 0.25rem;
                   font-size: 0.875rem;
+                  cursor: pointer;
+                  border: none;
+                }
+                .share-button {
+                  background-color: var(--primary);
+                  color: white;
+                }
+                .save-button {
+                  background-color: white;
+                  color: var(--primary);
+                  border: 1px solid var(--primary);
+                }
+                .section-highlight:hover {
+                  outline: 2px solid var(--primary);
+                  outline-offset: 2px;
+                }
+                .section-selected {
+                  outline: 3px solid var(--accent) !important;
+                  outline-offset: 2px;
                 }
               </style>
             </head>
