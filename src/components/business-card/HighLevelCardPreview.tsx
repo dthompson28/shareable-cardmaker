@@ -32,7 +32,6 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
       <div 
         className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
         style={{ 
-          minHeight: '500px',
           backgroundColor: data.colors.background 
         }}
       >
@@ -81,7 +80,7 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
               </div>
             </div>
           </div>
-          <div className="mt-6">
+          <div className="mt-6 space-y-6">
             <ContactInfo data={data} />
             {hasSocialLinks && <SocialLinks data={data} />}
             {hasAdditionalLinks && <AdditionalLinks data={data} />}
@@ -96,7 +95,6 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
     <div 
       className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
       style={{ 
-        minHeight: '500px',
         backgroundColor: data.colors.background 
       }}
     >
@@ -129,7 +127,7 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
         )}
         {renderLogo()}
       </div>
-      <div className="p-6">
+      <div className="p-6 space-y-6">
         <ContactInfo data={data} />
         {hasSocialLinks && <SocialLinks data={data} />}
         {hasAdditionalLinks && <AdditionalLinks data={data} />}
