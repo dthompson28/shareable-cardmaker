@@ -17,7 +17,6 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
 
   const handleSectionClick = (section: PreviewSection) => {
     setSelectedSection(section);
-    // Highlight corresponding section in BusinessCard preview
     const businessCardSection = document.querySelector(`[data-section="${section}"]`);
     if (businessCardSection) {
       businessCardSection.classList.add('ring-2', 'ring-brand-primary');
@@ -138,9 +137,12 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .business-card {
                   width: 100% !important;
                   max-width: 400px !important;
+                  height: 100% !important;
                 }
                 .business-card-wrapper {
                   padding: 1.5rem;
+                  height: 100%;
+                  min-height: 600px;
                 }
                 .contact-info {
                   gap: 0.5rem !important;
