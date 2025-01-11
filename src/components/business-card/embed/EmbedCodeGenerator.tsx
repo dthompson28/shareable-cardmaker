@@ -59,8 +59,10 @@ export const generateEmbedCode = (data: BusinessCardData) => {
   </style>
 </head>
 <body>
-  <div class="business-card-wrapper">
-    ${cardContent}
+  <div id="digital-business-card-root">
+    <div class="business-card-wrapper">
+      ${cardContent}
+    </div>
   </div>
 
   <script>

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
 import { generateStyles } from "./embed/utils/styleGenerator";
 import { CompactCardLayout } from "./layouts/CompactCardLayout";
@@ -15,6 +15,28 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
     typeof value === 'string' && value.length > 0
   );
 
+  useEffect(() => {
+    // Remove any existing style element
+    const existingStyle = document.getElementById('business-card-styles');
+    if (existingStyle) {
+      existingStyle.remove();
+    }
+
+    // Add the styles to the document head
+    const styleElement = document.createElement('style');
+    styleElement.id = 'business-card-styles';
+    styleElement.textContent = generateStyles(data);
+    document.head.appendChild(styleElement);
+
+    // Cleanup on unmount
+    return () => {
+      const style = document.getElementById('business-card-styles');
+      if (style) {
+        style.remove();
+      }
+    };
+  }, [data]);
+
   const renderLogo = () => {
     if (!data.logo) return null;
     return (
@@ -26,27 +48,11 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
     );
   };
 
-  // Add the styles to the document head
-  const styleElement = document.createElement('style');
-  styleElement.textContent = generateStyles(data);
-  document.head.appendChild(styleElement);
-
-  if (data.photoStyle === 'compact') {
-    return (
-      <div className="business-card-wrapper">
-        <CompactCardLayout
-          data={data}
-          hasSocialLinks={hasSocialLinks}
-          hasAdditionalLinks={hasAdditionalLinks}
-          renderLogo={renderLogo}
-        />
-      </div>
-    );
-  }
+  const CardComponent = data.photoStyle === 'compact' ? CompactCardLayout : FullCardLayout;
 
   return (
-    <div className="business-card-wrapper">
-      <FullCardLayout
+    <div id="digital-business-card-root" className="business-card-wrapper">
+      <CardComponent
         data={data}
         hasSocialLinks={hasSocialLinks}
         hasAdditionalLinks={hasAdditionalLinks}
