@@ -43,13 +43,13 @@ export const baseStyles = `
   }
 
   .content {
-    padding: 1.5rem;
+    padding: 1.5rem; /* This ensures 24px margin from edges */
   }
 
   .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1rem; /* This ensures 16px spacing between items */
     margin-bottom: 2rem;
   }
 

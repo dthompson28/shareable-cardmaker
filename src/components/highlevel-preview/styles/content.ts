@@ -6,8 +6,8 @@ export const contentStyles = `
   .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 
   .contact-link {
@@ -22,6 +22,7 @@ export const contentStyles = `
   }
 
   .contact-link:hover {
-    background-color: rgba(0, 103, 79, 0.1);
+    background-color: var(--background);
+    color: var(--secondary);
   }
 `;
