@@ -24,7 +24,6 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
         businessCardSection.classList.remove('ring-2', 'ring-brand-primary');
       }, 2000);
     }
-    console.log('Selected section:', section);
   };
 
   const generateHTML = (data: BusinessCardData) => `
@@ -40,9 +39,9 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
           <div class="header-content">
             ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" loading="lazy" />` : ''}
             <div class="header-text">
-              <h1 class="font-playfair">${data.name}</h1>
-              ${data.jobTitle ? `<p class="font-playfair">${data.jobTitle}</p>` : ''}
-              ${data.company ? `<p class="font-playfair">${data.company}</p>` : ''}
+              <h1 class="font-playfair text-xl font-bold mb-1">${data.name}</h1>
+              ${data.jobTitle ? `<p class="font-playfair text-sm opacity-90">${data.jobTitle}</p>` : ''}
+              ${data.company ? `<p class="font-playfair text-sm opacity-90">${data.company}</p>` : ''}
             </div>
           </div>
         </div>
@@ -131,7 +130,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .header {
                   background-size: cover;
                   background-repeat: no-repeat;
-                  height: 200px;
+                  height: 160px;
                 }
                 .business-card {
                   width: 448px !important;
@@ -151,56 +150,49 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   overflow: hidden;
                 }
                 .content {
-                  padding: 1.5rem !important;
+                  padding: 1rem !important;
                   flex: 1 !important;
-                  overflow-y: auto !important;
+                  overflow: hidden !important;
                 }
                 .contact-info {
                   display: flex;
                   flex-direction: column;
-                  gap: 1rem;
-                  margin-bottom: 2rem;
+                  gap: 0.5rem;
+                  margin-bottom: 1rem;
                 }
-
                 .contact-link {
                   display: flex;
                   align-items: center;
-                  gap: 0.75rem;
+                  gap: 0.5rem;
                   color: var(--primary);
                   text-decoration: none;
+                  padding: 0.25rem;
+                  border-radius: 0.25rem;
+                  font-size: 0.875rem;
+                }
+                .social-links {
+                  display: flex;
+                  gap: 1rem;
+                  justify-content: center;
+                  margin: 1rem 0;
+                }
+                .additional-links {
+                  margin: 1rem 0;
+                  font-size: 0.875rem;
+                }
+                .action-buttons {
+                  display: flex;
+                  gap: 0.5rem;
+                  margin-top: 1rem;
+                }
+                .action-button {
+                  flex: 1;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0.25rem;
                   padding: 0.5rem;
-                  border-radius: 0.5rem;
-                  transition: background-color 0.2s;
-                }
-
-                .contact-link:hover {
-                  background-color: var(--background);
-                }
-
-                .contact-link svg {
-                  width: 1.5rem;
-                  height: 1.5rem;
-                  flex-shrink: 0;
-                }
-
-                .font-playfair {
-                  font-family: 'Playfair Display', serif;
-                }
-
-                .font-normal {
-                  font-weight: 400;
-                }
-
-                a {
-                  color: inherit;
-                  text-decoration: none;
-                }
-
-                button {
-                  border: none;
-                  background: none;
-                  font: inherit;
-                  cursor: pointer;
+                  font-size: 0.875rem;
                 }
               </style>
             </head>
