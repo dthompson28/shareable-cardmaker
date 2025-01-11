@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { BusinessCardForm, BusinessCardData } from "@/components/BusinessCardForm";
-import { BusinessCard } from "@/components/BusinessCard";
+import BusinessCard from "@/components/BusinessCard";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Header } from "@/components/layout/Header";
 import { ContentContainer } from "@/components/layout/ContentContainer";
