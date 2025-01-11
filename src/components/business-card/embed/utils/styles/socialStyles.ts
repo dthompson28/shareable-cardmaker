@@ -14,31 +14,13 @@ export const generateSocialStyles = (data: BusinessCardData) => `
     justify-content: center;
     width: 2.5rem;
     height: 2.5rem;
-    color: currentColor;
+    color: ${data.colors.primary};
     transition: all 0.2s ease;
   }
 
   .bc-social-link svg {
     width: 20px;
     height: 20px;
-    flex-shrink: 0;
-  }
-
-  .bc-contact-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: ${data.colors.primary};
-    text-decoration: none;
-    font-size: 1.125rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.2s ease;
-  }
-
-  .bc-contact-link svg {
-    width: 1.25rem;
-    height: 1.25rem;
     flex-shrink: 0;
   }
 
@@ -79,8 +61,13 @@ export const generateSocialStyles = (data: BusinessCardData) => `
   }
 
   .bc-share-button {
+    background-color: ${data.colors.primary};
     color: white;
     border: none;
+  }
+
+  .bc-share-button svg {
+    color: white;
   }
 
   .bc-save-button {

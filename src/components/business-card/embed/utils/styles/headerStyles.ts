@@ -14,12 +14,6 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
     `}
   }
 
-  .bc-header-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
-  }
-
   .bc-header-content {
     position: relative;
     height: 100%;
@@ -31,7 +25,7 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
     bottom: 24px;
     left: 24px;
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
   .bc-header-text h1 {
