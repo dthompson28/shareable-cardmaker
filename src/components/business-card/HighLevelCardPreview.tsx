@@ -1,14 +1,18 @@
 import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
 import { generateStyles } from "./embed/utils/styleGenerator";
-import { generateHeaderHTML, generateContactHTML, generateSocialHTML, generateActionButtonsHTML } from "./embed/utils/htmlGenerator";
+import { 
+  generateHeaderHTML, 
+  generateContactHTML, 
+  generateSocialHTML, 
+  generateActionButtonsHTML 
+} from "./embed/utils/htmlGenerator";
 
 interface HighLevelCardPreviewProps {
   data: BusinessCardData;
 }
 
 export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) => {
-  // Generate the same HTML structure as the embed code
   const headerHtml = generateHeaderHTML(data);
   const contactHtml = generateContactHTML(data);
   const socialHtml = generateSocialHTML(data);
@@ -17,7 +21,18 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
 
   return (
     <div className="w-full h-full">
-      <style dangerouslySetInnerHTML={{ __html: styles }} />
+      <style dangerouslySetInnerHTML={{ __html: `
+        ${styles}
+        .business-card-wrapper {
+          min-height: auto !important;
+          padding: 0 !important;
+        }
+        .business-card {
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          max-width: none !important;
+        }
+      `}} />
       <div className="business-card-wrapper">
         <div className="business-card">
           <div dangerouslySetInnerHTML={{ __html: headerHtml }} />
