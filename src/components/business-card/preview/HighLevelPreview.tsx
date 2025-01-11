@@ -137,16 +137,17 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .business-card {
                   width: 100% !important;
                   max-width: 448px !important;
-                  min-height: 500px !important;
+                  height: 500px !important;
                   margin: 0 auto !important;
+                  overflow: auto !important;
                 }
                 .business-card-wrapper {
-                  padding: 1.5rem;
+                  padding: 0;
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  min-height: 500px;
-                  height: 100%;
+                  height: 500px;
+                  overflow: hidden;
                 }
                 .content {
                   padding: 1.5rem !important;
