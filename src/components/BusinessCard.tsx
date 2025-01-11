@@ -25,7 +25,7 @@ const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
       
       <div className="flex-1 grid grid-cols-2 gap-8">
         <div className="bg-white rounded-lg shadow-md p-6 flex flex-col h-[600px]">
-          <h3 className="text-lg font-medium mb-4 text-[#00674f]">Business Card Preview</h3>
+          <h3 className="text-lg font-medium text-[#00674f]">Business Card Preview</h3>
           <div className="flex-1 flex items-center justify-center overflow-hidden">
             <div className="w-[448px] h-[280px] transform scale-90">
               <CardPreview data={data} />
@@ -34,7 +34,7 @@ const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
         </div>
         
         <div className="bg-white rounded-lg shadow-md p-6 flex flex-col h-[600px]">
-          <h3 className="text-lg font-medium mb-4 text-[#00674f]">HighLevel Preview</h3>
+          <h3 className="text-lg font-medium text-[#00674f]">HighLevel Preview</h3>
           <div className="flex-1 flex items-center justify-center overflow-hidden">
             <div className="w-[448px] h-[280px] transform scale-90">
               <HighLevelPreview data={data} />
