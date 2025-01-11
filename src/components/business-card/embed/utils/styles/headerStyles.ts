@@ -25,7 +25,6 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
     bottom: 24px;
     left: 24px;
     color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
   .bc-header-text h1 {

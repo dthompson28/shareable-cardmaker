@@ -7,7 +7,7 @@ export const generateActionStyles = (data: BusinessCardData) => `
     margin-top: 2rem;
   }
 
-  .action-buttons button {
+  .action-button {
     flex: 1;
     display: flex;
     align-items: center;
@@ -21,15 +21,24 @@ export const generateActionStyles = (data: BusinessCardData) => `
   }
 
   .share-button {
-    background-color: ${data.colors.primary};
     color: white;
     border: none;
+    background-color: ${data.colors.primary};
   }
 
-  .save-contact-button {
+  .share-button svg {
+    color: white;
+    background: none;
+  }
+
+  .save-button {
     background-color: transparent;
     color: ${data.colors.primary};
     border: 2px solid ${data.colors.primary};
+  }
+
+  .save-button svg {
+    background: none;
   }
 
   .action-buttons button:hover {

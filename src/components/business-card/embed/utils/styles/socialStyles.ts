@@ -22,6 +22,7 @@ export const generateSocialStyles = (data: BusinessCardData) => `
     width: 20px;
     height: 20px;
     flex-shrink: 0;
+    background: none;
   }
 
   .bc-additional-links {
@@ -61,18 +62,23 @@ export const generateSocialStyles = (data: BusinessCardData) => `
   }
 
   .bc-share-button {
-    background-color: ${data.colors.primary};
     color: white;
     border: none;
+    background-color: ${data.colors.primary};
   }
 
   .bc-share-button svg {
     color: white;
+    background: none;
   }
 
   .bc-save-button {
     background-color: transparent;
     color: ${data.colors.accent};
     border: 2px solid ${data.colors.accent};
+  }
+
+  .bc-save-button svg {
+    background: none;
   }
 `;
