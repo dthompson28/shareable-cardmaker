@@ -1,12 +1,11 @@
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+import { memo } from "react";
 import { ContactSection } from "./business-card/form/ContactSection";
 import { SocialSection } from "./business-card/form/SocialSection";
 import { ColorSection } from "./business-card/form/ColorSection";
 import { PhotoSection } from "./business-card/form/PhotoSection";
 import { LogoSection } from "./business-card/form/LogoSection";
-import { memo, useEffect } from "react";
-import { STORAGE_KEY } from "@/constants/businessCard";
+import { FormContainer } from "./business-card/form/FormContainer";
+import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 
 export interface BusinessCardData {
   name: string;
@@ -52,66 +51,16 @@ interface Props {
 }
 
 export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
-  useEffect(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        onChange(parsedData);
-      }
-    } catch (error) {
-      console.error('Error loading data from localStorage:', error);
-    }
-  }, []);
-
-  const handleChange = (field: string, value: string | any) => {
-    if (field.includes(".")) {
-      const [parent, child] = field.split(".");
-      const parentKey = parent as keyof BusinessCardData;
-      const parentValue = data[parentKey];
-      
-      if (parentValue && typeof parentValue === 'object') {
-        onChange({
-          ...data,
-          [parent]: {
-            ...parentValue,
-            [child]: value,
-          },
-        });
-      }
-    } else {
-      onChange({
-        ...data,
-        [field]: value,
-      });
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!data.name || !data.email || !data.phone) {
-      toast.error("Please fill in all required fields");
-      return;
-    }
-    onNext();
-  };
+  const { handleChange } = useBusinessCardForm(data, onChange);
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-12 animate-fadeIn">
-      <div className="space-y-12 divide-y divide-muted">
-        <PhotoSection data={data} onChange={handleChange} />
-        <LogoSection data={data} onChange={handleChange} />
-        <ContactSection data={data} onChange={handleChange} />
-        <SocialSection data={data} onChange={handleChange} />
-        <ColorSection data={data} onChange={handleChange} />
-      </div>
-      <Button 
-        type="submit" 
-        className="w-full h-12 text-lg bg-brand-primary hover:bg-brand-primary/90 transition-opacity"
-      >
-        Preview Card
-      </Button>
-    </form>
+    <FormContainer data={data} onNext={onNext}>
+      <PhotoSection data={data} onChange={handleChange} />
+      <LogoSection data={data} onChange={handleChange} />
+      <ContactSection data={data} onChange={handleChange} />
+      <SocialSection data={data} onChange={handleChange} />
+      <ColorSection data={data} onChange={handleChange} />
+    </FormContainer>
   );
 });
 
