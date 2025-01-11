@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { BusinessCardData } from "../../BusinessCardForm";
 import { generateStyles } from './styles/previewStyles';
 import { generateContactLinks } from './generators/ContactLinksGenerator';
@@ -10,11 +10,28 @@ interface HighLevelPreviewProps {
   data: BusinessCardData;
 }
 
+type PreviewSection = 'header' | 'contact' | 'social' | 'additional' | 'actions' | null;
+
 export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
+  const [selectedSection, setSelectedSection] = useState<PreviewSection>(null);
+
+  const handleSectionClick = (section: PreviewSection) => {
+    setSelectedSection(section);
+    // Highlight corresponding section in BusinessCard preview
+    const businessCardSection = document.querySelector(`[data-section="${section}"]`);
+    if (businessCardSection) {
+      businessCardSection.classList.add('ring-2', 'ring-brand-primary');
+      setTimeout(() => {
+        businessCardSection.classList.remove('ring-2', 'ring-brand-primary');
+      }, 2000);
+    }
+    console.log('Selected section:', section);
+  };
+
   const generateHTML = (data: BusinessCardData) => `
     <div class="business-card-wrapper">
       <div class="business-card">
-        <div class="header" style="background-image: url('${data.photo}')">
+        <div class="header section-highlight" data-section="header" onclick="window.handleSectionClick('header')">
           <div class="header-overlay"></div>
           <div class="header-content">
             ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" loading="lazy" />` : ''}
@@ -26,12 +43,16 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
           </div>
         </div>
         <div class="content">
-          <div class="contact-info">
+          <div class="contact-info section-highlight" data-section="contact" onclick="window.handleSectionClick('contact')">
             ${generateContactLinks(data)}
           </div>
-          ${generateSocialLinks(data)}
-          ${generateAdditionalLinks(data)}
-          <div class="action-buttons">
+          <div class="section-highlight" data-section="social" onclick="window.handleSectionClick('social')">
+            ${generateSocialLinks(data)}
+          </div>
+          <div class="section-highlight" data-section="additional" onclick="window.handleSectionClick('additional')">
+            ${generateAdditionalLinks(data)}
+          </div>
+          <div class="action-buttons section-highlight" data-section="actions" onclick="window.handleSectionClick('actions')">
             <button onclick="shareCard()" class="action-button share-button">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"/>
@@ -76,18 +97,36 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   --background: ${data.colors.background};
                 }
                 ${generateStyles()}
+                .section-highlight {
+                  cursor: pointer;
+                  transition: all 0.2s ease;
+                }
+                .section-highlight:hover {
+                  outline: 2px solid var(--primary);
+                  outline-offset: 2px;
+                }
               </style>
             </head>
             <body>
               ${generateHTML(data)}
               <script>
                 ${generateScript(data)}
+                window.handleSectionClick = function(section) {
+                  window.parent.postMessage({ type: 'sectionClick', section }, '*');
+                }
               </script>
             </body>
           </html>
         `}
         className="w-full h-[600px] border-0"
         title="HighLevel Preview"
+        onLoad={() => {
+          window.addEventListener('message', (event) => {
+            if (event.data.type === 'sectionClick') {
+              handleSectionClick(event.data.section);
+            }
+          });
+        }}
       />
     </div>
   );

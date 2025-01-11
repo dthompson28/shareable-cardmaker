@@ -20,6 +20,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
       <div 
         className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition(data.logoPosition)}`}
         style={{ backgroundImage: `url(${data.logo})` }}
+        data-section="header"
       />
     );
   };
