@@ -142,6 +142,12 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .business-card-wrapper {
                   padding: 1.5rem;
                 }
+                .contact-info {
+                  gap: 0.75rem !important;
+                }
+                .contact-link {
+                  padding: 0.375rem !important;
+                }
               </style>
             </head>
             <body>
