@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
-import { BusinessCardForm, BusinessCardData } from "@/components/BusinessCardForm";
-import BusinessCard from "@/components/BusinessCard";
+import { BusinessCardData } from "@/components/BusinessCardForm";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Header } from "@/components/layout/Header";
 import { ContentContainer } from "@/components/layout/ContentContainer";
-import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { STORAGE_KEY } from "@/constants/businessCard";
+import { FormStep } from "@/components/steps/FormStep";
+import { PreviewStep } from "@/components/steps/PreviewStep";
 
 const initialData: BusinessCardData = {
   name: "",
@@ -85,30 +85,18 @@ const Index = () => {
     setStep(2);
   }, [data]);
 
-  const handleReset = useCallback(() => {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-      setData(initialData);
-      setStep(1);
-      toast.success("Form data has been reset");
-    } catch (error) {
-      console.error('Error resetting data:', error);
-      toast.error("Could not reset form data");
-    }
-  }, []);
-
   return (
     <PageLayout>
       <Header />
       <ContentContainer>
         {step === 1 ? (
-          <BusinessCardForm
+          <FormStep
             data={data}
             onChange={handleDataChange}
             onNext={handleNext}
           />
         ) : (
-          <BusinessCard
+          <PreviewStep
             data={data}
             onBack={handleBack}
             onEdit={handleEdit}
