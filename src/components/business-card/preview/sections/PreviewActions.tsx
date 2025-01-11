@@ -6,13 +6,23 @@ interface PreviewActionsProps {
 }
 
 export const PreviewActions = ({ data, selectedSection }: PreviewActionsProps) => {
+  const handleShareClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent section selection when clicking buttons
+    window.shareCard();
+  };
+
+  const handleSaveClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent section selection when clicking buttons
+    window.saveContact();
+  };
+
   return (
     <div 
       className={`action-buttons section-highlight ${selectedSection === 'actions' ? 'section-selected' : ''}`}
       data-section="actions" 
       onClick={() => window.parent.postMessage({ type: 'sectionClick', section: 'actions' }, '*')}
     >
-      <button onClick={() => window.shareCard()} className="action-button share-button">
+      <button onClick={handleShareClick} className="action-button share-button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
           <circle cx="18" cy="5" r="3"/>
           <circle cx="6" cy="12" r="3"/>
@@ -22,7 +32,7 @@ export const PreviewActions = ({ data, selectedSection }: PreviewActionsProps) =
         </svg>
         Share
       </button>
-      <button onClick={() => window.saveContact()} className="action-button save-button">
+      <button onClick={handleSaveClick} className="action-button save-button">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
           <polyline points="7 10 12 15 17 10"/>
