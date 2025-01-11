@@ -4,13 +4,12 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
   .bc-header {
     position: relative;
     width: 100%;
+    height: 256px;
     ${data.photoStyle === 'full' ? `
-      height: 16rem;
       background-image: url('${data.photo}');
       background-size: cover;
       background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
     ` : `
-      height: 12rem;
       background-color: ${data.colors.secondary};
     `}
   }
@@ -24,16 +23,16 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
   .bc-header-content {
     position: relative;
     height: 100%;
-    padding: 1.5rem;
+    padding: 24px;
   }
 
   .bc-header-photo {
     ${data.photoStyle === 'compact' ? `
       position: absolute;
-      bottom: -3rem;
-      left: 1.5rem;
-      width: 12rem;
-      height: 12rem;
+      bottom: -96px;
+      left: 24px;
+      width: 192px;
+      height: 192px;
       border-radius: 9999px;
       border: 4px solid white;
       background-image: url('${data.photo}');
@@ -45,17 +44,17 @@ export const generateHeaderStyles = (data: BusinessCardData) => `
 
   .bc-header-logo {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 4rem;
-    height: 4rem;
+    top: 24px;
+    right: 24px;
+    width: 64px;
+    height: 64px;
     object-fit: contain;
   }
 
   .bc-header-text {
     position: absolute;
-    bottom: ${data.photoStyle === 'full' ? '1.5rem' : '1rem'};
-    left: ${data.photoStyle === 'full' ? '1.5rem' : '15rem'};
+    bottom: 24px;
+    left: ${data.photoStyle === 'full' ? '24px' : '240px'};
     color: white;
   }
 

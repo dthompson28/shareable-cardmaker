@@ -1,27 +1,36 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateSocialStyles = (data: BusinessCardData) => `
-  .social-links {
+  .bc-social-links {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
-    margin: 2rem 0;
+    gap: 24px;
+    padding: 24px;
   }
 
-  .social-link {
+  .bc-social-link {
+    color: ${data.colors.primary};
+    transition: color 0.2s ease;
+  }
+
+  .bc-social-link svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .bc-additional-links {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .bc-additional-link {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    color: white;
-    background-color: var(--primary);
-    border-radius: 50%;
+    gap: 12px;
+    color: ${data.colors.primary};
+    text-decoration: none;
     transition: all 0.2s ease;
-  }
-
-  .social-link:hover {
-    background-color: var(--secondary);
-    transform: translateY(-2px);
   }
 `;

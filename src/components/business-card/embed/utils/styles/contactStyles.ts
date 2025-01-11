@@ -1,24 +1,25 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
 
 export const generateContactStyles = (data: BusinessCardData) => `
-  .contact-info a {
+  .bc-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .bc-contact-link {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    color: var(--primary);
+    gap: 12px;
+    color: ${data.colors.primary};
     text-decoration: none;
     transition: all 0.2s ease;
-    border-radius: 0.5rem;
   }
 
-  .contact-info a:hover {
-    background-color: var(--background);
-    color: var(--secondary);
-  }
-
-  .contact-info svg {
-    width: 1.5rem;
-    height: 1.5rem;
+  .bc-contact-link svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
   }
 `;
