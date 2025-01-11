@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
+import { generateStyles } from "./embed/utils/styleGenerator";
 import { CompactCardLayout } from "./layouts/CompactCardLayout";
 import { FullCardLayout } from "./layouts/FullCardLayout";
 import { getLogoPosition } from "@/utils/positionUtils";
@@ -25,24 +26,33 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
     );
   };
 
+  // Add the styles to the document head
+  const styleElement = document.createElement('style');
+  styleElement.textContent = generateStyles(data);
+  document.head.appendChild(styleElement);
+
   if (data.photoStyle === 'compact') {
     return (
-      <CompactCardLayout
+      <div className="business-card-wrapper">
+        <CompactCardLayout
+          data={data}
+          hasSocialLinks={hasSocialLinks}
+          hasAdditionalLinks={hasAdditionalLinks}
+          renderLogo={renderLogo}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="business-card-wrapper">
+      <FullCardLayout
         data={data}
         hasSocialLinks={hasSocialLinks}
         hasAdditionalLinks={hasAdditionalLinks}
         renderLogo={renderLogo}
       />
-    );
-  }
-
-  return (
-    <FullCardLayout
-      data={data}
-      hasSocialLinks={hasSocialLinks}
-      hasAdditionalLinks={hasAdditionalLinks}
-      renderLogo={renderLogo}
-    />
+    </div>
   );
 });
 
