@@ -21,10 +21,8 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
   };
 
   return (
-    <div className="h-[500px] w-full flex items-center justify-center">
-      <div className="w-[448px] h-[500px] flex items-center justify-center bg-white rounded-lg shadow-md">
-        <CardPreview data={data} />
-      </div>
+    <div className="w-full h-full">
+      <CardPreview data={data} />
     </div>
   );
 });
