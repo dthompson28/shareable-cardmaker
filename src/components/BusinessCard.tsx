@@ -17,26 +17,25 @@ export const BusinessCard = memo(({ data, onBack, onEdit }: Props) => {
 
   return (
     <div className="space-y-8 animate-fadeIn">
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="min-h-[600px] rounded-lg border"
-      >
-        <ResizablePanel defaultSize={50}>
-          <div className="flex h-full items-center justify-center p-6">
-            <div id="business-card-preview" className="w-full">
-              <CardPreview data={data} />
+      <div className="min-h-[600px] rounded-lg border">
+        <ResizablePanelGroup direction="horizontal">
+          <ResizablePanel defaultSize={50}>
+            <div className="flex h-full items-center justify-center p-6">
+              <div id="business-card-preview" className="w-full">
+                <CardPreview data={data} />
+              </div>
             </div>
-          </div>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={50}>
-          <div className="flex h-full items-center justify-center p-6">
-            <div className="w-full">
-              <HighLevelPreview data={data} />
+          </ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel defaultSize={50}>
+            <div className="flex h-full items-center justify-center p-6">
+              <div className="w-full">
+                <HighLevelPreview data={data} />
+              </div>
             </div>
-          </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
       
       <ActionButtons
         data={data}
