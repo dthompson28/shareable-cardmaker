@@ -47,11 +47,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             bottom: 20px;
             left: 20px;
             color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 8px;
-            backdrop-filter: blur(5px);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
           }
           .header-text h1 {
             font-size: 36px;
@@ -75,6 +71,9 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             text-decoration: none;
             font-size: 18px;
             margin-bottom: 16px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background-color 0.2s ease;
           }
           .social-links {
             display: flex;
@@ -83,9 +82,10 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             margin: 32px 0;
           }
           .social-icon {
-            color: #00674f;
-            width: 24px;
-            height: 24px;
+            color: currentColor;
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
           }
           .additional-link {
             display: flex;
@@ -115,7 +115,6 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             border: none;
           }
           .share-button {
-            background-color: #00674f;
             color: white;
           }
           .save-button {
