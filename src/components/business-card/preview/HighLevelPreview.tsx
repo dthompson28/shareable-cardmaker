@@ -75,7 +75,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             onclick="window.handleSectionClick('actions')"
           >
             <button onclick="shareCard()" class="action-button share-button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                 <circle cx="18" cy="5" r="3"/>
                 <circle cx="6" cy="12" r="3"/>
                 <circle cx="18" cy="19" r="3"/>
@@ -85,7 +85,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
               Share
             </button>
             <button onclick="saveContact()" class="action-button save-button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
                 <polyline points="7 10 12 15 17 10"/>
                 <line x1="12" y1="15" x2="12" y2="3"/>
@@ -152,6 +152,14 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .contact-link svg {
                   width: 1.25rem !important;
                   height: 1.25rem !important;
+                }
+                .action-button {
+                  padding: 0.5rem 1rem !important;
+                  font-size: 0.875rem !important;
+                }
+                .action-button svg {
+                  width: 1rem !important;
+                  height: 1rem !important;
                 }
               </style>
             </head>
