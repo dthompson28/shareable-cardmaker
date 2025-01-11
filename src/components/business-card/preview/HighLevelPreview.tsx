@@ -106,7 +106,6 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-              <meta name="format-detection" content="telephone=no">
               <title>${data.name} - Digital Business Card</title>
               <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
               <style>
@@ -132,14 +131,13 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .header {
                   background-size: cover;
                   background-repeat: no-repeat;
-                  height: 16rem !important;
                 }
                 .business-card {
                   width: 100% !important;
                   max-width: 448px !important;
                   height: 500px !important;
                   margin: 0 auto !important;
-                  overflow: auto !important;
+                  overflow: visible !important;
                 }
                 .business-card-wrapper {
                   padding: 0;
@@ -147,7 +145,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   align-items: center;
                   justify-content: center;
                   height: 500px;
-                  overflow: hidden;
+                  overflow: visible;
                 }
                 .content {
                   padding: 1.5rem !important;
