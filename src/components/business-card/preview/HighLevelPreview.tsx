@@ -133,6 +133,14 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .header {
                   background-size: cover;
                   background-repeat: no-repeat;
+                  height: 16rem !important;
+                }
+                .business-card {
+                  width: 100% !important;
+                  max-width: 400px !important;
+                }
+                .business-card-wrapper {
+                  padding: 1.5rem;
                 }
               </style>
             </head>
