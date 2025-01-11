@@ -1,0 +1,19 @@
+/* Business Card Preview Styles */
+.business-card-preview {
+  @apply bg-white rounded-lg shadow-md p-6;
+}
+
+/* Header Styles */
+.preview-header {
+  @apply text-2xl font-semibold text-brand-primary mb-4;
+}
+
+/* Container Styles */
+.preview-container {
+  @apply bg-white rounded-lg shadow-md p-4;
+}
+
+/* Action Button Styles */
+.preview-actions {
+  @apply flex justify-between mt-4;
+}
