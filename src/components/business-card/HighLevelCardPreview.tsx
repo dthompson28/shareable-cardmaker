@@ -1,6 +1,10 @@
 import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
 import { getLogoPosition } from "@/utils/positionUtils";
+import { SocialLinks } from "./SocialLinks";
+import { AdditionalLinks } from "./AdditionalLinks";
+import { ContactInfo } from "./contact/ContactInfo";
+import { CardActions } from "./preview/CardActions";
 
 interface HighLevelCardPreviewProps {
   data: BusinessCardData;
@@ -77,6 +81,12 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
               </div>
             </div>
           </div>
+          <div className="mt-6">
+            <ContactInfo data={data} />
+            {hasSocialLinks && <SocialLinks data={data} />}
+            {hasAdditionalLinks && <AdditionalLinks data={data} />}
+            <CardActions data={data} />
+          </div>
         </div>
       </div>
     );
@@ -118,6 +128,12 @@ export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) =
           </div>
         )}
         {renderLogo()}
+      </div>
+      <div className="p-6">
+        <ContactInfo data={data} />
+        {hasSocialLinks && <SocialLinks data={data} />}
+        {hasAdditionalLinks && <AdditionalLinks data={data} />}
+        <CardActions data={data} />
       </div>
     </div>
   );
