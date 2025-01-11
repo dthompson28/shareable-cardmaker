@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { BusinessCardData } from "../../BusinessCardForm";
 
 interface PreviewContainerProps {
   title: string;
