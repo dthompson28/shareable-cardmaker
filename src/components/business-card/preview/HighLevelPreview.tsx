@@ -1,6 +1,5 @@
 import { memo, useState } from 'react';
 import { BusinessCardData } from "../../BusinessCardForm";
-import { generateStyles } from './styles/previewStyles';
 import { generateContactLinks } from './generators/ContactLinksGenerator';
 import { generateSocialLinks } from './generators/SocialLinksGenerator';
 import { generateAdditionalLinks } from './generators/AdditionalLinksGenerator';
@@ -25,76 +24,6 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
       }, 2000);
     }
   };
-
-  const generateHTML = (data: BusinessCardData) => `
-    <div class="business-card-wrapper">
-      <div class="business-card">
-        <div 
-          class="header section-highlight ${selectedSection === 'header' ? 'section-selected' : ''}" 
-          data-section="header" 
-          onclick="window.handleSectionClick('header')"
-          style="background-image: url('${data.photo}'); background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;"
-        >
-          <div class="header-overlay"></div>
-          <div class="header-content">
-            ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" loading="lazy" />` : ''}
-            <div class="header-text">
-              <h1 class="text-2xl font-bold mb-1">${data.name}</h1>
-              ${data.jobTitle ? `<p class="text-base opacity-90">${data.jobTitle}</p>` : ''}
-              ${data.company ? `<p class="text-base opacity-90">${data.company}</p>` : ''}
-            </div>
-          </div>
-        </div>
-        <div class="content">
-          <div 
-            class="contact-info section-highlight ${selectedSection === 'contact' ? 'section-selected' : ''}" 
-            data-section="contact" 
-            onclick="window.handleSectionClick('contact')"
-          >
-            ${generateContactLinks(data)}
-          </div>
-          <div 
-            class="section-highlight ${selectedSection === 'social' ? 'section-selected' : ''}" 
-            data-section="social" 
-            onclick="window.handleSectionClick('social')"
-          >
-            ${generateSocialLinks(data)}
-          </div>
-          <div 
-            class="section-highlight ${selectedSection === 'additional' ? 'section-selected' : ''}" 
-            data-section="additional" 
-            onclick="window.handleSectionClick('additional')"
-          >
-            ${generateAdditionalLinks(data)}
-          </div>
-          <div 
-            class="action-buttons section-highlight ${selectedSection === 'actions' ? 'section-selected' : ''}" 
-            data-section="actions" 
-            onclick="window.handleSectionClick('actions')"
-          >
-            <button onclick="shareCard()" class="action-button share-button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                <circle cx="18" cy="5" r="3"/>
-                <circle cx="6" cy="12" r="3"/>
-                <circle cx="18" cy="19" r="3"/>
-                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-              </svg>
-              Share
-            </button>
-            <button onclick="saveContact()" class="action-button save-button">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Save Contact
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
 
   return (
     <div className="h-[500px] w-full flex items-center justify-center">
@@ -128,27 +57,23 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   display: flex;
                   align-items: center;
                   justify-content: center;
-                  height: 500px;
                   width: 448px;
+                  height: 500px;
                   overflow: hidden;
                 }
                 .business-card {
-                  width: 448px !important;
-                  height: 500px !important;
-                  margin: 0 !important;
-                  overflow: hidden !important;
-                  display: flex !important;
-                  flex-direction: column !important;
+                  width: 100%;
+                  height: 100%;
                   background-color: white;
-                  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                  display: flex;
+                  flex-direction: column;
                 }
                 .header {
                   position: relative;
                   width: 100%;
                   height: 160px;
                   background-size: cover;
-                  background-position: center;
-                  background-repeat: no-repeat;
+                  background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
                 }
                 .header-overlay {
                   position: absolute;
@@ -174,27 +99,43 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   left: 1rem;
                   color: white;
                 }
+                .header-text h1 {
+                  font-size: 1.75rem;
+                  margin-bottom: 0.25rem;
+                  font-weight: 700;
+                  font-family: 'Playfair Display', serif;
+                }
+                .header-text p {
+                  font-size: 1rem;
+                  margin: 0.125rem 0;
+                  opacity: 0.9;
+                  font-family: 'Playfair Display', serif;
+                }
                 .content {
                   flex: 1;
-                  padding: 1rem;
+                  padding: 1.5rem;
                   display: flex;
                   flex-direction: column;
-                  gap: 1rem;
+                  gap: 1.5rem;
                 }
                 .contact-info {
                   display: flex;
                   flex-direction: column;
-                  gap: 0.5rem;
+                  gap: 0.75rem;
                 }
                 .contact-link {
                   display: flex;
                   align-items: center;
-                  gap: 0.5rem;
+                  gap: 0.75rem;
                   color: var(--primary);
                   text-decoration: none;
                   font-size: 0.875rem;
-                  padding: 0.25rem;
-                  border-radius: 0.25rem;
+                  padding: 0.375rem;
+                  border-radius: 0.375rem;
+                  transition: background-color 0.2s;
+                }
+                .contact-link:hover {
+                  background-color: rgba(0, 103, 79, 0.1);
                 }
                 .contact-link svg {
                   width: 1.25rem;
@@ -211,23 +152,38 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   color: var(--primary);
                   width: 1.5rem;
                   height: 1.5rem;
+                  transition: color 0.2s;
+                }
+                .social-icon:hover {
+                  color: var(--secondary);
                 }
                 .additional-links {
                   display: flex;
                   flex-direction: column;
-                  gap: 0.5rem;
+                  gap: 0.75rem;
                 }
                 .additional-link {
                   display: flex;
                   align-items: center;
-                  gap: 0.5rem;
+                  gap: 0.75rem;
                   color: var(--secondary);
                   text-decoration: none;
                   font-size: 0.875rem;
+                  padding: 0.375rem;
+                  border-radius: 0.375rem;
+                  transition: all 0.2s;
+                }
+                .additional-link:hover {
+                  color: var(--accent);
+                }
+                .additional-link svg {
+                  width: 1.25rem;
+                  height: 1.25rem;
+                  color: var(--accent);
                 }
                 .action-buttons {
                   display: flex;
-                  gap: 0.5rem;
+                  gap: 1rem;
                   margin-top: auto;
                 }
                 .action-button {
@@ -236,20 +192,30 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   align-items: center;
                   justify-content: center;
                   gap: 0.5rem;
-                  padding: 0.5rem;
-                  border-radius: 0.25rem;
+                  padding: 0.75rem;
+                  border-radius: 0.375rem;
                   font-size: 0.875rem;
+                  font-weight: 500;
                   cursor: pointer;
-                  border: none;
+                  transition: all 0.2s;
                 }
                 .share-button {
                   background-color: var(--primary);
                   color: white;
+                  border: none;
+                }
+                .share-button:hover {
+                  background-color: var(--secondary);
                 }
                 .save-button {
                   background-color: white;
                   color: var(--primary);
                   border: 1px solid var(--primary);
+                }
+                .save-button:hover {
+                  background-color: var(--secondary);
+                  color: white;
+                  border-color: var(--secondary);
                 }
                 .section-highlight:hover {
                   outline: 2px solid var(--primary);
@@ -262,7 +228,73 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
               </style>
             </head>
             <body>
-              ${generateHTML(data)}
+              <div class="business-card-wrapper">
+                <div class="business-card">
+                  <div 
+                    class="header section-highlight ${selectedSection === 'header' ? 'section-selected' : ''}" 
+                    data-section="header" 
+                    onclick="window.handleSectionClick('header')"
+                    style="background-image: url('${data.photo}');"
+                  >
+                    <div class="header-overlay"></div>
+                    <div class="header-content">
+                      ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" loading="lazy" />` : ''}
+                      <div class="header-text">
+                        <h1>${data.name}</h1>
+                        ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
+                        ${data.company ? `<p>${data.company}</p>` : ''}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="content">
+                    <div 
+                      class="contact-info section-highlight ${selectedSection === 'contact' ? 'section-selected' : ''}" 
+                      data-section="contact" 
+                      onclick="window.handleSectionClick('contact')"
+                    >
+                      ${generateContactLinks(data)}
+                    </div>
+                    <div 
+                      class="section-highlight ${selectedSection === 'social' ? 'section-selected' : ''}" 
+                      data-section="social" 
+                      onclick="window.handleSectionClick('social')"
+                    >
+                      ${generateSocialLinks(data)}
+                    </div>
+                    <div 
+                      class="section-highlight ${selectedSection === 'additional' ? 'section-selected' : ''}" 
+                      data-section="additional" 
+                      onclick="window.handleSectionClick('additional')"
+                    >
+                      ${generateAdditionalLinks(data)}
+                    </div>
+                    <div 
+                      class="action-buttons section-highlight ${selectedSection === 'actions' ? 'section-selected' : ''}" 
+                      data-section="actions" 
+                      onclick="window.handleSectionClick('actions')"
+                    >
+                      <button onclick="shareCard()" class="action-button share-button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                          <circle cx="18" cy="5" r="3"/>
+                          <circle cx="6" cy="12" r="3"/>
+                          <circle cx="18" cy="19" r="3"/>
+                          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                        </svg>
+                        Share
+                      </button>
+                      <button onclick="saveContact()" class="action-button save-button">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                          <polyline points="7 10 12 15 17 10"/>
+                          <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Save Contact
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <script>
                 ${generateScript(data)}
                 window.handleSectionClick = function(section) {
