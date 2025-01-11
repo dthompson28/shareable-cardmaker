@@ -147,6 +147,11 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 }
                 .contact-link {
                   padding: 0.375rem !important;
+                  font-weight: 500 !important;
+                }
+                .contact-link svg {
+                  width: 1.25rem !important;
+                  height: 1.25rem !important;
                 }
               </style>
             </head>
