@@ -144,8 +144,12 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   height: 100%;
                   min-height: 600px;
                 }
+                .content {
+                  padding: 1.5rem !important;
+                }
                 .contact-info {
-                  gap: 0.5rem !important;
+                  gap: 0.75rem !important;
+                  margin-bottom: 1.5rem !important;
                 }
                 .contact-link {
                   padding: 0.375rem !important;
@@ -154,6 +158,28 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .contact-link svg {
                   width: 1.25rem !important;
                   height: 1.25rem !important;
+                }
+                .social-links {
+                  margin: 1.5rem 0 !important;
+                  gap: 1rem !important;
+                }
+                .social-icon svg {
+                  width: 1.25rem !important;
+                  height: 1.25rem !important;
+                }
+                .additional-links {
+                  margin: 1.5rem 0 !important;
+                }
+                .additional-link {
+                  padding: 0.375rem !important;
+                  margin-bottom: 0.5rem !important;
+                }
+                .additional-link:last-child {
+                  margin-bottom: 0 !important;
+                }
+                .action-buttons {
+                  margin-top: 1.5rem !important;
+                  gap: 0.75rem !important;
                 }
                 .action-button {
                   padding: 0.5rem 1rem !important;
