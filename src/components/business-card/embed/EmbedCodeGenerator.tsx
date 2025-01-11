@@ -17,15 +17,43 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <title>${data.name} - Digital Business Card</title>
   <meta name="description" content="Digital Business Card for ${data.name}">
   <meta name="author" content="${data.name}">
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Load fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Prevent flash of unstyled content -->
+  <style>
+    .business-card-wrapper { opacity: 0; }
+    .fonts-loaded .business-card-wrapper { opacity: 1; transition: opacity 0.3s ease; }
+  </style>
+  
+  <!-- Font loading detection -->
+  <script>
+    if ("fonts" in document) {
+      Promise.all([
+        document.fonts.load("400 1em 'Open Sans'"),
+        document.fonts.load("400 1em 'Playfair Display'")
+      ]).then(() => {
+        document.documentElement.classList.add('fonts-loaded');
+      });
+    } else {
+      document.documentElement.classList.add('fonts-loaded');
+    }
+  </script>
 </head>
 <body>
-  <div class="bc-card-container">
-    <div class="bc-business-card">
+  <div class="business-card-wrapper">
+    <div class="business-card">
       ${generateHeaderHTML(data)}
-      ${generateContactHTML(data)}
-      ${generateSocialHTML(data)}
-      ${generateActionButtonsHTML(data)}
+      <div class="content">
+        ${generateContactHTML(data)}
+        ${generateSocialHTML(data)}
+        ${generateActionButtonsHTML(data)}
+      </div>
     </div>
   </div>
   ${generateScriptHTML(data)}
