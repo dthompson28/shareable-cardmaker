@@ -136,13 +136,13 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 }
                 .business-card {
                   width: 100% !important;
-                  max-width: 400px !important;
-                  height: 100% !important;
+                  max-width: 448px !important;
+                  min-height: 500px !important;
                 }
                 .business-card-wrapper {
                   padding: 1.5rem;
                   height: 100%;
-                  min-height: 600px;
+                  min-height: 500px;
                 }
                 .content {
                   padding: 1.5rem !important;
@@ -202,7 +202,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             </body>
           </html>
         `}
-        className="w-full h-[600px] border-0"
+        className="w-full h-[500px] border-0"
         title="HighLevel Preview"
         onLoad={() => {
           window.addEventListener('message', (event) => {
