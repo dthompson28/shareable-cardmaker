@@ -89,7 +89,7 @@ export const generateStyles = (data: BusinessCardData) => `
 #digital-business-card-root .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem; /* Changed from 0.75rem to 1rem (16px) */
     margin-bottom: 2rem;
 }
 
