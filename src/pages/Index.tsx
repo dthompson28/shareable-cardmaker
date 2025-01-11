@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { BusinessCardForm, BusinessCardData } from "@/components/BusinessCardForm";
 import BusinessCard from "@/components/BusinessCard";
 import { PageLayout } from "@/components/layout/PageLayout";
@@ -101,15 +101,6 @@ const Index = () => {
     <PageLayout>
       <Header />
       <ContentContainer>
-        <div className="flex justify-end mb-4">
-          <Button 
-            variant="outline" 
-            onClick={handleReset}
-            className="text-sm"
-          >
-            Reset Form
-          </Button>
-        </div>
         {step === 1 ? (
           <BusinessCardForm
             data={data}
