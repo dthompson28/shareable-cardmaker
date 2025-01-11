@@ -18,7 +18,6 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <meta name="description" content="Digital Business Card for ${data.name}">
   <meta name="author" content="${data.name}">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   <style>
     ${generateStyles(data)}
   </style>
