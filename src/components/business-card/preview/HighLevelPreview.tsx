@@ -98,7 +98,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
   `;
 
   return (
-    <div className="h-full w-full">
+    <div className="h-[500px] w-full flex items-center justify-center">
       <iframe
         srcDoc={`
           <!DOCTYPE html>
@@ -131,13 +131,15 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .header {
                   background-size: cover;
                   background-repeat: no-repeat;
+                  height: 200px;
                 }
                 .business-card {
-                  width: 100% !important;
-                  max-width: 448px !important;
+                  width: 448px !important;
                   height: 500px !important;
-                  margin: 0 auto !important;
-                  overflow: visible !important;
+                  margin: 0 !important;
+                  overflow: hidden !important;
+                  display: flex !important;
+                  flex-direction: column !important;
                 }
                 .business-card-wrapper {
                   padding: 0;
@@ -145,52 +147,60 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   align-items: center;
                   justify-content: center;
                   height: 500px;
-                  overflow: visible;
+                  width: 448px;
+                  overflow: hidden;
                 }
                 .content {
                   padding: 1.5rem !important;
+                  flex: 1 !important;
+                  overflow-y: auto !important;
                 }
                 .contact-info {
-                  gap: 0.75rem !important;
-                  margin-bottom: 1.5rem !important;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 1rem;
+                  margin-bottom: 2rem;
                 }
+
                 .contact-link {
-                  padding: 0.375rem !important;
-                  font-weight: 500 !important;
+                  display: flex;
+                  align-items: center;
+                  gap: 0.75rem;
+                  color: var(--primary);
+                  text-decoration: none;
+                  padding: 0.5rem;
+                  border-radius: 0.5rem;
+                  transition: background-color 0.2s;
                 }
+
+                .contact-link:hover {
+                  background-color: var(--background);
+                }
+
                 .contact-link svg {
-                  width: 1.25rem !important;
-                  height: 1.25rem !important;
+                  width: 1.5rem;
+                  height: 1.5rem;
+                  flex-shrink: 0;
                 }
-                .social-links {
-                  margin: 1.5rem 0 !important;
-                  gap: 1rem !important;
+
+                .font-playfair {
+                  font-family: 'Playfair Display', serif;
                 }
-                .social-icon svg {
-                  width: 1.25rem !important;
-                  height: 1.25rem !important;
+
+                .font-normal {
+                  font-weight: 400;
                 }
-                .additional-links {
-                  margin: 1.5rem 0 !important;
+
+                a {
+                  color: inherit;
+                  text-decoration: none;
                 }
-                .additional-link {
-                  padding: 0.375rem !important;
-                  margin-bottom: 0.5rem !important;
-                }
-                .additional-link:last-child {
-                  margin-bottom: 0 !important;
-                }
-                .action-buttons {
-                  margin-top: 1.5rem !important;
-                  gap: 0.75rem !important;
-                }
-                .action-button {
-                  padding: 0.5rem 1rem !important;
-                  font-size: 0.875rem !important;
-                }
-                .action-button svg {
-                  width: 1rem !important;
-                  height: 1rem !important;
+
+                button {
+                  border: none;
+                  background: none;
+                  font: inherit;
+                  cursor: pointer;
                 }
               </style>
             </head>
@@ -205,7 +215,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
             </body>
           </html>
         `}
-        className="w-full h-[500px] border-0"
+        className="w-[448px] h-[500px] border-0"
         title="HighLevel Preview"
         onLoad={() => {
           window.addEventListener('message', (event) => {
