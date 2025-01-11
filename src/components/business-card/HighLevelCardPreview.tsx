@@ -1,34 +1,48 @@
 import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
-import { generateStyles } from "./embed/utils/styleGenerator";
-import { generateHeaderHTML, generateContactHTML, generateSocialHTML, generateActionButtonsHTML } from "./embed/utils/htmlGenerator";
+import { CompactCardLayout } from "./layouts/CompactCardLayout";
+import { FullCardLayout } from "./layouts/FullCardLayout";
+import { getLogoPosition } from "@/utils/positionUtils";
 
 interface HighLevelCardPreviewProps {
   data: BusinessCardData;
 }
 
 export const HighLevelCardPreview = memo(({ data }: HighLevelCardPreviewProps) => {
-  // Generate the same HTML structure as the embed code
-  const headerHtml = generateHeaderHTML(data);
-  const contactHtml = generateContactHTML(data);
-  const socialHtml = generateSocialHTML(data);
-  const actionButtonsHtml = generateActionButtonsHTML(data);
-  const styles = generateStyles(data);
+  const hasAdditionalLinks = data.social.additionalLinks?.length > 0;
+  const hasSocialLinks = Object.values(data.social).some(value => 
+    typeof value === 'string' && value.length > 0
+  );
+
+  const renderLogo = () => {
+    if (!data.logo) return null;
+    return (
+      <div 
+        className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition(data.logoPosition)}`}
+        style={{ backgroundImage: `url(${data.logo})` }}
+        data-section="header"
+      />
+    );
+  };
+
+  if (data.photoStyle === 'compact') {
+    return (
+      <CompactCardLayout
+        data={data}
+        hasSocialLinks={hasSocialLinks}
+        hasAdditionalLinks={hasAdditionalLinks}
+        renderLogo={renderLogo}
+      />
+    );
+  }
 
   return (
-    <div className="w-full h-full">
-      <style dangerouslySetInnerHTML={{ __html: styles }} />
-      <div className="business-card-wrapper">
-        <div className="business-card">
-          <div dangerouslySetInnerHTML={{ __html: headerHtml }} />
-          <div className="content">
-            <div dangerouslySetInnerHTML={{ __html: contactHtml }} />
-            <div dangerouslySetInnerHTML={{ __html: socialHtml }} />
-            <div dangerouslySetInnerHTML={{ __html: actionButtonsHtml }} />
-          </div>
-        </div>
-      </div>
-    </div>
+    <FullCardLayout
+      data={data}
+      hasSocialLinks={hasSocialLinks}
+      hasAdditionalLinks={hasAdditionalLinks}
+      renderLogo={renderLogo}
+    />
   );
 });
 

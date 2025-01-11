@@ -8,8 +8,10 @@ interface HighLevelPreviewProps {
 
 export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
   return (
-    <div className="w-full h-full">
-      <HighLevelCardPreview data={data} />
+    <div className="w-full h-full flex items-center justify-center bg-gray-50 p-4">
+      <div className="w-full max-w-md">
+        <HighLevelCardPreview data={data} />
+      </div>
     </div>
   );
 });
