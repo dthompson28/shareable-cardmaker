@@ -31,9 +31,11 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
   const generateHTML = (data: BusinessCardData) => `
     <div class="business-card-wrapper">
       <div class="business-card">
-        <div class="header section-highlight ${selectedSection === 'header' ? 'section-selected' : ''}" 
+        <div 
+          class="header section-highlight ${selectedSection === 'header' ? 'section-selected' : ''}" 
           data-section="header" 
           onclick="window.handleSectionClick('header')"
+          style="background-image: url('${data.photo}'); background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;"
         >
           <div class="header-overlay"></div>
           <div class="header-content">
@@ -46,25 +48,29 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
           </div>
         </div>
         <div class="content">
-          <div class="contact-info section-highlight ${selectedSection === 'contact' ? 'section-selected' : ''}" 
+          <div 
+            class="contact-info section-highlight ${selectedSection === 'contact' ? 'section-selected' : ''}" 
             data-section="contact" 
             onclick="window.handleSectionClick('contact')"
           >
             ${generateContactLinks(data)}
           </div>
-          <div class="section-highlight ${selectedSection === 'social' ? 'section-selected' : ''}" 
+          <div 
+            class="section-highlight ${selectedSection === 'social' ? 'section-selected' : ''}" 
             data-section="social" 
             onclick="window.handleSectionClick('social')"
           >
             ${generateSocialLinks(data)}
           </div>
-          <div class="section-highlight ${selectedSection === 'additional' ? 'section-selected' : ''}" 
+          <div 
+            class="section-highlight ${selectedSection === 'additional' ? 'section-selected' : ''}" 
             data-section="additional" 
             onclick="window.handleSectionClick('additional')"
           >
             ${generateAdditionalLinks(data)}
           </div>
-          <div class="action-buttons section-highlight ${selectedSection === 'actions' ? 'section-selected' : ''}" 
+          <div 
+            class="action-buttons section-highlight ${selectedSection === 'actions' ? 'section-selected' : ''}" 
             data-section="actions" 
             onclick="window.handleSectionClick('actions')"
           >
@@ -123,6 +129,10 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                 .section-selected {
                   outline: 3px solid var(--accent) !important;
                   outline-offset: 2px;
+                }
+                .header {
+                  background-size: cover;
+                  background-repeat: no-repeat;
                 }
               </style>
             </head>
