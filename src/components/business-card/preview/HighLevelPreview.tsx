@@ -143,7 +143,7 @@ export const HighLevelPreview = memo(({ data }: HighLevelPreviewProps) => {
                   padding: 1.5rem;
                 }
                 .contact-info {
-                  gap: 0.75rem !important;
+                  gap: 0.5rem !important;
                 }
                 .contact-link {
                   padding: 0.375rem !important;
