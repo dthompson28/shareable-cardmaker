@@ -8,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { generateEmbedCode } from "../embed/utils/generators/embedGenerator";
 import html2canvas from "html2canvas";
+import { Json } from "@/integrations/supabase/types";
 
 interface SaveCardDialogProps {
   open: boolean;
@@ -48,7 +49,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data }: SaveCardDialogProps
           client_name: clientName,
           card_name: cardName,
           embed_code: embedCode,
-          card_data: data,
+          card_data: data as unknown as Json,
           preview_image: previewImage
         });
 

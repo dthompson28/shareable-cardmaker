@@ -31,6 +31,7 @@ const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
       </div>
 
       <PreviewActions 
+        data={data}
         onBack={onBack}
         onShowEmbedCode={() => setShowEmbedCode(true)}
       />
