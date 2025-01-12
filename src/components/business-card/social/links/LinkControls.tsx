@@ -89,14 +89,14 @@ export const LinkControls = ({
       <div className="grid gap-2">
         <Label>Group</Label>
         <Select
-          value={currentGroup}
-          onValueChange={(value) => onGroupChange(value || undefined)}
+          value={currentGroup || "no-group"}
+          onValueChange={(value) => onGroupChange(value === "no-group" ? undefined : value)}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select a group" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">No Group</SelectItem>
+            <SelectItem value="no-group">No Group</SelectItem>
             {availableGroups.map((group) => (
               <SelectItem key={group} value={group}>
                 {group}
