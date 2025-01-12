@@ -32,24 +32,42 @@ export const generateEmbedCode = (data: BusinessCardData) => `
     .business-card {
       width: 100%;
       max-width: 448px;
-      background: transparent;
       border-radius: 12px;
+      background-color: ${data.colors.background};
       overflow: hidden;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
-    ${data.photoStyle === 'compact' ? `
     .header {
-      position: relative;
-      width: 100%;
       height: 192px;
+      width: 100%;
       background-color: ${data.colors.secondary};
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
     }
 
-    .profile-photo {
+    ${data.logo ? `
+    .logo {
       position: absolute;
-      ${isLogoBottomLeft(data.logoPosition) ? 'right' : 'left'}: 24px;
+      ${isLogoBottomLeft(data.logoPosition) ? `
       bottom: -96px;
+      left: 24px;
+      z-index: 20;
+      ` : `
+      top: 24px;
+      right: 24px;
+      `}
+      width: 64px;
+      height: 64px;
+      background-image: url('${data.logo}');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    ` : ''}
+
+    .contact-photo {
       width: 192px;
       height: 192px;
       border-radius: 50%;
@@ -57,86 +75,43 @@ export const generateEmbedCode = (data: BusinessCardData) => `
       background-image: url('${data.photo}');
       background-size: cover;
       background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      bottom: -96px;
+      ${isLogoBottomLeft(data.logoPosition) ? 'right: 24px;' : 'left: 24px;'}
       z-index: 10;
     }
-    ` : `
-    .header {
-      position: relative;
-      width: 100%;
-      height: 256px;
-      background-image: url('${data.photo}');
-      background-size: cover;
-      background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
+
+    .content {
+      padding: 120px 24px 24px;
     }
 
-    .header::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-    }
-    `}
-
-    .header-content {
-      position: relative;
-      height: 100%;
-      padding: 24px;
-    }
-
-    .header-logo {
-      position: absolute;
-      ${data.photoStyle === 'compact' && isLogoBottomLeft(data.logoPosition) ? `
-      bottom: -96px;
-      left: 24px;
-      ` : `
-      top: 24px;
-      right: 24px;
-      `}
-      width: 64px;
-      height: 64px;
-      object-fit: contain;
-      z-index: ${data.photoStyle === 'compact' ? '20' : '10'};
-    }
-
-    .header-text {
-      ${data.photoStyle === 'compact' ? `
-      padding-top: 96px;
-      text-align: ${isLogoBottomLeft(data.logoPosition) ? 'left' : 'right'};
-      color: ${data.colors.primary};
-      ` : `
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      color: white;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      `}
-    }
-
-    .header-text h1 {
+    .name {
       font-size: 28px;
       margin-bottom: 4px;
       font-weight: 700;
       font-family: 'Playfair Display', serif;
+      color: ${data.colors.primary};
     }
 
-    .header-text p {
+    .title {
       font-size: 18px;
-      margin: 2px 0;
-      opacity: 0.9;
       font-family: 'Playfair Display', serif;
+      color: ${data.colors.secondary};
+      margin: 2px 0;
     }
 
-    .content {
-      padding: 24px;
-      background-color: ${data.colors.background};
-      ${data.photoStyle === 'compact' ? 'padding-top: 120px;' : ''}
+    .company {
+      font-size: 18px;
+      font-family: 'Playfair Display', serif;
+      color: ${data.colors.accent};
+      margin: 2px 0;
     }
 
     .contact-info {
       display: flex;
       flex-direction: column;
       gap: 16px;
+      margin-top: 24px;
     }
 
     .contact-link {
@@ -159,7 +134,6 @@ export const generateEmbedCode = (data: BusinessCardData) => `
       width: 20px;
       height: 20px;
       flex-shrink: 0;
-      background: none;
     }
 
     .social-links {
@@ -178,7 +152,6 @@ export const generateEmbedCode = (data: BusinessCardData) => `
     .social-icon svg {
       width: 20px;
       height: 20px;
-      background: none;
     }
 
     .additional-links {
@@ -205,7 +178,6 @@ export const generateEmbedCode = (data: BusinessCardData) => `
     .additional-link svg {
       width: 20px;
       height: 20px;
-      background: none;
     }
 
     .action-buttons {
@@ -235,7 +207,6 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 
     .share-button svg {
       color: white;
-      background: none;
     }
 
     .save-button {
@@ -245,7 +216,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
     }
 
     .save-button svg {
-      background: none;
+      color: ${data.colors.accent};
     }
   </style>
 </head>
@@ -253,18 +224,15 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <div style="width: 448px; margin: auto;">
     <div class="business-card">
       <div class="header">
-        <div class="header-content">
-          ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" />` : ''}
-          ${data.photoStyle === 'compact' ? `<div class="profile-photo"></div>` : ''}
-          <div class="header-text">
-            <h1>${data.name}</h1>
-            ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
-            ${data.company ? `<p>${data.company}</p>` : ''}
-          </div>
-        </div>
+        <div class="contact-photo"></div>
+        ${data.logo ? '<div class="logo"></div>' : ''}
       </div>
-
+      
       <div class="content">
+        <div class="name">${data.name}</div>
+        ${data.jobTitle ? `<div class="title">${data.jobTitle}</div>` : ''}
+        ${data.company ? `<div class="company">${data.company}</div>` : ''}
+
         <div class="contact-info">
           ${data.phone ? `
             <a href="tel:${data.phone}" class="contact-link">
@@ -274,7 +242,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
               ${data.phone}
             </a>
           ` : ''}
-          
+
           ${data.email ? `
             <a href="mailto:${data.email}" class="contact-link">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -284,9 +252,9 @@ export const generateEmbedCode = (data: BusinessCardData) => `
               ${data.email}
             </a>
           ` : ''}
-          
+
           ${data.website ? `
-            <a href="${data.website}" target="_blank" class="contact-link">
+            <a href="${data.website}" class="contact-link">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/>
                 <line x1="2" y1="12" x2="22" y2="12"/>
@@ -297,41 +265,43 @@ export const generateEmbedCode = (data: BusinessCardData) => `
           ` : ''}
         </div>
 
-        <div class="social-links">
-          ${data.social.linkedin ? `
-            <a href="${data.social.linkedin}" target="_blank" class="social-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect width="4" height="12" x="2" y="9"/>
-                <circle cx="4" cy="4" r="2"/>
-              </svg>
-            </a>
-          ` : ''}
-          
-          ${data.social.facebook ? `
-            <a href="${data.social.facebook}" target="_blank" class="social-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
-              </svg>
-            </a>
-          ` : ''}
-          
-          ${data.social.instagram ? `
-            <a href="${data.social.instagram}" target="_blank" class="social-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-              </svg>
-            </a>
-          ` : ''}
-        </div>
+        ${Object.values(data.social).some(value => value && typeof value === 'string') ? `
+          <div class="social-links">
+            ${data.social.linkedin ? `
+              <a href="${data.social.linkedin}" target="_blank" class="social-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect width="4" height="12" x="2" y="9"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+            ` : ''}
+
+            ${data.social.facebook ? `
+              <a href="${data.social.facebook}" target="_blank" class="social-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </a>
+            ` : ''}
+
+            ${data.social.instagram ? `
+              <a href="${data.social.instagram}" target="_blank" class="social-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                </svg>
+              </a>
+            ` : ''}
+          </div>
+        ` : ''}
 
         ${data.social.additionalLinks?.length ? `
           <div class="additional-links">
             ${data.social.additionalLinks.map(link => `
               <a href="${link.url}" target="_blank" class="additional-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-5 h-5">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
                 <span>${link.title}</span>
@@ -349,6 +319,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
             </svg>
             Share
           </button>
+
           <button onclick="saveContact()" class="action-button save-button">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
