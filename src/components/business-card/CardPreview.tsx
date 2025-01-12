@@ -28,9 +28,8 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     return (
       <CompactCardLayout
         data={data}
-        hasSocialLinks={hasSocialLinks}
-        hasAdditionalLinks={hasAdditionalLinks}
-        renderLogo={renderLogo}
+        selectedSection={null}
+        onSectionClick={() => {}}
       />
     );
   }
