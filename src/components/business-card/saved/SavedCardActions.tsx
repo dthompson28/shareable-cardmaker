@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { BusinessCardData } from "@/components/BusinessCardForm";
+import { toast } from "sonner";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,10 +28,15 @@ export const SavedCardActions = ({
   onEdit,
   onDelete,
 }: SavedCardActionsProps) => {
+  const handleCopyEmbed = (code: string) => {
+    onCopyEmbed(code);
+    toast.success("Embed code copied to clipboard!");
+  };
+
   return (
     <div className="flex gap-4">
       <Button 
-        onClick={() => onCopyEmbed(embedCode)}
+        onClick={() => handleCopyEmbed(embedCode)}
         variant="secondary"
       >
         Copy Embed Code
