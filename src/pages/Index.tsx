@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { BusinessCardData } from "@/components/BusinessCardForm";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Header } from "@/components/layout/Header";
@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { STORAGE_KEY } from "@/constants/businessCard";
 import { FormStep } from "@/components/steps/FormStep";
 import { PreviewStep } from "@/components/steps/PreviewStep";
+import { useLocation } from "react-router-dom";
 
 const initialData: BusinessCardData = {
   name: "",
@@ -57,6 +58,17 @@ const Index = () => {
     }
   });
 
+  const location = useLocation();
+
+  useEffect(() => {
+    // Reset form when navigating from saved cards with state.newCard
+    if (location.state?.newCard) {
+      handleClearForm();
+      // Clear the state to prevent repeated resets
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state]);
+
   const handleEdit = useCallback(() => {
     setStep(1);
   }, []);
@@ -72,6 +84,11 @@ const Index = () => {
     } catch (error) {
       console.error('Error saving data to localStorage:', error);
     }
+  }, []);
+
+  const handleClearForm = useCallback(() => {
+    setData(initialData);
+    localStorage.removeItem(STORAGE_KEY);
   }, []);
 
   const handleNext = useCallback(() => {
@@ -94,6 +111,7 @@ const Index = () => {
             data={data}
             onChange={handleDataChange}
             onNext={handleNext}
+            onClear={handleClearForm}
           />
         ) : (
           <PreviewStep

@@ -78,7 +78,10 @@ const SavedCards = () => {
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-[#00674f]">Saved Business Cards</h1>
-        <Button onClick={() => navigate('/')} variant="outline">
+        <Button 
+          onClick={() => navigate('/', { state: { newCard: true } })} 
+          variant="outline"
+        >
           Create New Card
         </Button>
       </div>

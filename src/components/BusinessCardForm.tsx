@@ -9,6 +9,7 @@ import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { Button } from "./ui/button";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export interface BusinessCardData {
   name: string;
@@ -51,9 +52,10 @@ interface Props {
   data: BusinessCardData;
   onChange: (data: BusinessCardData) => void;
   onNext: () => void;
+  onClear: () => void;
 }
 
-export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
+export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props) => {
   const { handleChange } = useBusinessCardForm(data, onChange);
   const navigate = useNavigate();
   const location = useLocation();
@@ -65,9 +67,20 @@ export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
     }
   }, [location.state, onChange]);
 
+  const handleClearForm = () => {
+    onClear();
+    toast.success("Form has been cleared");
+  };
+
   return (
     <div className="space-y-8">
-      <div className="flex justify-end">
+      <div className="flex justify-between">
+        <Button 
+          variant="outline"
+          onClick={handleClearForm}
+        >
+          Clear Form
+        </Button>
         <Button 
           variant="outline"
           onClick={() => navigate('/saved-cards')}
