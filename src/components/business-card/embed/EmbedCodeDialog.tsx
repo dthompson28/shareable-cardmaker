@@ -34,11 +34,8 @@ export const EmbedCodeDialog = ({ open, onOpenChange, data }: EmbedCodeDialogPro
           </div>
           <button
             onClick={() => handleCopyCode(embedCode)}
-            className="mt-4 w-full px-6 py-3 text-base font-medium rounded-md transition-all duration-300 hover:opacity-90"
-            style={{ 
-              backgroundColor: data.colors.primary,
-              color: "#FFFFFF"
-            }}
+            className="mt-4 w-full px-6 py-3 text-base font-medium rounded-md transition-all duration-300 hover:opacity-90 text-white"
+            style={{ backgroundColor: data.colors.primary }}
           >
             Copy Embed Code
           </button>
