@@ -23,10 +23,6 @@ const initialData: BusinessCardData = {
     y: 50
   },
   logo: "",
-  logoPosition: {
-    x: 50,
-    y: 50
-  },
   address: "",
   social: {
     linkedin: "",

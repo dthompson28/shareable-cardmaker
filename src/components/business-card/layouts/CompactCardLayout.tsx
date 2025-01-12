@@ -1,70 +1,67 @@
-import { BusinessCardData } from "../../BusinessCardForm";
-import { CardHeader } from "../header/CardHeader";
+import { BusinessCardData } from "@/components/BusinessCardForm";
 import { ContactInfo } from "../contact/ContactInfo";
 import { SocialLinks } from "../SocialLinks";
 import { AdditionalLinks } from "../AdditionalLinks";
-import { CardActions } from "../preview/CardActions";
-import { isLogoBottomLeft } from "@/utils/positionUtils";
 
 interface CompactCardLayoutProps {
   data: BusinessCardData;
-  hasSocialLinks: boolean;
-  hasAdditionalLinks: boolean;
-  renderLogo: () => React.ReactNode;
+  selectedSection: string | null;
+  onSectionClick: (section: string) => void;
 }
 
-export const CompactCardLayout = ({
-  data,
-  hasSocialLinks,
-  hasAdditionalLinks,
-  renderLogo,
-}: CompactCardLayoutProps) => {
-  return (
-    <div 
-      className="flex flex-col w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
-      style={{ 
-        minHeight: '500px',
-        backgroundColor: data.colors.background 
-      }}
-    >
+export const CompactCardLayout = ({ data, selectedSection, onSectionClick }: CompactCardLayoutProps) => {
+  const renderLogo = () => {
+    if (!data.logo) return null;
+    return (
       <div 
-        className="w-full h-48 relative"
-        style={{ backgroundColor: data.colors.secondary }}
+        className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${data.logo})` }}
+        data-section="header"
+        onClick={() => onSectionClick('header')}
+      />
+    );
+  };
+
+  return (
+    <div className="relative w-full h-full flex flex-col">
+      <div 
+        className={`header section-highlight relative h-48 bg-cover bg-center ${selectedSection === 'header' ? 'section-selected' : ''}`}
+        style={{ backgroundImage: `url(${data.photo})` }}
+        data-section="header"
+        onClick={() => onSectionClick('header')}
       >
-        {isLogoBottomLeft(data.logoPosition) ? (
-          <div className="absolute bottom-[-96px] left-4 z-10">
-            {renderLogo()}
-          </div>
-        ) : renderLogo()}
-      </div>
-      <div className="relative px-6">
-        <div className="flex flex-col items-start -mt-24">
-          <div 
-            className={`w-48 h-48 rounded-full bg-cover bg-center relative mb-4 border-4 border-white ${
-              isLogoBottomLeft(data.logoPosition) ? 'ml-auto' : ''
-            }`}
-            style={{ 
-              backgroundImage: `url(${data.photo})`,
-              backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
-              backgroundSize: 'cover'
-            }}
-          >
-            <div className="absolute inset-0 bg-black/10 rounded-full" />
-          </div>
-          <div className={`w-full ${isLogoBottomLeft(data.logoPosition) ? '' : ''}`}>
-            <CardHeader data={data} />
-          </div>
+        {renderLogo()}
+        <div className="absolute bottom-4 left-4 text-white">
+          <h1 className="text-2xl font-playfair">{data.name}</h1>
+          {data.jobTitle && <p className="text-lg font-playfair">{data.jobTitle}</p>}
+          {data.company && <p className="text-lg font-playfair">{data.company}</p>}
         </div>
       </div>
-      <div className="p-6 space-y-6">
-        <ContactInfo data={data} />
-        {(hasSocialLinks || hasAdditionalLinks) && (
-          <div className="space-y-4">
-            {hasSocialLinks && <SocialLinks data={data} />}
-            {hasAdditionalLinks && <AdditionalLinks data={data} />}
-          </div>
-        )}
-        <CardActions data={data} />
+
+      <div className="content flex-1 p-6 space-y-6">
+        <div 
+          className={`section-highlight ${selectedSection === 'contact' ? 'section-selected' : ''}`}
+          data-section="contact"
+          onClick={() => onSectionClick('contact')}
+        >
+          <ContactInfo data={data} />
+        </div>
+
+        <div 
+          className={`section-highlight ${selectedSection === 'social' ? 'section-selected' : ''}`}
+          data-section="social"
+          onClick={() => onSectionClick('social')}
+        >
+          <SocialLinks data={data} />
+        </div>
+
+        <div 
+          className={`section-highlight ${selectedSection === 'additional' ? 'section-selected' : ''}`}
+          data-section="additional"
+          onClick={() => onSectionClick('additional')}
+        >
+          <AdditionalLinks data={data} />
+        </div>
       </div>
     </div>
   );

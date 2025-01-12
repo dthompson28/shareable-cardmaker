@@ -45,11 +45,10 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="phone" className="text-brand-primary font-medium">Phone *</Label>
+        <Label htmlFor="phone" className="text-brand-primary font-medium">Phone</Label>
         <Input
           id="phone"
           type="tel"
-          required
           value={data.phone}
           onChange={(e) => onChange("phone", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
@@ -71,10 +70,11 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
       </div>
 
       <div className="grid gap-2">
-        <Label htmlFor="website" className="text-brand-primary font-medium">Website</Label>
+        <Label htmlFor="website" className="text-brand-primary font-medium">Website *</Label>
         <Input
           id="website"
           type="url"
+          required
           value={data.website}
           onChange={(e) => onChange("website", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
