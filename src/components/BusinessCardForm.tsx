@@ -6,6 +6,8 @@ import { PhotoSection } from "./business-card/form/PhotoSection";
 import { LogoSection } from "./business-card/form/LogoSection";
 import { FormContainer } from "./business-card/form/FormContainer";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
+import { Button } from "./ui/button";
+import { useNavigate } from "react-router-dom";
 
 export interface BusinessCardData {
   name: string;
@@ -52,15 +54,26 @@ interface Props {
 
 export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
   const { handleChange } = useBusinessCardForm(data, onChange);
+  const navigate = useNavigate();
 
   return (
-    <FormContainer data={data} onNext={onNext}>
-      <PhotoSection data={data} onChange={handleChange} />
-      <LogoSection data={data} onChange={handleChange} />
-      <ContactSection data={data} onChange={handleChange} />
-      <SocialSection data={data} onChange={handleChange} />
-      <ColorSection data={data} onChange={handleChange} />
-    </FormContainer>
+    <div className="space-y-8">
+      <div className="flex justify-end">
+        <Button 
+          variant="outline"
+          onClick={() => navigate('/saved-cards')}
+        >
+          View Saved Cards
+        </Button>
+      </div>
+      <FormContainer data={data} onNext={onNext}>
+        <PhotoSection data={data} onChange={handleChange} />
+        <LogoSection data={data} onChange={handleChange} />
+        <ContactSection data={data} onChange={handleChange} />
+        <SocialSection data={data} onChange={handleChange} />
+        <ColorSection data={data} onChange={handleChange} />
+      </FormContainer>
+    </div>
   );
 });
 
