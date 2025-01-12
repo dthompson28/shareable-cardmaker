@@ -46,48 +46,50 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     setActiveId(null);
-    
+
     if (!over || !active) return;
 
     const activeId = active.id;
     const overId = over.id;
-    
+
     if (activeId === overId) return;
 
     const activeIndex = links.findIndex(link => link.id === activeId);
     if (activeIndex === -1) return;
 
-    const overIndex = links.findIndex(link => link.id === overId);
     const newLinks = [...links];
     const [movedItem] = newLinks.splice(activeIndex, 1);
 
-    // Determine the target group based on where the item was dropped
+    // Determine target group and position
     let targetGroupName: string | undefined;
+    let targetIndex: number;
 
-    // If dropping onto a group container
-    if (typeof over.id === 'string' && over.id.startsWith('group-')) {
-      targetGroupName = over.id.replace('group-', '');
-    } 
-    // If dropping in ungrouped section
-    else if (over.id === 'ungrouped') {
+    // Handle dropping into a group
+    if (typeof overId === 'string' && overId.startsWith('group-')) {
+      targetGroupName = overId.replace('group-', '');
+      // Find the last index in the target group or 0 if empty
+      targetIndex = newLinks.filter(link => link.groupName === targetGroupName).length;
+    }
+    // Handle dropping into ungrouped section
+    else if (overId === 'ungrouped') {
       targetGroupName = undefined;
-    } 
-    // If dropping onto another link
+      // Find the last index in ungrouped section
+      targetIndex = newLinks.filter(link => !link.groupName).length;
+    }
+    // Handle dropping onto another link
     else {
-      const overLink = links.find(link => link.id === overId);
-      targetGroupName = overLink?.groupName;
+      const overIndex = newLinks.findIndex(link => link.id === overId);
+      if (overIndex === -1) return;
+      
+      targetGroupName = newLinks[overIndex].groupName;
+      targetIndex = overIndex;
     }
 
     // Update the moved item's group
     movedItem.groupName = targetGroupName;
 
     // Insert at the correct position
-    if (overIndex >= 0) {
-      newLinks.splice(overIndex, 0, movedItem);
-    } else {
-      // If dropping into an empty group or ungrouped section
-      newLinks.push(movedItem);
-    }
+    newLinks.splice(targetIndex, 0, movedItem);
 
     onChange(newLinks);
     toast.success("Link moved successfully");
@@ -120,7 +122,7 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
       </div>
       
       <DndContext 
-        collisionDetection={closestCenter} 
+        collisionDetection={closestCenter}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >

@@ -32,10 +32,6 @@ export const GroupCard = ({
 }: GroupCardProps) => {
   const { setNodeRef } = useDroppable({
     id: `group-${groupName}`,
-    data: {
-      type: 'group',
-      groupName: groupName,
-    },
   });
 
   return (

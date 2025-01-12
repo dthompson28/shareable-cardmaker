@@ -17,9 +17,6 @@ export const UngroupedLinks = ({
 }: UngroupedLinksProps) => {
   const { setNodeRef } = useDroppable({
     id: 'ungrouped',
-    data: {
-      type: 'ungrouped',
-    },
   });
 
   if (!links.length) return null;
