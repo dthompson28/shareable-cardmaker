@@ -10,6 +10,7 @@ interface LinkControlsProps {
   title: string;
   url: string;
   id?: string;
+  groupName?: string;
   onTitleChange: (value: string) => void;
   onUrlChange: (value: string) => void;
   onDelete: () => void;
@@ -20,6 +21,7 @@ export const LinkControls = ({
   title,
   url,
   id,
+  groupName,
   onTitleChange,
   onUrlChange,
   onDelete,
@@ -30,7 +32,12 @@ export const LinkControls = ({
     setNodeRef,
     transform,
     transition,
-  } = useSortable({ id: id || index.toString() });
+  } = useSortable({ 
+    id: id || index.toString(),
+    data: {
+      groupName,
+    }
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),

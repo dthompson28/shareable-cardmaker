@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { GroupControls } from "./GroupControls";
 import { LinkControls } from "../links/LinkControls";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 interface GroupCardProps {
   groupName: string;
@@ -43,18 +44,21 @@ export const GroupCard = ({
       </div>
       
       <div className="p-4 space-y-4">
-        {links.map((link, index) => (
-          <LinkControls
-            key={link.id || index}
-            index={index}
-            id={link.id}
-            title={link.title}
-            url={link.url}
-            onTitleChange={(value) => onLinkUpdate(index, "title", value)}
-            onUrlChange={(value) => onLinkUpdate(index, "url", value)}
-            onDelete={() => onLinkDelete(index)}
-          />
-        ))}
+        <SortableContext items={links.map(link => link.id!)} strategy={verticalListSortingStrategy}>
+          {links.map((link, index) => (
+            <LinkControls
+              key={link.id || index}
+              index={index}
+              id={link.id}
+              title={link.title}
+              url={link.url}
+              groupName={groupName}
+              onTitleChange={(value) => onLinkUpdate(index, "title", value)}
+              onUrlChange={(value) => onLinkUpdate(index, "url", value)}
+              onDelete={() => onLinkDelete(index)}
+            />
+          ))}
+        </SortableContext>
       </div>
     </Card>
   );
