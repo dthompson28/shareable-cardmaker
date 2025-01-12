@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { BusinessCardData } from "../../BusinessCardForm";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { generateEmbedCode } from "../embed/utils/generators/embedGenerator";
-import html2canvas from "html2canvas";
+import { SaveCardForm } from "./save-dialog/SaveCardForm";
+import { SaveCardActions } from "./save-dialog/SaveCardActions";
+import { capturePreview } from "@/utils/previewCapture";
 import { Json } from "@/integrations/supabase/types";
 
 interface SaveCardDialogProps {
@@ -36,14 +35,9 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
     setIsSaving(true);
 
     try {
-      // Generate embed code
       const embedCode = generateEmbedCode(data);
+      const previewImage = await capturePreview(previewRef.current);
 
-      // Capture preview image
-      const canvas = await html2canvas(previewRef.current);
-      const previewImage = canvas.toDataURL('image/jpeg');
-
-      // Save to Supabase
       const { error } = await supabase
         .from('business_cards')
         .insert({
@@ -72,34 +66,17 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
         <DialogHeader>
           <DialogTitle>Save Business Card</DialogTitle>
         </DialogHeader>
-        <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label htmlFor="clientName">Client Name</Label>
-            <Input
-              id="clientName"
-              value={clientName}
-              onChange={(e) => setClientName(e.target.value)}
-              placeholder="Enter client name"
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="cardName">Card Name</Label>
-            <Input
-              id="cardName"
-              value={cardName}
-              onChange={(e) => setCardName(e.target.value)}
-              placeholder="Enter card name"
-            />
-          </div>
-        </div>
-        <div className="flex justify-end gap-4">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleSave} disabled={isSaving}>
-            {isSaving ? "Saving..." : "Save Card"}
-          </Button>
-        </div>
+        <SaveCardForm
+          clientName={clientName}
+          setClientName={setClientName}
+          cardName={cardName}
+          setCardName={setCardName}
+        />
+        <SaveCardActions
+          onCancel={() => onOpenChange(false)}
+          onSave={handleSave}
+          isSaving={isSaving}
+        />
       </DialogContent>
     </Dialog>
   );
