@@ -47,7 +47,7 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     const { active, over } = event;
     setActiveId(null);
     
-    if (!over) return;
+    if (!over || !active) return;
 
     const activeId = active.id;
     const overId = over.id;
@@ -55,20 +55,31 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     if (activeId === overId) return;
 
     const activeIndex = links.findIndex(link => link.id === activeId);
+    if (activeIndex === -1) return;
+
     const overIndex = links.findIndex(link => link.id === overId);
-    
-    // Get the container (group) IDs
-    const activeGroupId = links[activeIndex].groupName;
-    const overGroupId = links[overIndex]?.groupName;
-
-    // If dropping onto a group container instead of a link
-    const targetGroupName = over.data.current?.sortable?.containerId || overGroupId;
-
     const newLinks = [...links];
     const [movedItem] = newLinks.splice(activeIndex, 1);
 
-    // Update the group name based on where it was dropped
-    movedItem.groupName = targetGroupName === 'ungrouped' ? undefined : targetGroupName;
+    // Determine the target group based on where the item was dropped
+    let targetGroupName: string | undefined;
+
+    // If dropping onto a group container
+    if (typeof over.id === 'string' && over.id.startsWith('group-')) {
+      targetGroupName = over.id.replace('group-', '');
+    } 
+    // If dropping in ungrouped section
+    else if (over.id === 'ungrouped') {
+      targetGroupName = undefined;
+    } 
+    // If dropping onto another link
+    else {
+      const overLink = links.find(link => link.id === overId);
+      targetGroupName = overLink?.groupName;
+    }
+
+    // Update the moved item's group
+    movedItem.groupName = targetGroupName;
 
     // Insert at the correct position
     if (overIndex >= 0) {
