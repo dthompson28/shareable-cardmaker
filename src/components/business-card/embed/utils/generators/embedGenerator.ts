@@ -4,7 +4,17 @@ import { generateHeaderStyles } from "./sections/headerStyles";
 import { generateContentStyles } from "./sections/contentStyles";
 import { generateSocialStyles } from "./sections/socialStyles";
 import { generateButtonStyles } from "./sections/buttonStyles";
+import { generateHeaderSection } from "./sections/headerSection";
+import { generateContactSection } from "./sections/contactSection";
+import { generateSocialSection } from "./sections/socialSection";
+import { generateActionButtonsSection } from "./sections/actionButtonsSection";
 import { generateScriptSection } from "./sections/scriptSection";
+
+const generateHeaderHTML = (data: BusinessCardData) => generateHeaderSection(data);
+const generateContactHTML = (data: BusinessCardData) => generateContactSection(data);
+const generateSocialHTML = (data: BusinessCardData) => generateSocialSection(data);
+const generateActionButtonsHTML = (data: BusinessCardData) => generateActionButtonsSection(data);
+const generateScriptHTML = (data: BusinessCardData) => `<script>${generateScriptSection(data)}</script>`;
 
 export const generateEmbedCode = (data: BusinessCardData) => `
 <!DOCTYPE html>
@@ -38,5 +48,3 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   ${generateScriptHTML(data)}
 </body>
 </html>`;
-
-export { generateStyles };
