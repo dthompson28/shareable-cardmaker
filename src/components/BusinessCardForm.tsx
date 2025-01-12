@@ -34,7 +34,15 @@ export interface BusinessCardData {
     twitter: string;
     tiktok: string;
     whatsapp: string;
-    additionalLinks?: { title: string; url: string; }[];
+    additionalLinks?: { 
+      title: string; 
+      url: string;
+      groupName?: string; 
+    }[];
+    linkGroups?: {
+      name: string;
+      position: number;
+    }[];
   };
   colors: {
     primary: string;
