@@ -40,17 +40,14 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   );
 
   return (
-    <div className="space-y-6 p-4 rounded-lg border border-border">
+    <div className="additional-links">
       {groupOrder.map((groupName, groupIndex) => {
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
         
         return (
-          <div key={groupIndex} className="bg-muted/50 rounded-lg p-4">
-            <h3 
-              className="text-lg font-semibold mb-3" 
-              style={{ color: data.colors.secondary }}
-            >
+          <div key={groupIndex} className="link-group">
+            <h3 className="group-title" style={{ color: data.colors.secondary }}>
               {groupName}
             </h3>
             <div className="space-y-3">
@@ -60,11 +57,10 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 no-underline hover:opacity-80 transition-opacity"
+                  className="additional-link"
                   style={{ color: data.colors.secondary }}
                 >
                   <svg 
-                    className="w-4 h-4 flex-shrink-0" 
                     viewBox="0 0 24 24" 
                     fill="none" 
                     stroke="currentColor" 
@@ -75,7 +71,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
                   >
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
-                  <span className="text-base font-opensans">{link.title}</span>
+                  <span>{link.title}</span>
                 </a>
               ))}
             </div>
@@ -92,11 +88,10 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 no-underline hover:opacity-80 transition-opacity"
+              className="additional-link"
               style={{ color: data.colors.secondary }}
             >
               <svg 
-                className="w-4 h-4 flex-shrink-0" 
                 viewBox="0 0 24 24" 
                 fill="none" 
                 stroke="currentColor" 
@@ -107,7 +102,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-              <span className="text-base font-opensans">{link.title}</span>
+              <span>{link.title}</span>
             </a>
           ))}
         </div>
