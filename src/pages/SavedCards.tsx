@@ -34,7 +34,6 @@ const SavedCards = () => {
       return;
     }
 
-    // Type assertion to ensure the data matches our SavedCard interface
     setCards(data as unknown as SavedCard[]);
   };
 
@@ -45,6 +44,21 @@ const SavedCards = () => {
 
   const handleEdit = (cardData: BusinessCardData) => {
     navigate('/', { state: { editData: cardData } });
+  };
+
+  const handleDelete = async (id: string) => {
+    const { error } = await supabase
+      .from('business_cards')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      toast.error("Failed to delete card");
+      return;
+    }
+
+    setCards(cards.filter(card => card.id !== id));
+    toast.success("Card deleted successfully");
   };
 
   return (
@@ -68,6 +82,7 @@ const SavedCards = () => {
             cardData={card.card_data}
             onCopyEmbed={copyEmbedCode}
             onEdit={handleEdit}
+            onDelete={() => handleDelete(card.id)}
           />
         ))}
       </div>

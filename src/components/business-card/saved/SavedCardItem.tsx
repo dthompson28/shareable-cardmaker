@@ -10,6 +10,7 @@ interface SavedCardProps {
   cardData: BusinessCardData;
   onCopyEmbed: (embedCode: string) => void;
   onEdit: (cardData: BusinessCardData) => void;
+  onDelete: () => void;
 }
 
 export const SavedCardItem = ({
@@ -20,6 +21,7 @@ export const SavedCardItem = ({
   cardData,
   onCopyEmbed,
   onEdit,
+  onDelete,
 }: SavedCardProps) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
@@ -41,6 +43,7 @@ export const SavedCardItem = ({
             cardData={cardData}
             onCopyEmbed={onCopyEmbed}
             onEdit={onEdit}
+            onDelete={onDelete}
           />
         </div>
       </div>
