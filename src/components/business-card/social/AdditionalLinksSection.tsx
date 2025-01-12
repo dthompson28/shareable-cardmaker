@@ -58,18 +58,26 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     const overIndex = links.findIndex(link => link.id === overId);
     
     // Get the container (group) IDs
-    const activeGroupId = links[activeIndex].groupName || 'ungrouped';
-    const overGroupId = over.data.current?.groupName || 'ungrouped';
+    const activeGroupId = links[activeIndex].groupName;
+    const overGroupId = links[overIndex]?.groupName;
+
+    // If dropping onto a group container instead of a link
+    const targetGroupName = over.data.current?.sortable?.containerId || overGroupId;
 
     const newLinks = [...links];
     const [movedItem] = newLinks.splice(activeIndex, 1);
 
-    // Update the group name if moving between groups
-    if (activeGroupId !== overGroupId) {
-      movedItem.groupName = overGroupId === 'ungrouped' ? undefined : overGroupId;
+    // Update the group name based on where it was dropped
+    movedItem.groupName = targetGroupName === 'ungrouped' ? undefined : targetGroupName;
+
+    // Insert at the correct position
+    if (overIndex >= 0) {
+      newLinks.splice(overIndex, 0, movedItem);
+    } else {
+      // If dropping into an empty group or ungrouped section
+      newLinks.push(movedItem);
     }
 
-    newLinks.splice(overIndex, 0, movedItem);
     onChange(newLinks);
     toast.success("Link moved successfully");
   };

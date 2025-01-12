@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { LinkControls } from "./LinkControls";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { useDroppable } from "@dnd-kit/core";
 
 interface UngroupedLinksProps {
   links: { title: string; url: string; groupName?: string; id?: string }[];
@@ -14,6 +15,13 @@ export const UngroupedLinks = ({
   onLinkUpdate,
   onLinkDelete,
 }: UngroupedLinksProps) => {
+  const { setNodeRef } = useDroppable({
+    id: 'ungrouped',
+    data: {
+      type: 'ungrouped',
+    },
+  });
+
   if (!links.length) return null;
 
   return (
@@ -21,7 +29,7 @@ export const UngroupedLinks = ({
       <div className="p-4 border-b border-border">
         <h4 className="font-medium text-muted-foreground">Ungrouped Links</h4>
       </div>
-      <div className="p-4 space-y-4">
+      <div ref={setNodeRef} className="p-4 space-y-4 min-h-[100px]">
         <SortableContext items={links.map(link => link.id!)} strategy={verticalListSortingStrategy}>
           {links.map((link, index) => (
             <LinkControls

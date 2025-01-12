@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { GroupControls } from "./GroupControls";
 import { LinkControls } from "../links/LinkControls";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import { useDroppable } from "@dnd-kit/core";
 
 interface GroupCardProps {
   groupName: string;
@@ -29,6 +30,14 @@ export const GroupCard = ({
   onLinkUpdate,
   onLinkDelete,
 }: GroupCardProps) => {
+  const { setNodeRef } = useDroppable({
+    id: `group-${groupName}`,
+    data: {
+      type: 'group',
+      groupName: groupName,
+    },
+  });
+
   return (
     <Card className="bg-muted/50 border-2 border-border overflow-hidden">
       <div className="p-4 border-b border-border bg-muted">
@@ -43,7 +52,7 @@ export const GroupCard = ({
         />
       </div>
       
-      <div className="p-4 space-y-4">
+      <div ref={setNodeRef} className="p-4 space-y-4 min-h-[100px]">
         <SortableContext items={links.map(link => link.id!)} strategy={verticalListSortingStrategy}>
           {links.map((link, index) => (
             <LinkControls
