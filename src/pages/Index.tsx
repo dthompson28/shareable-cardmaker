@@ -1,119 +1,43 @@
-import { useState, useCallback, useEffect } from "react";
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { useEffect } from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { Header } from "@/components/layout/Header";
 import { ContentContainer } from "@/components/layout/ContentContainer";
-import { toast } from "sonner";
-import { STORAGE_KEY } from "@/constants/businessCard";
-import { FormStep } from "@/components/steps/FormStep";
-import { PreviewStep } from "@/components/steps/PreviewStep";
 import { useLocation } from "react-router-dom";
-
-const initialData: BusinessCardData = {
-  name: "",
-  company: "",
-  jobTitle: "",
-  phone: "",
-  email: "",
-  website: "",
-  photo: "",
-  photoStyle: "full",
-  photoPosition: {
-    x: 50,
-    y: 50
-  },
-  logo: "",
-  address: "",
-  social: {
-    linkedin: "",
-    facebook: "",
-    instagram: "",
-    youtube: "",
-    twitter: "",
-    tiktok: "",
-    whatsapp: "",
-    additionalLinks: [],
-  },
-  colors: {
-    primary: "#00674f",
-    secondary: "#326872",
-    accent: "#be5103",
-    background: "#cecabe",
-  },
-};
+import { useBusinessCard } from "@/hooks/useBusinessCard";
+import { BusinessCardContent } from "@/components/business-card/BusinessCardContent";
 
 const Index = () => {
-  const [step, setStep] = useState(1);
-  const [data, setData] = useState<BusinessCardData>(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      return savedData ? JSON.parse(savedData) : initialData;
-    } catch (error) {
-      console.error('Error loading data from localStorage:', error);
-      return initialData;
-    }
-  });
-
   const location = useLocation();
+  const {
+    step,
+    data,
+    handleEdit,
+    handleBack,
+    handleDataChange,
+    handleClearForm,
+    handleNext,
+  } = useBusinessCard();
 
   useEffect(() => {
     if (location.state?.newCard) {
       handleClearForm();
       window.history.replaceState({}, document.title);
     }
-  }, [location.state]);
-
-  const handleEdit = useCallback(() => {
-    setStep(1);
-  }, []);
-
-  const handleBack = useCallback(() => {
-    setStep(1);
-  }, []);
-
-  const handleDataChange = useCallback((newData: BusinessCardData) => {
-    setData(newData);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-    } catch (error) {
-      console.error('Error saving data to localStorage:', error);
-    }
-  }, []);
-
-  const handleClearForm = useCallback(() => {
-    setData(initialData);
-    localStorage.removeItem(STORAGE_KEY);
-  }, []);
-
-  const handleNext = useCallback(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      toast.success("Form data saved successfully");
-      setStep(2);
-    } catch (error) {
-      console.error('Error saving data to localStorage:', error);
-      toast.error("Could not save form data");
-    }
-  }, [data]);
+  }, [location.state, handleClearForm]);
 
   return (
     <PageLayout>
       <Header />
       <ContentContainer>
-        {step === 1 ? (
-          <FormStep
-            data={data}
-            onChange={handleDataChange}
-            onNext={handleNext}
-            onClear={handleClearForm}
-          />
-        ) : (
-          <PreviewStep
-            data={data}
-            onBack={handleBack}
-            onEdit={handleEdit}
-          />
-        )}
+        <BusinessCardContent
+          step={step}
+          data={data}
+          onEdit={handleEdit}
+          onBack={handleBack}
+          onChange={handleDataChange}
+          onClear={handleClearForm}
+          onNext={handleNext}
+        />
       </ContentContainer>
     </PageLayout>
   );
