@@ -32,6 +32,9 @@ export const GroupControls = ({
           className="font-medium"
         />
       </div>
+      <span className="text-sm text-muted-foreground mr-2">
+        Position: {groupIndex + 1}
+      </span>
       <div className="flex gap-1">
         <Button
           type="button"

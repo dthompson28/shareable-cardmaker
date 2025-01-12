@@ -18,7 +18,7 @@ export const useGroupManagement = (
   const [groups, setGroups] = useState<Group[]>([]);
 
   useEffect(() => {
-    // Extract unique group names from links and create group objects
+    // Extract unique group names from links and create group objects with positions
     const uniqueGroups = Array.from(new Set(
       initialLinks
         .map(link => link.groupName)
