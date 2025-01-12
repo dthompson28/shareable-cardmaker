@@ -21,11 +21,11 @@ export const UngroupedLinks = ({
   if (!links.length) return null;
 
   return (
-    <Card className="p-4">
+    <Card className="p-4 bg-background border border-border">
       <h4 className="font-medium text-muted-foreground mb-4">Ungrouped Links</h4>
       <div className="space-y-4">
         {links.map((link, index) => (
-          <div key={index} className="pl-6">
+          <div key={index} className="pl-4 border-l-2 border-border">
             <LinkControls
               index={index}
               title={link.title}

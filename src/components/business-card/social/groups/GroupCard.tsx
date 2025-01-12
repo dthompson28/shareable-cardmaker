@@ -34,7 +34,7 @@ export const GroupCard = ({
   availableGroups,
 }: GroupCardProps) => {
   return (
-    <Card className="p-4">
+    <Card className="p-4 bg-muted/50 border-2 border-border">
       <GroupControls
         groupIndex={groupIndex}
         groupName={groupName}
@@ -47,7 +47,7 @@ export const GroupCard = ({
       
       <div className="mt-4 space-y-4">
         {links.map((link, index) => (
-          <div key={index} className="pl-6">
+          <div key={index} className="pl-4 border-l-2 border-border">
             <LinkControls
               index={index}
               title={link.title}
