@@ -34,7 +34,7 @@ export const generateStylesSection = (data: BusinessCardData) => `
       height: 256px;
       background-size: cover;
       background-position: center;
-      background-color: white;
+      background-color: ${data.colors.secondary};
     }
 
     .header-content {
