@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { BusinessCardData } from "@/components/BusinessCardForm";
+import { SavedCardItem } from "@/components/business-card/saved/SavedCardItem";
 
 interface SavedCard {
   id: string;
@@ -33,7 +34,8 @@ const SavedCards = () => {
       return;
     }
 
-    setCards(data || []);
+    // Type assertion to ensure the data matches our SavedCard interface
+    setCards(data as unknown as SavedCard[]);
   };
 
   const copyEmbedCode = async (embedCode: string) => {
@@ -56,37 +58,17 @@ const SavedCards = () => {
 
       <div className="grid gap-6">
         {cards.map((card) => (
-          <div key={card.id} className="bg-white p-6 rounded-lg shadow-md">
-            <div className="flex items-start gap-6">
-              {card.preview_image && (
-                <img 
-                  src={card.preview_image} 
-                  alt={`${card.card_name} preview`}
-                  className="w-48 h-48 object-cover rounded-lg"
-                />
-              )}
-              <div className="flex-1 space-y-4">
-                <div>
-                  <h3 className="text-lg font-medium">{card.client_name}</h3>
-                  <p className="text-gray-600">{card.card_name}</p>
-                </div>
-                <div className="flex gap-4">
-                  <Button 
-                    onClick={() => copyEmbedCode(card.embed_code)}
-                    variant="secondary"
-                  >
-                    Copy Embed Code
-                  </Button>
-                  <Button
-                    onClick={() => handleEdit(card.card_data)}
-                    variant="outline"
-                  >
-                    Edit Card
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          <SavedCardItem
+            key={card.id}
+            id={card.id}
+            clientName={card.client_name}
+            cardName={card.card_name}
+            previewImage={card.preview_image}
+            embedCode={card.embed_code}
+            cardData={card.card_data}
+            onCopyEmbed={copyEmbedCode}
+            onEdit={handleEdit}
+          />
         ))}
       </div>
     </div>
