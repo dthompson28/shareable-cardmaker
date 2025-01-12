@@ -5,6 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { BusinessCardData } from "@/components/BusinessCardForm";
 import { SavedCardItem } from "@/components/business-card/saved/SavedCardItem";
+import { Database } from "@/integrations/supabase/types";
+
+type BusinessCard = Database['public']['Tables']['business_cards']['Row'];
 
 interface SavedCard {
   id: string;
@@ -34,7 +37,14 @@ const SavedCards = () => {
       return;
     }
 
-    setCards(data as unknown as SavedCard[]);
+    // Transform the data to ensure card_data is properly typed
+    const transformedData: SavedCard[] = (data as BusinessCard[]).map(card => ({
+      ...card,
+      card_data: card.card_data as BusinessCardData,
+      preview_image: card.preview_image || ''
+    }));
+
+    setCards(transformedData);
   };
 
   const copyEmbedCode = async (embedCode: string) => {
