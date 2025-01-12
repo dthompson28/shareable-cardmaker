@@ -60,42 +60,37 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     const newLinks = [...links];
     const [movedItem] = newLinks.splice(activeIndex, 1);
 
-    // Determine target group and position
-    let targetGroupName: string | undefined;
-    let targetIndex: number;
-
     // Handle dropping into a group
     if (typeof overId === 'string' && overId.startsWith('group-')) {
-      targetGroupName = overId.replace('group-', '');
-      // Find the last index in the target group or 0 if empty
-      targetIndex = newLinks.filter(link => link.groupName === targetGroupName).length;
+      const targetGroupName = overId.replace('group-', '');
+      movedItem.groupName = targetGroupName;
+      
+      // Find the last position in the target group
+      const lastGroupItemIndex = newLinks.reduce((lastIndex, link, index) => {
+        return link.groupName === targetGroupName ? index : lastIndex;
+      }, -1);
+      
+      newLinks.splice(lastGroupItemIndex + 1, 0, movedItem);
     }
     // Handle dropping into ungrouped section
     else if (overId === 'ungrouped') {
-      targetGroupName = undefined;
-      // Find the last index in ungrouped section
-      targetIndex = newLinks.filter(link => !link.groupName).length;
+      movedItem.groupName = undefined;
+      newLinks.push(movedItem);
     }
     // Handle dropping onto another link
     else {
       const overIndex = newLinks.findIndex(link => link.id === overId);
       if (overIndex === -1) return;
       
-      targetGroupName = newLinks[overIndex].groupName;
-      targetIndex = overIndex;
+      movedItem.groupName = newLinks[overIndex].groupName;
+      newLinks.splice(overIndex, 0, movedItem);
     }
-
-    // Update the moved item's group
-    movedItem.groupName = targetGroupName;
-
-    // Insert at the correct position
-    newLinks.splice(targetIndex, 0, movedItem);
 
     onChange(newLinks);
     toast.success("Link moved successfully");
   };
 
-  // Group links by their groupName
+  // Group links by their groupName while preserving order
   const groupedLinks = links.reduce((acc, link) => {
     const group = link.groupName || 'ungrouped';
     if (!acc[group]) {
