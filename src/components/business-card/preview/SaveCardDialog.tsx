@@ -19,13 +19,23 @@ interface SaveCardDialogProps {
 export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCardDialogProps) => {
   const [clientName, setClientName] = useState("");
   const [cardName, setCardName] = useState("");
+  const [clientId, setClientId] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
-  // Initialize form data when editing an existing card
+  // Initialize form data when dialog opens or when editing an existing card
   useEffect(() => {
-    if (data.id) {
-      setClientName(data.name);
-      setCardName(data.company);
+    if (open) {
+      if (data.id) {
+        // Editing existing card
+        setClientName(data.name);
+        setCardName(data.company);
+        setClientId(data.id);
+      } else {
+        // New card - auto populate from form data
+        setClientName(data.name || "");
+        setCardName("");
+        setClientId(crypto.randomUUID());
+      }
     }
   }, [data.id, data.name, data.company, open]);
 
@@ -91,7 +101,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
             {data.id ? (
               <>Update Business Card (ID: {data.id})</>
             ) : (
-              "Save Business Card"
+              <>Save Business Card (ID: {clientId})</>
             )}
           </DialogTitle>
         </DialogHeader>
@@ -101,6 +111,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
           cardName={cardName}
           setCardName={setCardName}
           isEditing={!!data.id}
+          clientId={clientId}
         />
         <SaveCardActions
           onCancel={() => onOpenChange(false)}

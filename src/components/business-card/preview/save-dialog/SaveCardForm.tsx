@@ -7,6 +7,7 @@ interface SaveCardFormProps {
   cardName: string;
   setCardName: (value: string) => void;
   isEditing?: boolean;
+  clientId: string;
 }
 
 export const SaveCardForm = ({ 
@@ -14,10 +15,20 @@ export const SaveCardForm = ({
   setClientName, 
   cardName, 
   setCardName,
-  isEditing
+  isEditing,
+  clientId
 }: SaveCardFormProps) => {
   return (
     <div className="space-y-4 py-4">
+      <div className="space-y-2">
+        <Label htmlFor="clientId">Client ID</Label>
+        <Input
+          id="clientId"
+          value={clientId}
+          readOnly
+          className="bg-gray-100"
+        />
+      </div>
       <div className="space-y-2">
         <Label htmlFor="clientName">Client Name</Label>
         <Input
