@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Plus, Trash2, GripVertical, MoveUp, MoveDown } from "lucide-react";
-import { useState } from "react";
+import { Plus } from "lucide-react";
+import { GroupControls } from "./groups/GroupControls";
+import { LinkControls } from "./links/LinkControls";
+import { useGroupManagement } from "./groups/useGroupManagement";
 
 interface Props {
   links: { title: string; url: string; groupName?: string; }[];
@@ -10,74 +10,26 @@ interface Props {
 }
 
 export const AdditionalLinksSection = ({ links, onChange }: Props) => {
-  const [groups, setGroups] = useState<{ name: string; position: number; }[]>([]);
+  const {
+    groups,
+    addGroup,
+    updateGroupName,
+    moveGroup,
+    removeGroup
+  } = useGroupManagement(links, onChange);
 
   const addLink = () => {
     onChange([...links, { title: "", url: "" }]);
-  };
-
-  const addGroup = () => {
-    const newGroup = {
-      name: "",
-      position: links.length
-    };
-    setGroups([...groups, newGroup]);
   };
 
   const removeLink = (index: number) => {
     onChange(links.filter((_, i) => i !== index));
   };
 
-  const removeGroup = (position: number) => {
-    setGroups(groups.filter(g => g.position !== position));
-    // Remove group name from all links at this position
-    const updatedLinks = links.map(link => {
-      if (links.indexOf(link) === position) {
-        const { groupName, ...rest } = link;
-        return rest;
-      }
-      return link;
-    });
-    onChange(updatedLinks);
-  };
-
   const updateLink = (index: number, field: "title" | "url", value: string) => {
     const newLinks = [...links];
     newLinks[index] = { ...newLinks[index], [field]: value };
     onChange(newLinks);
-  };
-
-  const updateGroupName = (index: number, name: string) => {
-    const newGroups = [...groups];
-    newGroups[index] = { ...newGroups[index], name };
-    setGroups(newGroups);
-    
-    // Update all links in this group
-    const position = newGroups[index].position;
-    const updatedLinks = links.map((link, i) => {
-      if (i >= position && (!groups[index + 1] || i < groups[index + 1].position)) {
-        return { ...link, groupName: name };
-      }
-      return link;
-    });
-    onChange(updatedLinks);
-  };
-
-  const moveGroup = (index: number, direction: 'up' | 'down') => {
-    const newGroups = [...groups];
-    const group = newGroups[index];
-    
-    if (direction === 'up' && index > 0) {
-      const prevGroup = newGroups[index - 1];
-      newGroups[index - 1] = { ...group, position: prevGroup.position };
-      newGroups[index] = { ...prevGroup, position: group.position };
-    } else if (direction === 'down' && index < groups.length - 1) {
-      const nextGroup = newGroups[index + 1];
-      newGroups[index + 1] = { ...group, position: nextGroup.position };
-      newGroups[index] = { ...nextGroup, position: group.position };
-    }
-    
-    setGroups(newGroups.sort((a, b) => a.position - b.position));
   };
 
   return (
@@ -98,45 +50,15 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
       
       {groups.map((group, groupIndex) => (
         <div key={groupIndex} className="relative border rounded-lg p-4 space-y-4 bg-muted/50">
-          <div className="flex items-center gap-2">
-            <GripVertical className="w-5 h-5 text-muted-foreground cursor-move" />
-            <div className="flex-1">
-              <Input
-                value={group.name}
-                onChange={(e) => updateGroupName(groupIndex, e.target.value)}
-                placeholder="Group Name"
-                className="font-medium"
-              />
-            </div>
-            <div className="flex gap-1">
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={() => moveGroup(groupIndex, 'up')}
-                disabled={groupIndex === 0}
-              >
-                <MoveUp className="w-4 h-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={() => moveGroup(groupIndex, 'down')}
-                disabled={groupIndex === groups.length - 1}
-              >
-                <MoveDown className="w-4 h-4" />
-              </Button>
-              <Button
-                type="button"
-                variant="destructive"
-                size="icon"
-                onClick={() => removeGroup(group.position)}
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
+          <GroupControls
+            groupIndex={groupIndex}
+            groupName={group.name}
+            totalGroups={groups.length}
+            onNameChange={(name) => updateGroupName(groupIndex, name)}
+            onMoveUp={() => moveGroup(groupIndex, 'up')}
+            onMoveDown={() => moveGroup(groupIndex, 'down')}
+            onDelete={() => removeGroup(group.position)}
+          />
         </div>
       ))}
       
@@ -150,32 +72,14 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
             key={index} 
             className={`grid gap-4 p-4 border rounded-lg ${group ? 'ml-6 border-muted' : ''}`}
           >
-            <div className="grid gap-2">
-              <Label htmlFor={`link-title-${index}`}>Link Title</Label>
-              <Input
-                id={`link-title-${index}`}
-                value={link.title}
-                onChange={(e) => updateLink(index, "title", e.target.value)}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor={`link-url-${index}`}>Link URL</Label>
-              <div className="flex gap-2">
-                <Input
-                  id={`link-url-${index}`}
-                  value={link.url}
-                  onChange={(e) => updateLink(index, "url", e.target.value)}
-                />
-                <Button
-                  type="button"
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => removeLink(index)}
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
+            <LinkControls
+              index={index}
+              title={link.title}
+              url={link.url}
+              onTitleChange={(value) => updateLink(index, "title", value)}
+              onUrlChange={(value) => updateLink(index, "url", value)}
+              onDelete={() => removeLink(index)}
+            />
           </div>
         );
       })}

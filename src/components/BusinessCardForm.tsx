@@ -5,9 +5,9 @@ import { ColorSection } from "./business-card/form/ColorSection";
 import { PhotoSection } from "./business-card/form/PhotoSection";
 import { LogoSection } from "./business-card/form/LogoSection";
 import { FormContainer } from "./business-card/form/FormContainer";
+import { FormHeader } from "./business-card/form/FormHeader";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
-import { Button } from "./ui/button";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
@@ -61,7 +61,6 @@ interface Props {
 
 export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props) => {
   const { handleChange } = useBusinessCardForm(data, onChange);
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -78,20 +77,7 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between">
-        <Button 
-          variant="outline"
-          onClick={handleClearForm}
-        >
-          Clear Form
-        </Button>
-        <Button 
-          variant="outline"
-          onClick={() => navigate('/saved-cards')}
-        >
-          View Saved Cards
-        </Button>
-      </div>
+      <FormHeader onClear={handleClearForm} />
       <FormContainer data={data} onNext={onNext}>
         <PhotoSection data={data} onChange={handleChange} />
         <LogoSection data={data} onChange={handleChange} />
