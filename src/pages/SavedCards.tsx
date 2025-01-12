@@ -39,9 +39,12 @@ const SavedCards = () => {
 
     // Transform the data to ensure card_data is properly typed
     const transformedData: SavedCard[] = (data as BusinessCard[]).map(card => ({
-      ...card,
-      card_data: card.card_data as BusinessCardData,
-      preview_image: card.preview_image || ''
+      id: card.id,
+      client_name: card.client_name,
+      card_name: card.card_name,
+      embed_code: card.embed_code,
+      preview_image: card.preview_image || '',
+      card_data: card.card_data as unknown as BusinessCardData
     }));
 
     setCards(transformedData);
