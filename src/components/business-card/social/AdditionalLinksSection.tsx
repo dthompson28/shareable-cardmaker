@@ -4,6 +4,7 @@ import { GroupControls } from "./groups/GroupControls";
 import { LinkControls } from "./links/LinkControls";
 import { useGroupManagement } from "./groups/useGroupManagement";
 import { toast } from "sonner";
+import { Card } from "@/components/ui/card";
 
 interface Props {
   links: { title: string; url: string; groupName?: string; }[];
@@ -48,12 +49,10 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
       return;
     }
 
-    // Get the target group (if any)
     const targetGroup = groups.find(g => 
       targetIndex >= g.position && (!groups[groups.indexOf(g) + 1] || targetIndex < groups[groups.indexOf(g) + 1].position)
     );
 
-    // Update the link's group assignment
     newLinks[index] = { ...newLinks[targetIndex], groupName: currentLink.groupName };
     newLinks[targetIndex] = { ...currentLink, groupName: targetGroup?.name };
 
@@ -67,6 +66,16 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     onChange(newLinks);
     toast.success(groupName ? `Link assigned to ${groupName}` : "Link removed from group");
   };
+
+  // Group links by their groupName
+  const groupedLinks = links.reduce((acc, link) => {
+    const group = link.groupName || 'ungrouped';
+    if (!acc[group]) {
+      acc[group] = [];
+    }
+    acc[group].push(link);
+    return acc;
+  }, {} as Record<string, typeof links>);
 
   return (
     <div className="space-y-4">
@@ -84,8 +93,9 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
         </div>
       </div>
       
+      {/* Display grouped links */}
       {groups.map((group, groupIndex) => (
-        <div key={groupIndex} className="relative border rounded-lg p-4 space-y-4 bg-muted/50">
+        <Card key={groupIndex} className="p-4 space-y-4">
           <GroupControls
             groupIndex={groupIndex}
             groupName={group.name}
@@ -96,57 +106,60 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
             onDelete={() => removeGroup(group.position)}
           />
           
-          {/* Links within this group */}
-          {links.map((link, linkIndex) => {
-            const belongsToThisGroup = link.groupName === group.name;
-            if (!belongsToThisGroup) return null;
-            
-            return (
-              <div key={linkIndex} className="ml-6">
+          <div className="pl-6 space-y-4">
+            {groupedLinks[group.name]?.map((link, linkIndex) => {
+              const originalIndex = links.findIndex(l => l === link);
+              return (
                 <LinkControls
-                  index={linkIndex}
+                  key={originalIndex}
+                  index={originalIndex}
                   title={link.title}
                   url={link.url}
-                  isFirst={linkIndex === 0}
-                  isLast={linkIndex === links.length - 1}
-                  onTitleChange={(value) => updateLink(linkIndex, "title", value)}
-                  onUrlChange={(value) => updateLink(linkIndex, "url", value)}
-                  onDelete={() => removeLink(linkIndex)}
-                  onMoveUp={() => moveLink(linkIndex, 'up')}
-                  onMoveDown={() => moveLink(linkIndex, 'down')}
-                  onGroupChange={(groupName) => assignLinkToGroup(linkIndex, groupName)}
+                  isFirst={originalIndex === 0}
+                  isLast={originalIndex === links.length - 1}
+                  onTitleChange={(value) => updateLink(originalIndex, "title", value)}
+                  onUrlChange={(value) => updateLink(originalIndex, "url", value)}
+                  onDelete={() => removeLink(originalIndex)}
+                  onMoveUp={() => moveLink(originalIndex, 'up')}
+                  onMoveDown={() => moveLink(originalIndex, 'down')}
+                  onGroupChange={(groupName) => assignLinkToGroup(originalIndex, groupName)}
                   availableGroups={groups.map(g => g.name)}
                   currentGroup={group.name}
                 />
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </Card>
       ))}
       
       {/* Ungrouped links */}
-      {links.map((link, linkIndex) => {
-        if (link.groupName) return null;
-        
-        return (
-          <div key={linkIndex} className="border rounded-lg p-4">
-            <LinkControls
-              index={linkIndex}
-              title={link.title}
-              url={link.url}
-              isFirst={linkIndex === 0}
-              isLast={linkIndex === links.length - 1}
-              onTitleChange={(value) => updateLink(linkIndex, "title", value)}
-              onUrlChange={(value) => updateLink(linkIndex, "url", value)}
-              onDelete={() => removeLink(linkIndex)}
-              onMoveUp={() => moveLink(linkIndex, 'up')}
-              onMoveDown={() => moveLink(linkIndex, 'down')}
-              onGroupChange={(groupName) => assignLinkToGroup(linkIndex, groupName)}
-              availableGroups={groups.map(g => g.name)}
-            />
+      {groupedLinks['ungrouped']?.length > 0 && (
+        <Card className="p-4 space-y-4">
+          <h4 className="font-medium text-muted-foreground">Ungrouped Links</h4>
+          <div className="space-y-4">
+            {groupedLinks['ungrouped'].map((link, index) => {
+              const originalIndex = links.findIndex(l => l === link);
+              return (
+                <LinkControls
+                  key={originalIndex}
+                  index={originalIndex}
+                  title={link.title}
+                  url={link.url}
+                  isFirst={originalIndex === 0}
+                  isLast={originalIndex === links.length - 1}
+                  onTitleChange={(value) => updateLink(originalIndex, "title", value)}
+                  onUrlChange={(value) => updateLink(originalIndex, "url", value)}
+                  onDelete={() => removeLink(originalIndex)}
+                  onMoveUp={() => moveLink(originalIndex, 'up')}
+                  onMoveDown={() => moveLink(originalIndex, 'down')}
+                  onGroupChange={(groupName) => assignLinkToGroup(originalIndex, groupName)}
+                  availableGroups={groups.map(g => g.name)}
+                />
+              );
+            })}
           </div>
-        );
-      })}
+        </Card>
+      )}
     </div>
   );
 };
