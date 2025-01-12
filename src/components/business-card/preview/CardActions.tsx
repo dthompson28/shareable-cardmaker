@@ -40,9 +40,9 @@ export const CardActions = ({ data }: CardActionsProps) => {
     }
   };
 
-  const handleSaveContact = () => {
+  const handleSaveContact = async () => {
     try {
-      downloadVCard(data);
+      await downloadVCard(data);
       toast({
         title: "Contact saved!",
         description: "The contact file has been downloaded.",
