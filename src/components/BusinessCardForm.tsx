@@ -38,6 +38,7 @@ export interface BusinessCardData {
       title: string; 
       url: string;
       groupName?: string; 
+      id?: string;
     }[];
     linkGroups?: {
       name: string;
@@ -66,7 +67,18 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   useEffect(() => {
     const editData = location.state?.editData;
     if (editData) {
-      onChange(editData);
+      // Ensure all additional links have IDs when loading saved data
+      const processedData = {
+        ...editData,
+        social: {
+          ...editData.social,
+          additionalLinks: editData.social.additionalLinks?.map(link => ({
+            ...link,
+            id: link.id || crypto.randomUUID()
+          })) || []
+        }
+      };
+      onChange(processedData);
     }
   }, [location.state, onChange]);
 
