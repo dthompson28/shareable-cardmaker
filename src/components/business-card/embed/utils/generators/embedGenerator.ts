@@ -10,6 +10,14 @@ import { generateSocialSection } from "./sections/socialSection";
 import { generateActionButtonsSection } from "./sections/actionButtonsSection";
 import { generateScriptSection } from "./sections/scriptSection";
 
+const generateStyles = (data: BusinessCardData) => `
+  ${generateBaseStyles(data)}
+  ${generateHeaderStyles(data)}
+  ${generateContentStyles(data)}
+  ${generateSocialStyles(data)}
+  ${generateButtonStyles(data)}
+`;
+
 const generateHeaderHTML = (data: BusinessCardData) => generateHeaderSection(data);
 const generateContactHTML = (data: BusinessCardData) => generateContactSection(data);
 const generateSocialHTML = (data: BusinessCardData) => generateSocialSection(data);
@@ -27,11 +35,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <meta name="author" content="${data.name}">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@400;700&family=Merriweather:wght@400;700&family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    ${generateBaseStyles(data)}
-    ${generateHeaderStyles(data)}
-    ${generateContentStyles(data)}
-    ${generateSocialStyles(data)}
-    ${generateButtonStyles(data)}
+    ${generateStyles(data)}
   </style>
 </head>
 <body>
