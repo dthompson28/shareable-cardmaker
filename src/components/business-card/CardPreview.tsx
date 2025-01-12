@@ -2,7 +2,6 @@ import { memo } from "react";
 import { BusinessCardData } from "../BusinessCardForm";
 import { CompactCardLayout } from "./layouts/CompactCardLayout";
 import { FullCardLayout } from "./layouts/FullCardLayout";
-import { getLogoPosition, isLogoBottomLeft } from "@/utils/positionUtils";
 
 interface CardPreviewProps {
   data: BusinessCardData;
@@ -18,7 +17,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
     if (!data.logo) return null;
     return (
       <div 
-        className={`absolute w-16 h-16 bg-contain bg-center bg-no-repeat ${getLogoPosition(data.logoPosition)}`}
+        className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${data.logo})` }}
         data-section="header"
       />

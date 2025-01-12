@@ -25,10 +25,6 @@ export interface BusinessCardData {
     y: number;
   };
   logo: string;
-  logoPosition: {
-    x: number;
-    y: number;
-  };
   address: string;
   social: {
     linkedin: string;
