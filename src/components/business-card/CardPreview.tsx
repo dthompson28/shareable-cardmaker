@@ -30,6 +30,7 @@ export const CardPreview = memo(({ data }: CardPreviewProps) => {
         data={data}
         selectedSection={null}
         onSectionClick={() => {}}
+        renderLogo={renderLogo}
       />
     );
   }

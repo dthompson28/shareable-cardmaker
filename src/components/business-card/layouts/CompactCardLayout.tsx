@@ -7,26 +7,23 @@ interface CompactCardLayoutProps {
   data: BusinessCardData;
   selectedSection: string | null;
   onSectionClick: (section: string) => void;
+  renderLogo: () => React.ReactNode;
 }
 
-export const CompactCardLayout = ({ data, selectedSection, onSectionClick }: CompactCardLayoutProps) => {
-  const renderLogo = () => {
-    if (!data.logo) return null;
-    return (
-      <div 
-        className="absolute top-4 right-4 w-16 h-16 bg-contain bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${data.logo})` }}
-        data-section="header"
-        onClick={() => onSectionClick('header')}
-      />
-    );
-  };
-
+export const CompactCardLayout = ({ 
+  data, 
+  selectedSection, 
+  onSectionClick,
+  renderLogo 
+}: CompactCardLayoutProps) => {
   return (
     <div className="relative w-full h-full flex flex-col">
       <div 
         className={`header section-highlight relative h-48 bg-cover bg-center ${selectedSection === 'header' ? 'section-selected' : ''}`}
-        style={{ backgroundImage: `url(${data.photo})` }}
+        style={{ 
+          backgroundImage: `url(${data.photo})`,
+          backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`
+        }}
         data-section="header"
         onClick={() => onSectionClick('header')}
       >
