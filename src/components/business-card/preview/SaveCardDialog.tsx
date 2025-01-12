@@ -17,7 +17,7 @@ interface SaveCardDialogProps {
 }
 
 export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCardDialogProps) => {
-  const [clientName, setClientName] = useState("");
+  const [clientName, setClientName] = useState(data.id ? data.name : "");
   const [cardName, setCardName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
@@ -38,19 +38,34 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
       const embedCode = generateEmbedCode(data);
       const previewImage = await capturePreview(previewRef.current);
 
-      const { error } = await supabase
-        .from('business_cards')
-        .insert({
-          client_name: clientName,
-          card_name: cardName,
-          embed_code: embedCode,
-          card_data: data as unknown as Json,
-          preview_image: previewImage
-        });
+      const cardData = {
+        client_name: clientName,
+        card_name: cardName,
+        embed_code: embedCode,
+        card_data: data as unknown as Json,
+        preview_image: previewImage
+      };
+
+      let error;
+
+      if (data.id) {
+        // Update existing card
+        const { error: updateError } = await supabase
+          .from('business_cards')
+          .update(cardData)
+          .eq('id', data.id);
+        error = updateError;
+        if (!error) toast.success("Business card updated successfully");
+      } else {
+        // Create new card
+        const { error: insertError } = await supabase
+          .from('business_cards')
+          .insert(cardData);
+        error = insertError;
+        if (!error) toast.success("Business card saved successfully");
+      }
 
       if (error) throw error;
-
-      toast.success("Business card saved successfully");
       onOpenChange(false);
     } catch (error) {
       console.error('Error saving business card:', error);
@@ -64,7 +79,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Save Business Card</DialogTitle>
+          <DialogTitle>{data.id ? "Update Business Card" : "Save Business Card"}</DialogTitle>
         </DialogHeader>
         <SaveCardForm
           clientName={clientName}

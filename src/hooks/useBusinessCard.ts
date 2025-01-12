@@ -4,6 +4,7 @@ import { STORAGE_KEY } from "@/constants/businessCard";
 import { toast } from "sonner";
 
 const initialData: BusinessCardData = {
+  id: undefined,
   name: "",
   company: "",
   jobTitle: "",

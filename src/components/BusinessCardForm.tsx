@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 export interface BusinessCardData {
+  id?: string;
   name: string;
   company: string;
   jobTitle: string;
