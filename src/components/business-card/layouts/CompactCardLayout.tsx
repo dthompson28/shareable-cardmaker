@@ -23,7 +23,10 @@ export const CompactCardLayout = ({
       className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
       style={{ backgroundColor: data.colors.background }}
     >
-      <div className="relative h-48 bg-secondary">
+      <div 
+        className="relative h-48" 
+        style={{ backgroundColor: data.colors.secondary }}
+      >
         {renderLogo()}
         {data.photo && (
           <div className="absolute left-6 -bottom-24">
