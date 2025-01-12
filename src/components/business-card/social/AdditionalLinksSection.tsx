@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, GripVertical } from "lucide-react";
 import { GroupControls } from "./groups/GroupControls";
 import { LinkControls } from "./links/LinkControls";
 import { useGroupManagement } from "./groups/useGroupManagement";
