@@ -57,10 +57,8 @@ const Index = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Reset form when navigating from saved cards with state.newCard
     if (location.state?.newCard) {
       handleClearForm();
-      // Clear the state to prevent repeated resets
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
@@ -91,11 +89,11 @@ const Index = () => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
       toast.success("Form data saved successfully");
+      setStep(2);
     } catch (error) {
       console.error('Error saving data to localStorage:', error);
       toast.error("Could not save form data");
     }
-    setStep(2);
   }, [data]);
 
   return (

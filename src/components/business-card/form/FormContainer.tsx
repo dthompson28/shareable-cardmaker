@@ -12,10 +12,19 @@ interface FormContainerProps {
 export const FormContainer = memo(({ children, data, onNext }: FormContainerProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!data.name || !data.email || !data.phone) {
-      toast.error("Please fill in all required fields");
+    
+    // Basic validation
+    if (!data.name) {
+      toast.error("Please enter your name");
       return;
     }
+
+    if (!data.email && !data.phone) {
+      toast.error("Please provide either an email or phone number");
+      return;
+    }
+
+    // If validation passes, proceed to preview
     onNext();
   };
 
