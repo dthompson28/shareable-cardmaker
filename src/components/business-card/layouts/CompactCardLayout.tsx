@@ -2,6 +2,8 @@ import { BusinessCardData } from "@/components/BusinessCardForm";
 import { ContactInfo } from "../contact/ContactInfo";
 import { SocialLinks } from "../SocialLinks";
 import { AdditionalLinks } from "../AdditionalLinks";
+import { CardHeader } from "../header/CardHeader";
+import { CardActions } from "../preview/CardActions";
 
 interface CompactCardLayoutProps {
   data: BusinessCardData;
@@ -17,48 +19,34 @@ export const CompactCardLayout = ({
   renderLogo 
 }: CompactCardLayoutProps) => {
   return (
-    <div className="relative w-full h-full flex flex-col">
-      <div 
-        className={`header section-highlight relative h-48 bg-cover bg-center ${selectedSection === 'header' ? 'section-selected' : ''}`}
-        style={{ 
-          backgroundImage: `url(${data.photo})`,
-          backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`
-        }}
-        data-section="header"
-        onClick={() => onSectionClick('header')}
-      >
+    <div 
+      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
+      style={{ backgroundColor: data.colors.background }}
+    >
+      <div className="relative h-48 bg-secondary">
         {renderLogo()}
-        <div className="absolute bottom-4 left-4 text-white">
-          <h1 className="text-2xl font-playfair">{data.name}</h1>
-          {data.jobTitle && <p className="text-lg font-playfair">{data.jobTitle}</p>}
-          {data.company && <p className="text-lg font-playfair">{data.company}</p>}
-        </div>
+        {data.photo && (
+          <div className="absolute left-6 -bottom-24">
+            <div 
+              className="w-48 h-48 rounded-full bg-cover border-4 border-white shadow-xl" 
+              style={{ 
+                backgroundImage: `url(${data.photo})`,
+                backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
+                backgroundColor: 'white'
+              }} 
+            />
+          </div>
+        )}
       </div>
 
-      <div className="content flex-1 p-6 space-y-6">
-        <div 
-          className={`section-highlight ${selectedSection === 'contact' ? 'section-selected' : ''}`}
-          data-section="contact"
-          onClick={() => onSectionClick('contact')}
-        >
-          <ContactInfo data={data} />
-        </div>
-
-        <div 
-          className={`section-highlight ${selectedSection === 'social' ? 'section-selected' : ''}`}
-          data-section="social"
-          onClick={() => onSectionClick('social')}
-        >
+      <div className="pt-28 pb-6 px-6 space-y-6">
+        <CardHeader data={data} />
+        <ContactInfo data={data} />
+        <div className="space-y-4">
           <SocialLinks data={data} />
-        </div>
-
-        <div 
-          className={`section-highlight ${selectedSection === 'additional' ? 'section-selected' : ''}`}
-          data-section="additional"
-          onClick={() => onSectionClick('additional')}
-        >
           <AdditionalLinks data={data} />
         </div>
+        <CardActions data={data} />
       </div>
     </div>
   );
