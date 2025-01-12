@@ -32,6 +32,42 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     onChange(newLinks);
   };
 
+  const moveLink = (index: number, direction: 'up' | 'down') => {
+    const newLinks = [...links];
+    if (direction === 'up' && index > 0) {
+      [newLinks[index - 1], newLinks[index]] = [newLinks[index], newLinks[index - 1]];
+      
+      // Update group assignments if crossing group boundaries
+      const currentGroup = groups.find(g => 
+        index >= g.position && (!groups[groups.indexOf(g) + 1] || index < groups[groups.indexOf(g) + 1].position)
+      );
+      const prevGroup = groups.find(g => 
+        (index - 1) >= g.position && (!groups[groups.indexOf(g) + 1] || (index - 1) < groups[groups.indexOf(g) + 1].position)
+      );
+      
+      if (currentGroup !== prevGroup) {
+        newLinks[index].groupName = prevGroup?.name;
+        newLinks[index - 1].groupName = currentGroup?.name;
+      }
+    } else if (direction === 'down' && index < links.length - 1) {
+      [newLinks[index], newLinks[index + 1]] = [newLinks[index + 1], newLinks[index]];
+      
+      // Update group assignments if crossing group boundaries
+      const currentGroup = groups.find(g => 
+        index >= g.position && (!groups[groups.indexOf(g) + 1] || index < groups[groups.indexOf(g) + 1].position)
+      );
+      const nextGroup = groups.find(g => 
+        (index + 1) >= g.position && (!groups[groups.indexOf(g) + 1] || (index + 1) < groups[groups.indexOf(g) + 1].position)
+      );
+      
+      if (currentGroup !== nextGroup) {
+        newLinks[index].groupName = nextGroup?.name;
+        newLinks[index + 1].groupName = currentGroup?.name;
+      }
+    }
+    onChange(newLinks);
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -76,9 +112,13 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
               index={index}
               title={link.title}
               url={link.url}
+              isFirst={index === 0}
+              isLast={index === links.length - 1}
               onTitleChange={(value) => updateLink(index, "title", value)}
               onUrlChange={(value) => updateLink(index, "url", value)}
               onDelete={() => removeLink(index)}
+              onMoveUp={() => moveLink(index, 'up')}
+              onMoveDown={() => moveLink(index, 'down')}
             />
           </div>
         );
