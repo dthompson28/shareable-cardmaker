@@ -14,6 +14,7 @@ interface SavedCardProps {
 }
 
 export const SavedCardItem = ({
+  id,
   clientName,
   cardName,
   previewImage,
@@ -37,6 +38,7 @@ export const SavedCardItem = ({
           <div>
             <h3 className="text-lg font-medium">{clientName}</h3>
             <p className="text-gray-600">{cardName}</p>
+            <p className="text-sm text-gray-400">ID: {id}</p>
           </div>
           <SavedCardActions 
             embedCode={embedCode}

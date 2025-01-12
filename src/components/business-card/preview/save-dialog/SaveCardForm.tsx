@@ -6,13 +6,15 @@ interface SaveCardFormProps {
   setClientName: (value: string) => void;
   cardName: string;
   setCardName: (value: string) => void;
+  isEditing?: boolean;
 }
 
 export const SaveCardForm = ({ 
   clientName, 
   setClientName, 
   cardName, 
-  setCardName 
+  setCardName,
+  isEditing
 }: SaveCardFormProps) => {
   return (
     <div className="space-y-4 py-4">
@@ -23,6 +25,8 @@ export const SaveCardForm = ({
           value={clientName}
           onChange={(e) => setClientName(e.target.value)}
           placeholder="Enter client name"
+          readOnly={isEditing}
+          className={isEditing ? "bg-gray-100" : ""}
         />
       </div>
       <div className="space-y-2">

@@ -79,18 +79,26 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{data.id ? "Update Business Card" : "Save Business Card"}</DialogTitle>
+          <DialogTitle>
+            {data.id ? (
+              <>Update Business Card (ID: {data.id})</>
+            ) : (
+              "Save Business Card"
+            )}
+          </DialogTitle>
         </DialogHeader>
         <SaveCardForm
           clientName={clientName}
           setClientName={setClientName}
           cardName={cardName}
           setCardName={setCardName}
+          isEditing={!!data.id}
         />
         <SaveCardActions
           onCancel={() => onOpenChange(false)}
           onSave={handleSave}
           isSaving={isSaving}
+          isEditing={!!data.id}
         />
       </DialogContent>
     </Dialog>
