@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { BusinessCardData } from "../../BusinessCardForm";
 import { supabase } from "@/integrations/supabase/client";
@@ -17,9 +17,17 @@ interface SaveCardDialogProps {
 }
 
 export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCardDialogProps) => {
-  const [clientName, setClientName] = useState(data.id ? data.name : "");
+  const [clientName, setClientName] = useState("");
   const [cardName, setCardName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+
+  // Initialize form data when editing an existing card
+  useEffect(() => {
+    if (data.id) {
+      setClientName(data.name);
+      setCardName(data.company);
+    }
+  }, [data.id, data.name, data.company, open]);
 
   const handleSave = async () => {
     if (!clientName || !cardName) {
