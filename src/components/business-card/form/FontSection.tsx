@@ -13,12 +13,20 @@ const fonts = {
     { value: 'Open Sans', label: 'Open Sans' },
     { value: 'Roboto', label: 'Roboto' },
     { value: 'Montserrat', label: 'Montserrat' },
+    { value: 'Lato', label: 'Lato' },
+    { value: 'Merriweather', label: 'Merriweather' },
+    { value: 'Poppins', label: 'Poppins' },
+    { value: 'Source Sans Pro', label: 'Source Sans Pro' },
   ],
   body: [
     { value: 'Open Sans', label: 'Open Sans' },
     { value: 'Playfair Display', label: 'Playfair Display' },
     { value: 'Roboto', label: 'Roboto' },
     { value: 'Montserrat', label: 'Montserrat' },
+    { value: 'Lato', label: 'Lato' },
+    { value: 'Merriweather', label: 'Merriweather' },
+    { value: 'Poppins', label: 'Poppins' },
+    { value: 'Source Sans Pro', label: 'Source Sans Pro' },
   ],
 };
 

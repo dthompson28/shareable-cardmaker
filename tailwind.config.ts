@@ -21,6 +21,10 @@ export default {
       fontFamily: {
         playfair: ['Playfair Display', 'serif'],
         opensans: ['Open Sans', 'sans-serif'],
+        lato: ['Lato', 'sans-serif'],
+        merriweather: ['Merriweather', 'serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        sourcesans: ['Source Sans Pro', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
