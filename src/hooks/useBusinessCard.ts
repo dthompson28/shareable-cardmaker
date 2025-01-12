@@ -18,6 +18,10 @@ const initialData: BusinessCardData = {
   },
   logo: "",
   address: "",
+  fonts: {
+    heading: "Playfair Display",
+    body: "Open Sans"
+  },
   social: {
     linkedin: "",
     facebook: "",

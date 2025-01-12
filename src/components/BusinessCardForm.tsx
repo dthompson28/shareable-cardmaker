@@ -6,6 +6,7 @@ import { PhotoSection } from "./business-card/form/PhotoSection";
 import { LogoSection } from "./business-card/form/LogoSection";
 import { FormContainer } from "./business-card/form/FormContainer";
 import { FormHeader } from "./business-card/form/FormHeader";
+import { FontSection } from "./business-card/form/FontSection";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -26,6 +27,10 @@ export interface BusinessCardData {
   };
   logo: string;
   address: string;
+  fonts: {
+    heading: string;
+    body: string;
+  };
   social: {
     linkedin: string;
     facebook: string;
@@ -67,9 +72,9 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   useEffect(() => {
     const editData = location.state?.editData;
     if (editData) {
-      // Ensure all additional links have IDs when loading saved data
       const processedData = {
         ...editData,
+        fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
         social: {
           ...editData.social,
           additionalLinks: editData.social.additionalLinks?.map(link => ({
@@ -91,6 +96,7 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
     <div className="space-y-8">
       <FormHeader onClear={handleClearForm} />
       <FormContainer data={data} onNext={onNext}>
+        <FontSection data={data} onChange={handleChange} />
         <PhotoSection data={data} onChange={handleChange} />
         <LogoSection data={data} onChange={handleChange} />
         <ContactSection data={data} onChange={handleChange} />
