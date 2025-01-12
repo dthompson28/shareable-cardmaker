@@ -14,9 +14,10 @@ interface SaveCardDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   data: BusinessCardData;
+  previewRef: React.RefObject<HTMLDivElement>;
 }
 
-export const SaveCardDialog = ({ open, onOpenChange, data }: SaveCardDialogProps) => {
+export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCardDialogProps) => {
   const [clientName, setClientName] = useState("");
   const [cardName, setCardName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
@@ -27,6 +28,11 @@ export const SaveCardDialog = ({ open, onOpenChange, data }: SaveCardDialogProps
       return;
     }
 
+    if (!previewRef.current) {
+      toast.error("Preview element not found");
+      return;
+    }
+
     setIsSaving(true);
 
     try {
@@ -34,12 +40,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data }: SaveCardDialogProps
       const embedCode = generateEmbedCode(data);
 
       // Capture preview image
-      const previewElement = document.querySelector('.business-card') as HTMLElement;
-      if (!previewElement) {
-        throw new Error("Preview element not found");
-      }
-
-      const canvas = await html2canvas(previewElement);
+      const canvas = await html2canvas(previewRef.current);
       const previewImage = canvas.toDataURL('image/jpeg');
 
       // Save to Supabase

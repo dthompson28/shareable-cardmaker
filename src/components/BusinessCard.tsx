@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useState, useRef } from "react";
 import { BusinessCardData } from "./BusinessCardForm";
 import { CardPreview } from "./business-card/CardPreview";
 import { HighLevelPreview } from "./business-card/preview/HighLevelPreview";
@@ -6,6 +6,7 @@ import { EmbedCodeDialog } from "./business-card/embed/EmbedCodeDialog";
 import { PreviewContainer } from "./business-card/preview/PreviewContainer";
 import { PreviewHeader } from "./business-card/preview/PreviewHeader";
 import { PreviewActions } from "./business-card/preview/PreviewActions";
+import { SaveCardDialog } from "./business-card/preview/SaveCardDialog";
 
 interface BusinessCardProps {
   data: BusinessCardData;
@@ -15,6 +16,8 @@ interface BusinessCardProps {
 
 const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
   const [showEmbedCode, setShowEmbedCode] = useState(false);
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const previewRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="flex flex-col h-full gap-4">
@@ -22,7 +25,9 @@ const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
       
       <div className="flex-1 grid grid-cols-2 gap-8">
         <PreviewContainer title="Business Card Preview">
-          <CardPreview data={data} />
+          <div ref={previewRef}>
+            <CardPreview data={data} />
+          </div>
         </PreviewContainer>
         
         <PreviewContainer title="HighLevel Preview">
@@ -34,12 +39,20 @@ const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
         data={data}
         onBack={onBack}
         onShowEmbedCode={() => setShowEmbedCode(true)}
+        onSave={() => setShowSaveDialog(true)}
       />
 
       <EmbedCodeDialog
         open={showEmbedCode}
         onOpenChange={setShowEmbedCode}
         data={data}
+      />
+
+      <SaveCardDialog
+        open={showSaveDialog}
+        onOpenChange={setShowSaveDialog}
+        data={data}
+        previewRef={previewRef}
       />
     </div>
   );
