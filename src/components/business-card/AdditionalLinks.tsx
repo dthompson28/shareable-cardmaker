@@ -7,26 +7,25 @@ interface AdditionalLinksProps {
 export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   if (!data.social.additionalLinks?.length) return null;
 
-  // Create a map to store links by group
-  const groupedLinks = new Map<string, typeof data.social.additionalLinks>();
-  
-  // Track group order as they appear in the data
-  const groupOrder: string[] = [];
+  // First, get all unique group names in their original order
+  const groupOrder = Array.from(
+    new Set(
+      data.social.additionalLinks.map(link => link.groupName || '')
+    )
+  );
 
-  // Group links while preserving order
-  data.social.additionalLinks.forEach(link => {
-    const groupName = link.groupName || '';
-    if (!groupedLinks.has(groupName)) {
-      groupedLinks.set(groupName, []);
-      groupOrder.push(groupName);
-    }
-    groupedLinks.get(groupName)?.push(link);
-  });
+  // Create a map of links by group while preserving order
+  const groupedLinks = groupOrder.reduce((acc, groupName) => {
+    acc[groupName] = data.social.additionalLinks.filter(
+      link => (link.groupName || '') === groupName
+    );
+    return acc;
+  }, {} as Record<string, typeof data.social.additionalLinks>);
 
   return (
     <div className="space-y-6 p-4 rounded-lg border border-border">
       {groupOrder.map((groupName, groupIndex) => {
-        const links = groupedLinks.get(groupName) || [];
+        const links = groupedLinks[groupName];
         return (
           <div key={groupIndex} className={`${groupName ? 'bg-muted/50 rounded-lg p-4' : ''}`}>
             {groupName && (
