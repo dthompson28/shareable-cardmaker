@@ -52,7 +52,7 @@ const SavedCards = () => {
 
   const copyEmbedCode = async (embedCode: string) => {
     await navigator.clipboard.writeText(embedCode);
-    toast.success("Embed code copied to clipboard");
+    toast.success("Embed code copied to clipboard!");
   };
 
   const handleEdit = (cardData: BusinessCardData) => {
