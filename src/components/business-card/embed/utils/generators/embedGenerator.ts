@@ -1,5 +1,4 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
-import { isLogoBottomLeft } from "@/utils/positionUtils";
 
 export const generateEmbedCode = (data: BusinessCardData) => `
 <!DOCTYPE html>
@@ -51,14 +50,8 @@ export const generateEmbedCode = (data: BusinessCardData) => `
     ${data.logo ? `
     .logo {
       position: absolute;
-      ${isLogoBottomLeft(data.logoPosition) ? `
-      bottom: -96px;
-      left: 24px;
-      z-index: 20;
-      ` : `
       top: 24px;
       right: 24px;
-      `}
       width: 64px;
       height: 64px;
       background-image: url('${data.logo}');
@@ -77,7 +70,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
       background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
       position: absolute;
       bottom: -96px;
-      ${isLogoBottomLeft(data.logoPosition) ? 'right: 24px;' : 'left: 24px;'}
+      left: 24px;
       z-index: 10;
     }
 
