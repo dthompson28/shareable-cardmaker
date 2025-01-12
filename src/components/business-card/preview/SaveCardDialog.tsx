@@ -31,8 +31,9 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
         setCardName(data.company);
         setClientId(data.id);
       } else {
-        // New card - auto populate from form data
-        setClientName(data.name || "");
+        // New card - auto populate from form data with formatted name
+        const formattedClientName = `${data.name || ""} - ${data.company || ""}`.trim();
+        setClientName(formattedClientName);
         setCardName("");
         setClientId(crypto.randomUUID());
       }
