@@ -4,10 +4,12 @@ import { useGroupManagement } from "./groups/useGroupManagement";
 import { toast } from "sonner";
 import { GroupCard } from "./groups/GroupCard";
 import { UngroupedLinks } from "./links/UngroupedLinks";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 interface Props {
-  links: { title: string; url: string; groupName?: string; }[];
-  onChange: (links: { title: string; url: string; groupName?: string; }[]) => void;
+  links: { title: string; url: string; groupName?: string; id?: string }[];
+  onChange: (links: { title: string; url: string; groupName?: string; id?: string }[]) => void;
 }
 
 export const AdditionalLinksSection = ({ links, onChange }: Props) => {
@@ -20,7 +22,7 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
   } = useGroupManagement(links, onChange);
 
   const addLink = () => {
-    onChange([...links, { title: "", url: "" }]);
+    onChange([...links, { title: "", url: "", id: crypto.randomUUID() }]);
     toast.success("New link added");
   };
 
@@ -35,35 +37,24 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     onChange(newLinks);
   };
 
-  const moveLink = (index: number, direction: 'up' | 'down') => {
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+    
+    if (activeId === overId) return;
+
+    const activeIndex = links.findIndex(link => link.id === activeId);
+    const overIndex = links.findIndex(link => link.id === overId);
+    
     const newLinks = [...links];
-    const currentLink = newLinks[index];
-    let targetIndex;
-
-    if (direction === 'up' && index > 0) {
-      targetIndex = index - 1;
-    } else if (direction === 'down' && index < links.length - 1) {
-      targetIndex = index + 1;
-    } else {
-      return;
-    }
-
-    const targetGroup = groups.find(g => 
-      targetIndex >= g.position && (!groups[groups.indexOf(g) + 1] || targetIndex < groups[groups.indexOf(g) + 1].position)
-    );
-
-    newLinks[index] = { ...newLinks[targetIndex], groupName: currentLink.groupName };
-    newLinks[targetIndex] = { ...currentLink, groupName: targetGroup?.name };
-
+    const [movedItem] = newLinks.splice(activeIndex, 1);
+    newLinks.splice(overIndex, 0, movedItem);
+    
     onChange(newLinks);
-    toast.success(`Link moved ${direction}`);
-  };
-
-  const assignLinkToGroup = (linkIndex: number, groupName: string | undefined) => {
-    const newLinks = [...links];
-    newLinks[linkIndex] = { ...newLinks[linkIndex], groupName };
-    onChange(newLinks);
-    toast.success(groupName ? `Link assigned to ${groupName}` : "Link removed from group");
+    toast.success("Link moved successfully");
   };
 
   // Group links by their groupName
@@ -87,40 +78,42 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
           </Button>
           <Button type="button" variant="outline" size="sm" onClick={addGroup}>
             <Plus className="w-4 h-4 mr-2" />
-            Add Group
+            Add Collection
           </Button>
         </div>
       </div>
       
-      {/* Display grouped links */}
-      {groups.map((group, groupIndex) => (
-        <GroupCard
-          key={groupIndex}
-          groupName={group.name}
-          groupIndex={groupIndex}
-          totalGroups={groups.length}
-          links={groupedLinks[group.name] || []}
-          onNameChange={(name) => updateGroupName(groupIndex, name)}
-          onMoveUp={() => moveGroup(groupIndex, 'up')}
-          onMoveDown={() => moveGroup(groupIndex, 'down')}
-          onDelete={() => removeGroup(group.position)}
-          onLinkUpdate={updateLink}
-          onLinkMove={moveLink}
-          onLinkDelete={removeLink}
-          onLinkGroupChange={assignLinkToGroup}
-          availableGroups={groups.map(g => g.name)}
-        />
-      ))}
-      
-      {/* Ungrouped links */}
-      <UngroupedLinks
-        links={groupedLinks['ungrouped'] || []}
-        onLinkUpdate={updateLink}
-        onLinkMove={moveLink}
-        onLinkDelete={removeLink}
-        onLinkGroupChange={assignLinkToGroup}
-        availableGroups={groups.map(g => g.name)}
-      />
+      <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={links.map(l => l.id!)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-4 rounded-lg border border-border p-4">
+            {/* Display grouped links */}
+            {groups.map((group, groupIndex) => (
+              <GroupCard
+                key={groupIndex}
+                groupName={group.name}
+                groupIndex={groupIndex}
+                totalGroups={groups.length}
+                links={groupedLinks[group.name] || []}
+                onNameChange={(name) => updateGroupName(groupIndex, name)}
+                onMoveUp={() => moveGroup(groupIndex, 'up')}
+                onMoveDown={() => moveGroup(groupIndex, 'down')}
+                onDelete={() => removeGroup(group.position)}
+                onLinkUpdate={updateLink}
+                onLinkDelete={removeLink}
+                availableGroups={groups.map(g => g.name)}
+              />
+            ))}
+            
+            {/* Ungrouped links */}
+            <UngroupedLinks
+              links={groupedLinks['ungrouped'] || []}
+              onLinkUpdate={updateLink}
+              onLinkDelete={removeLink}
+              availableGroups={groups.map(g => g.name)}
+            />
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 };
