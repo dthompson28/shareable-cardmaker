@@ -12,6 +12,7 @@ interface LinkControlsProps {
   isLast: boolean;
   currentGroup?: string;
   availableGroups: string[];
+  hideGroupSelect?: boolean;
   onTitleChange: (value: string) => void;
   onUrlChange: (value: string) => void;
   onDelete: () => void;
@@ -28,6 +29,7 @@ export const LinkControls = ({
   isLast,
   currentGroup,
   availableGroups,
+  hideGroupSelect = false,
   onTitleChange,
   onUrlChange,
   onDelete,
@@ -86,25 +88,27 @@ export const LinkControls = ({
           </div>
         </div>
       </div>
-      <div className="grid gap-2">
-        <Label>Group</Label>
-        <Select
-          value={currentGroup || "no-group"}
-          onValueChange={(value) => onGroupChange(value === "no-group" ? undefined : value)}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Select a group" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="no-group">No Group</SelectItem>
-            {availableGroups.map((group) => (
-              <SelectItem key={group} value={group}>
-                {group}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      {!hideGroupSelect && (
+        <div className="grid gap-2">
+          <Label>Group</Label>
+          <Select
+            value={currentGroup || "no-group"}
+            onValueChange={(value) => onGroupChange(value === "no-group" ? undefined : value)}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select a group" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="no-group">No Group</SelectItem>
+              {availableGroups.map((group) => (
+                <SelectItem key={group} value={group}>
+                  {group}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
     </div>
   );
 };

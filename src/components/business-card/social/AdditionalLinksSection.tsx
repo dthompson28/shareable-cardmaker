@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Plus, GripVertical } from "lucide-react";
+import { Plus } from "lucide-react";
 import { GroupControls } from "./groups/GroupControls";
 import { LinkControls } from "./links/LinkControls";
 import { useGroupManagement } from "./groups/useGroupManagement";
@@ -95,7 +95,7 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
       
       {/* Display grouped links */}
       {groups.map((group, groupIndex) => (
-        <Card key={groupIndex} className="p-4 space-y-4">
+        <Card key={groupIndex} className="p-4">
           <GroupControls
             groupIndex={groupIndex}
             groupName={group.name}
@@ -106,26 +106,28 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
             onDelete={() => removeGroup(group.position)}
           />
           
-          <div className="pl-6 space-y-4">
+          <div className="mt-4 space-y-4">
             {groupedLinks[group.name]?.map((link, linkIndex) => {
               const originalIndex = links.findIndex(l => l === link);
               return (
-                <LinkControls
-                  key={originalIndex}
-                  index={originalIndex}
-                  title={link.title}
-                  url={link.url}
-                  isFirst={originalIndex === 0}
-                  isLast={originalIndex === links.length - 1}
-                  onTitleChange={(value) => updateLink(originalIndex, "title", value)}
-                  onUrlChange={(value) => updateLink(originalIndex, "url", value)}
-                  onDelete={() => removeLink(originalIndex)}
-                  onMoveUp={() => moveLink(originalIndex, 'up')}
-                  onMoveDown={() => moveLink(originalIndex, 'down')}
-                  onGroupChange={(groupName) => assignLinkToGroup(originalIndex, groupName)}
-                  availableGroups={groups.map(g => g.name)}
-                  currentGroup={group.name}
-                />
+                <div key={originalIndex} className="pl-6">
+                  <LinkControls
+                    index={originalIndex}
+                    title={link.title}
+                    url={link.url}
+                    isFirst={originalIndex === 0}
+                    isLast={originalIndex === links.length - 1}
+                    onTitleChange={(value) => updateLink(originalIndex, "title", value)}
+                    onUrlChange={(value) => updateLink(originalIndex, "url", value)}
+                    onDelete={() => removeLink(originalIndex)}
+                    onMoveUp={() => moveLink(originalIndex, 'up')}
+                    onMoveDown={() => moveLink(originalIndex, 'down')}
+                    onGroupChange={(groupName) => assignLinkToGroup(originalIndex, groupName)}
+                    availableGroups={groups.map(g => g.name)}
+                    currentGroup={group.name}
+                    hideGroupSelect={true}
+                  />
+                </div>
               );
             })}
           </div>
@@ -134,27 +136,28 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
       
       {/* Ungrouped links */}
       {groupedLinks['ungrouped']?.length > 0 && (
-        <Card className="p-4 space-y-4">
-          <h4 className="font-medium text-muted-foreground">Ungrouped Links</h4>
+        <Card className="p-4">
+          <h4 className="font-medium text-muted-foreground mb-4">Ungrouped Links</h4>
           <div className="space-y-4">
             {groupedLinks['ungrouped'].map((link, index) => {
               const originalIndex = links.findIndex(l => l === link);
               return (
-                <LinkControls
-                  key={originalIndex}
-                  index={originalIndex}
-                  title={link.title}
-                  url={link.url}
-                  isFirst={originalIndex === 0}
-                  isLast={originalIndex === links.length - 1}
-                  onTitleChange={(value) => updateLink(originalIndex, "title", value)}
-                  onUrlChange={(value) => updateLink(originalIndex, "url", value)}
-                  onDelete={() => removeLink(originalIndex)}
-                  onMoveUp={() => moveLink(originalIndex, 'up')}
-                  onMoveDown={() => moveLink(originalIndex, 'down')}
-                  onGroupChange={(groupName) => assignLinkToGroup(originalIndex, groupName)}
-                  availableGroups={groups.map(g => g.name)}
-                />
+                <div key={originalIndex} className="pl-6">
+                  <LinkControls
+                    index={originalIndex}
+                    title={link.title}
+                    url={link.url}
+                    isFirst={originalIndex === 0}
+                    isLast={originalIndex === links.length - 1}
+                    onTitleChange={(value) => updateLink(originalIndex, "title", value)}
+                    onUrlChange={(value) => updateLink(originalIndex, "url", value)}
+                    onDelete={() => removeLink(originalIndex)}
+                    onMoveUp={() => moveLink(originalIndex, 'up')}
+                    onMoveDown={() => moveLink(originalIndex, 'down')}
+                    onGroupChange={(groupName) => assignLinkToGroup(originalIndex, groupName)}
+                    availableGroups={groups.map(g => g.name)}
+                  />
+                </div>
               );
             })}
           </div>
