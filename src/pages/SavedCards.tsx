@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { BusinessCardData } from "@/components/BusinessCardForm";
 
 interface SavedCard {
   id: string;
@@ -10,6 +11,7 @@ interface SavedCard {
   card_name: string;
   embed_code: string;
   preview_image: string;
+  card_data: BusinessCardData;
 }
 
 const SavedCards = () => {
@@ -39,6 +41,10 @@ const SavedCards = () => {
     toast.success("Embed code copied to clipboard");
   };
 
+  const handleEdit = (cardData: BusinessCardData) => {
+    navigate('/', { state: { editData: cardData } });
+  };
+
   return (
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-8">
@@ -64,12 +70,20 @@ const SavedCards = () => {
                   <h3 className="text-lg font-medium">{card.client_name}</h3>
                   <p className="text-gray-600">{card.card_name}</p>
                 </div>
-                <Button 
-                  onClick={() => copyEmbedCode(card.embed_code)}
-                  variant="secondary"
-                >
-                  Copy Embed Code
-                </Button>
+                <div className="flex gap-4">
+                  <Button 
+                    onClick={() => copyEmbedCode(card.embed_code)}
+                    variant="secondary"
+                  >
+                    Copy Embed Code
+                  </Button>
+                  <Button
+                    onClick={() => handleEdit(card.card_data)}
+                    variant="outline"
+                  >
+                    Edit Card
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

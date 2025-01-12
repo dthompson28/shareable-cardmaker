@@ -7,7 +7,8 @@ import { LogoSection } from "./business-card/form/LogoSection";
 import { FormContainer } from "./business-card/form/FormContainer";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 export interface BusinessCardData {
   name: string;
@@ -55,6 +56,14 @@ interface Props {
 export const BusinessCardForm = memo(({ data, onChange, onNext }: Props) => {
   const { handleChange } = useBusinessCardForm(data, onChange);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const editData = location.state?.editData;
+    if (editData) {
+      onChange(editData);
+    }
+  }, [location.state, onChange]);
 
   return (
     <div className="space-y-8">
