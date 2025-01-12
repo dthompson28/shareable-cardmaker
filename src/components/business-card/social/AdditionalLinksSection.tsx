@@ -3,6 +3,7 @@ import { Plus } from "lucide-react";
 import { GroupControls } from "./groups/GroupControls";
 import { LinkControls } from "./links/LinkControls";
 import { useGroupManagement } from "./groups/useGroupManagement";
+import { toast } from "sonner";
 
 interface Props {
   links: { title: string; url: string; groupName?: string; }[];
@@ -20,10 +21,12 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
 
   const addLink = () => {
     onChange([...links, { title: "", url: "" }]);
+    toast.success("New link added");
   };
 
   const removeLink = (index: number) => {
     onChange(links.filter((_, i) => i !== index));
+    toast.success("Link removed");
   };
 
   const updateLink = (index: number, field: "title" | "url", value: string) => {
@@ -34,38 +37,35 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
 
   const moveLink = (index: number, direction: 'up' | 'down') => {
     const newLinks = [...links];
+    const currentLink = newLinks[index];
+    let targetIndex;
+
     if (direction === 'up' && index > 0) {
-      [newLinks[index - 1], newLinks[index]] = [newLinks[index], newLinks[index - 1]];
-      
-      // Update group assignments if crossing group boundaries
-      const currentGroup = groups.find(g => 
-        index >= g.position && (!groups[groups.indexOf(g) + 1] || index < groups[groups.indexOf(g) + 1].position)
-      );
-      const prevGroup = groups.find(g => 
-        (index - 1) >= g.position && (!groups[groups.indexOf(g) + 1] || (index - 1) < groups[groups.indexOf(g) + 1].position)
-      );
-      
-      if (currentGroup !== prevGroup) {
-        newLinks[index].groupName = prevGroup?.name;
-        newLinks[index - 1].groupName = currentGroup?.name;
-      }
+      targetIndex = index - 1;
     } else if (direction === 'down' && index < links.length - 1) {
-      [newLinks[index], newLinks[index + 1]] = [newLinks[index + 1], newLinks[index]];
-      
-      // Update group assignments if crossing group boundaries
-      const currentGroup = groups.find(g => 
-        index >= g.position && (!groups[groups.indexOf(g) + 1] || index < groups[groups.indexOf(g) + 1].position)
-      );
-      const nextGroup = groups.find(g => 
-        (index + 1) >= g.position && (!groups[groups.indexOf(g) + 1] || (index + 1) < groups[groups.indexOf(g) + 1].position)
-      );
-      
-      if (currentGroup !== nextGroup) {
-        newLinks[index].groupName = nextGroup?.name;
-        newLinks[index + 1].groupName = currentGroup?.name;
-      }
+      targetIndex = index + 1;
+    } else {
+      return;
     }
+
+    // Get the target group (if any)
+    const targetGroup = groups.find(g => 
+      targetIndex >= g.position && (!groups[groups.indexOf(g) + 1] || targetIndex < groups[groups.indexOf(g) + 1].position)
+    );
+
+    // Update the link's group assignment
+    newLinks[index] = { ...newLinks[targetIndex], groupName: currentLink.groupName };
+    newLinks[targetIndex] = { ...currentLink, groupName: targetGroup?.name };
+
     onChange(newLinks);
+    toast.success(`Link moved ${direction}`);
+  };
+
+  const assignLinkToGroup = (linkIndex: number, groupName: string | undefined) => {
+    const newLinks = [...links];
+    newLinks[linkIndex] = { ...newLinks[linkIndex], groupName };
+    onChange(newLinks);
+    toast.success(groupName ? `Link assigned to ${groupName}` : "Link removed from group");
   };
 
   return (
@@ -95,30 +95,54 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
             onMoveDown={() => moveGroup(groupIndex, 'down')}
             onDelete={() => removeGroup(group.position)}
           />
+          
+          {/* Links within this group */}
+          {links.map((link, linkIndex) => {
+            const belongsToThisGroup = link.groupName === group.name;
+            if (!belongsToThisGroup) return null;
+            
+            return (
+              <div key={linkIndex} className="ml-6">
+                <LinkControls
+                  index={linkIndex}
+                  title={link.title}
+                  url={link.url}
+                  isFirst={linkIndex === 0}
+                  isLast={linkIndex === links.length - 1}
+                  onTitleChange={(value) => updateLink(linkIndex, "title", value)}
+                  onUrlChange={(value) => updateLink(linkIndex, "url", value)}
+                  onDelete={() => removeLink(linkIndex)}
+                  onMoveUp={() => moveLink(linkIndex, 'up')}
+                  onMoveDown={() => moveLink(linkIndex, 'down')}
+                  onGroupChange={(groupName) => assignLinkToGroup(linkIndex, groupName)}
+                  availableGroups={groups.map(g => g.name)}
+                  currentGroup={group.name}
+                />
+              </div>
+            );
+          })}
         </div>
       ))}
       
-      {links.map((link, index) => {
-        const group = groups.find(g => 
-          index >= g.position && (!groups[groups.indexOf(g) + 1] || index < groups[groups.indexOf(g) + 1].position)
-        );
+      {/* Ungrouped links */}
+      {links.map((link, linkIndex) => {
+        if (link.groupName) return null;
         
         return (
-          <div 
-            key={index} 
-            className={`grid gap-4 p-4 border rounded-lg ${group ? 'ml-6 border-muted' : ''}`}
-          >
+          <div key={linkIndex} className="border rounded-lg p-4">
             <LinkControls
-              index={index}
+              index={linkIndex}
               title={link.title}
               url={link.url}
-              isFirst={index === 0}
-              isLast={index === links.length - 1}
-              onTitleChange={(value) => updateLink(index, "title", value)}
-              onUrlChange={(value) => updateLink(index, "url", value)}
-              onDelete={() => removeLink(index)}
-              onMoveUp={() => moveLink(index, 'up')}
-              onMoveDown={() => moveLink(index, 'down')}
+              isFirst={linkIndex === 0}
+              isLast={linkIndex === links.length - 1}
+              onTitleChange={(value) => updateLink(linkIndex, "title", value)}
+              onUrlChange={(value) => updateLink(linkIndex, "url", value)}
+              onDelete={() => removeLink(linkIndex)}
+              onMoveUp={() => moveLink(linkIndex, 'up')}
+              onMoveDown={() => moveLink(linkIndex, 'down')}
+              onGroupChange={(groupName) => assignLinkToGroup(linkIndex, groupName)}
+              availableGroups={groups.map(g => g.name)}
             />
           </div>
         );

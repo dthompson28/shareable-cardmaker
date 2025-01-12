@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Group {
   name: string;
@@ -17,9 +17,23 @@ export const useGroupManagement = (
 ) => {
   const [groups, setGroups] = useState<Group[]>([]);
 
+  useEffect(() => {
+    // Extract unique group names from links and create group objects
+    const uniqueGroups = Array.from(new Set(
+      initialLinks
+        .map(link => link.groupName)
+        .filter((name): name is string => !!name)
+    ));
+    
+    setGroups(uniqueGroups.map((name, index) => ({
+      name,
+      position: index
+    })));
+  }, []);
+
   const addGroup = () => {
     const newGroup = {
-      name: "",
+      name: `Group ${groups.length + 1}`,
       position: groups.length
     };
     setGroups([...groups, newGroup]);
@@ -27,13 +41,13 @@ export const useGroupManagement = (
 
   const updateGroupName = (index: number, name: string) => {
     const newGroups = [...groups];
+    const oldName = newGroups[index].name;
     newGroups[index] = { ...newGroups[index], name };
     setGroups(newGroups);
     
-    // Update all links in this group
-    const position = newGroups[index].position;
-    const updatedLinks = initialLinks.map((link, i) => {
-      if (i >= position && (!groups[index + 1] || i < groups[index + 1].position)) {
+    // Update all links in this group with the new name
+    const updatedLinks = initialLinks.map(link => {
+      if (link.groupName === oldName) {
         return { ...link, groupName: name };
       }
       return link;
@@ -59,10 +73,14 @@ export const useGroupManagement = (
   };
 
   const removeGroup = (position: number) => {
+    const groupToRemove = groups.find(g => g.position === position);
+    if (!groupToRemove) return;
+
     setGroups(groups.filter(g => g.position !== position));
-    // Remove group name from all links at this position
+    
+    // Remove group name from all links in this group
     const updatedLinks = initialLinks.map(link => {
-      if (initialLinks.indexOf(link) === position) {
+      if (link.groupName === groupToRemove.name) {
         const { groupName, ...rest } = link;
         return rest;
       }

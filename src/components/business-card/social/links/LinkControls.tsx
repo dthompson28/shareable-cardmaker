@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Trash2, MoveUp, MoveDown, GripVertical } from "lucide-react";
 
 interface LinkControlsProps {
@@ -9,11 +10,14 @@ interface LinkControlsProps {
   url: string;
   isFirst: boolean;
   isLast: boolean;
+  currentGroup?: string;
+  availableGroups: string[];
   onTitleChange: (value: string) => void;
   onUrlChange: (value: string) => void;
   onDelete: () => void;
   onMoveUp: () => void;
   onMoveDown: () => void;
+  onGroupChange: (groupName: string | undefined) => void;
 }
 
 export const LinkControls = ({
@@ -22,11 +26,14 @@ export const LinkControls = ({
   url,
   isFirst,
   isLast,
+  currentGroup,
+  availableGroups,
   onTitleChange,
   onUrlChange,
   onDelete,
   onMoveUp,
   onMoveDown,
+  onGroupChange,
 }: LinkControlsProps) => {
   return (
     <div className="grid gap-4">
@@ -78,6 +85,25 @@ export const LinkControls = ({
             </Button>
           </div>
         </div>
+      </div>
+      <div className="grid gap-2">
+        <Label>Group</Label>
+        <Select
+          value={currentGroup}
+          onValueChange={(value) => onGroupChange(value || undefined)}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select a group" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="">No Group</SelectItem>
+            {availableGroups.map((group) => (
+              <SelectItem key={group} value={group}>
+                {group}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );
