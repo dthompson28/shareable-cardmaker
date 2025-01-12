@@ -1,4 +1,5 @@
 import { BusinessCardData } from "@/components/BusinessCardForm";
+import { isLogoBottomLeft } from "@/utils/positionUtils";
 
 export const generateEmbedCode = (data: BusinessCardData) => `
 <!DOCTYPE html>
@@ -37,14 +38,45 @@ export const generateEmbedCode = (data: BusinessCardData) => `
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 
+    ${data.photoStyle === 'compact' ? `
+    .header {
+      position: relative;
+      width: 100%;
+      height: 192px;
+      background-color: ${data.colors.secondary};
+    }
+
+    .profile-photo {
+      position: absolute;
+      ${isLogoBottomLeft(data.logoPosition) ? 'right' : 'left'}: 24px;
+      bottom: -96px;
+      width: 192px;
+      height: 192px;
+      border-radius: 50%;
+      border: 4px solid white;
+      background-image: url('${data.photo}');
+      background-size: cover;
+      background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+    ` : `
     .header {
       position: relative;
       width: 100%;
       height: 256px;
+      background-image: url('${data.photo}');
       background-size: cover;
-      background-position: center;
-      background-color: white;
+      background-position: ${data.photoPosition.x}% ${data.photoPosition.y}%;
     }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+    }
+    `}
 
     .header-content {
       position: relative;
@@ -54,18 +86,31 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 
     .header-logo {
       position: absolute;
+      ${data.photoStyle === 'compact' && isLogoBottomLeft(data.logoPosition) ? `
+      bottom: -96px;
+      left: 24px;
+      ` : `
       top: 24px;
       right: 24px;
+      `}
       width: 64px;
       height: 64px;
       object-fit: contain;
+      z-index: ${data.photoStyle === 'compact' ? '20' : '10'};
     }
 
     .header-text {
+      ${data.photoStyle === 'compact' ? `
+      padding-top: 96px;
+      text-align: ${isLogoBottomLeft(data.logoPosition) ? 'left' : 'right'};
+      color: ${data.colors.primary};
+      ` : `
       position: absolute;
       bottom: 24px;
       left: 24px;
       color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      `}
     }
 
     .header-text h1 {
@@ -85,6 +130,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
     .content {
       padding: 24px;
       background-color: ${data.colors.background};
+      ${data.photoStyle === 'compact' ? 'padding-top: 120px;' : ''}
     }
 
     .contact-info {
@@ -206,9 +252,10 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 <body>
   <div style="width: 448px; margin: auto;">
     <div class="business-card">
-      <div class="header" style="background-image: url('${data.photo}');">
+      <div class="header">
         <div class="header-content">
           ${data.logo ? `<img src="${data.logo}" alt="Logo" class="header-logo" />` : ''}
+          ${data.photoStyle === 'compact' ? `<div class="profile-photo"></div>` : ''}
           <div class="header-text">
             <h1>${data.name}</h1>
             ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
