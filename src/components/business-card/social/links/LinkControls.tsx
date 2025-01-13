@@ -66,7 +66,7 @@ export const LinkControls = ({
               value={title}
               onChange={(e) => onTitleChange(e.target.value)}
               placeholder="Enter link title"
-              className="mt-1"
+              className="mt-2"
             />
           </div>
         </div>
