@@ -59,13 +59,14 @@ export const LinkControls = ({
           >
             <GripVertical className="w-5 h-5 text-muted-foreground" />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 space-y-2">
             <Label htmlFor={`link-title-${index}`}>Link Title</Label>
             <Input
               id={`link-title-${index}`}
               value={title}
               onChange={(e) => onTitleChange(e.target.value)}
               placeholder="Enter link title"
+              className="w-full"
             />
           </div>
         </div>
