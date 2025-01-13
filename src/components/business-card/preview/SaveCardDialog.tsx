@@ -21,6 +21,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
   useEffect(() => {
     if (open) {
       const id = getSafeId(data.id);
+      console.log("SaveCardDialog opened with clientId:", id);
       
       if (id) {
         // Editing existing card - use existing data
@@ -36,6 +37,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
   }, [data.id, data.name, data.company, open]);
 
   const safeId = getSafeId(data.id);
+  console.log("Current safeId in SaveCardDialog:", safeId);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

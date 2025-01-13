@@ -14,6 +14,7 @@ import { useFormInitialization } from "./business-card/form/useFormInitializatio
 import { useNewCard } from "./business-card/form/useNewCard";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
 import { BusinessCardData } from "@/types/businessCard";
+import { toast } from "sonner";
 
 interface Props {
   data: BusinessCardData;
@@ -37,6 +38,17 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   });
 
   const handleNext = () => {
+    // Ensure we have a clientId before proceeding
+    if (!data.id) {
+      const newId = crypto.randomUUID();
+      console.log("Generating new clientId:", newId);
+      onChange({
+        ...data,
+        id: newId
+      });
+      toast.success("Generated new client ID");
+    }
+
     const sortedData = sortGroupsAndLinks(data);
     onChange(sortedData);
     onNext();
