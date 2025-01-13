@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { updateGroupPositions, getNextGroupPosition } from "../utils/groupSorting";
-import { toast } from "sonner";
+import { updateGroupPositions } from "../utils/groupSorting";
+import { usePositionManagement } from "./utils/usePositionManagement";
+import { useGroupNameManagement } from "./utils/useGroupNameManagement";
 
 interface Group {
   name: string;
@@ -36,78 +37,16 @@ export const useGroupOperations = (
     }
   }, [initialLinks]);
 
+  const { moveGroup, getNewPosition } = usePositionManagement(groups, setGroups, initialLinks, onChange);
+  const { updateGroupName, removeGroup } = useGroupNameManagement(groups, setGroups, initialLinks, onChange);
+
   const addGroup = () => {
-    const newPosition = getNextGroupPosition(groups);
+    const newPosition = getNewPosition();
     setGroups(prevGroups => [...prevGroups, {
       name: `Group ${prevGroups.length + 1}`,
       position: newPosition,
       order: newPosition
     }]);
-  };
-
-  const updateGroupName = (index: number, name: string) => {
-    const newGroups = [...groups];
-    const oldName = newGroups[index].name;
-    newGroups[index] = { ...newGroups[index], name };
-    setGroups(newGroups);
-    
-    const updatedLinks = initialLinks.map(link => {
-      if (link.groupName === oldName) {
-        return { ...link, groupName: name };
-      }
-      return link;
-    });
-    onChange(updatedLinks);
-  };
-
-  const moveGroup = (index: number, direction: 'up' | 'down') => {
-    if (
-      (direction === 'up' && index === 0) || 
-      (direction === 'down' && index === groups.length - 1)
-    ) {
-      return;
-    }
-
-    const newGroups = [...groups];
-    const targetIndex = direction === 'up' ? index - 1 : index + 1;
-
-    // Update the positions of the groups being swapped
-    const temp = { ...newGroups[index] };
-    newGroups[index] = { ...newGroups[targetIndex], position: temp.position };
-    newGroups[targetIndex] = { ...temp, position: newGroups[targetIndex].position };
-
-    // Update the links to reflect the new group positions
-    const updatedLinks = initialLinks.map(link => {
-      if (link.groupName === newGroups[index].name || link.groupName === newGroups[targetIndex].name) {
-        return { ...link };
-      }
-      return link;
-    });
-
-    setGroups(updateGroupPositions(newGroups));
-    onChange(updatedLinks);
-    toast.success(`Group moved ${direction}`);
-  };
-
-  const removeGroup = (position: number) => {
-    const groupToRemove = groups.find(g => g.position === position);
-    if (!groupToRemove) return;
-
-    const newGroups = updateGroupPositions(
-      groups.filter(g => g.name !== groupToRemove.name)
-    );
-    
-    setGroups(newGroups);
-    
-    const updatedLinks = initialLinks.map(link => {
-      if (link.groupName === groupToRemove.name) {
-        const { groupName, ...rest } = link;
-        return rest;
-      }
-      return link;
-    });
-    onChange(updatedLinks);
-    toast.success("Group removed");
   };
 
   return {
