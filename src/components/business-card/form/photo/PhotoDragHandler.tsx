@@ -1,5 +1,5 @@
 import { useState, MouseEvent } from 'react';
-import { BusinessCardData } from "../../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 interface PhotoDragHandlerProps {
   data: BusinessCardData;

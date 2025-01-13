@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Code2 } from "lucide-react";
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 interface ActionButtonsProps {
   data: BusinessCardData;

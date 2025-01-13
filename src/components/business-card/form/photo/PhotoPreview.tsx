@@ -1,4 +1,4 @@
-import { BusinessCardData } from "../../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { PhotoDragHandler } from "./PhotoDragHandler";
 import { CompactPhotoStyle, FullWidthPhotoStyle } from "./PhotoPreviewStyles";
 import { Label } from "@/components/ui/label";

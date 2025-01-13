@@ -1,6 +1,7 @@
-import { BusinessCardData } from "../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { SocialMediaInput } from "./social/SocialMediaInput";
 import { AdditionalLinksSection } from "./social/AdditionalLinksSection";
+
 import { socialPlatforms } from "./social/config/socialPlatforms";
 
 interface SocialSectionProps {

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { toast } from "sonner";
 import {
   AlertDialog,

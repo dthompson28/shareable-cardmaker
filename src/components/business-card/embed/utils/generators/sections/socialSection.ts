@@ -1,5 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
-import { getSocialIcon } from "../socialIcons";
+import { BusinessCardData } from "@/types/businessCard";
 
 export const generateSocialSection = (data: BusinessCardData) => {
   const socialLinks = Object.entries(data.social)

@@ -1,4 +1,4 @@
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { getRootDomain } from "@/components/business-card/utils/urlUtils";
 
 interface ContactInfoProps {

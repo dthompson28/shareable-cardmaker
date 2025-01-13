@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { ContactInfo } from "../contact/ContactInfo";
 import { SocialLinks } from "../SocialLinks";
 import { AdditionalLinks } from "../AdditionalLinks";

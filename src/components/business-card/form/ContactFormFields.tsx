@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 interface ContactFormFieldsProps {
   data: BusinessCardData;

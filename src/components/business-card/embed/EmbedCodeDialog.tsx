@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../../ui/dialog";
 import { toast } from "sonner";
-import { BusinessCardData } from "../../BusinessCardForm";
-import { generateEmbedCode } from "./utils/generators/embedGenerator";
+import { BusinessCardData } from "@/types/businessCard";
+import { generateEmbedCode } from './utils/generators/embedGenerator';
 
 interface EmbedCodeDialogProps {
   open: boolean;

@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { generateStyles } from "./styleGenerator";
 import {
   generateHeaderHTML,
@@ -36,5 +36,3 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   ${generateScriptHTML(data)}
 </body>
 </html>`;
-
-export { generateStyles };

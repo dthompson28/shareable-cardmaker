@@ -1,7 +1,7 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 interface PreviewActionsProps {
   data: BusinessCardData;

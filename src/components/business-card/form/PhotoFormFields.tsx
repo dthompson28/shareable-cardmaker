@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { PhotoUrlInput } from "./photo/PhotoUrlInput";
 import { PhotoStyleToggle } from "./photo/PhotoStyleToggle";
 import { PhotoPreview } from "./photo/PhotoPreview";

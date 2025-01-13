@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { generateSocialLinks } from '../generators/SocialLinksGenerator';
 
 interface PreviewSocialProps {

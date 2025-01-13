@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { generateEmbedCode } from "../embed/utils/generators/embedGenerator";

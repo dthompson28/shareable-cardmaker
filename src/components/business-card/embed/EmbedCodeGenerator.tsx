@@ -1,5 +1,6 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { generateStyles } from "./utils/styleGenerator";
+
 import {
   generateHeaderHTML,
   generateContactHTML,

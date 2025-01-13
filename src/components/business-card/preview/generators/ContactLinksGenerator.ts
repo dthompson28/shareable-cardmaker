@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 export const generateContactLinks = (data: BusinessCardData) => {
   const links = [];

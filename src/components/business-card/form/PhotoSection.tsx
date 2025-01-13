@@ -1,4 +1,4 @@
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { PhotoFormFields } from "./PhotoFormFields";
 
 interface PhotoSectionProps {

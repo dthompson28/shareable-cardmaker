@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 export const generateVCard = (data: BusinessCardData): string => {
   const vCardLines = [

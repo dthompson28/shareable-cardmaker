@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef } from 'react';
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { generateEmbedCode } from '../embed/utils/generators/htmlSections';
 
 interface HighLevelPreviewProps {

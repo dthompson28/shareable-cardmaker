@@ -1,4 +1,5 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
+
 import { generateVCard } from "../vCardGenerator";
 
 export const generateScriptSection = (data: BusinessCardData) => `

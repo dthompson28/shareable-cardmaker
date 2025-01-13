@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 export const generateHeadSection = (data: BusinessCardData) => `
   <meta charset="UTF-8">

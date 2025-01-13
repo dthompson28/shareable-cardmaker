@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef } from "react";
-import { BusinessCardData } from "../BusinessCardForm";
-import { generateEmbedCode } from "./embed/utils/generators/embedGenerator";
+import { BusinessCardData } from "@/types/businessCard";
+import { generateEmbedCode } from './embed/utils/generators/embedGenerator';
 
 interface HighLevelCardPreviewProps {
   data: BusinessCardData;

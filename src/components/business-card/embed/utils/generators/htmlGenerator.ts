@@ -1,4 +1,5 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
+
 import { generateHeadSection } from "./sections/headSection";
 import { generateHeaderSection } from "./sections/headerSection";
 import { generateContactSection } from "./sections/contactSection";

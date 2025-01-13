@@ -1,4 +1,4 @@
-import { BusinessCardData } from "../../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { CardActions } from "../preview/CardActions";
 import { CardHeader } from "../header/CardHeader";
 import { ContactInfo } from "../contact/ContactInfo";

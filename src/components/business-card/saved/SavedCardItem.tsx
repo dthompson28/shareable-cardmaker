@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { SavedCardActions } from "./SavedCardActions";
 
 interface SavedCardProps {
