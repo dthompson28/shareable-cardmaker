@@ -92,17 +92,19 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   const handleClearForm = () => {
     onClear();
+    const newId = crypto.randomUUID();
     onChange({
       ...data,
-      id: crypto.randomUUID()
+      id: newId
     });
     toast.success("Form has been cleared");
   };
 
   const handleGenerateNewId = () => {
+    const newId = crypto.randomUUID();
     onChange({
       ...data,
-      id: crypto.randomUUID()
+      id: newId
     });
     toast.success("New client ID generated");
   };
@@ -124,7 +126,7 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
               id="clientId"
               value={data.id || ''}
               readOnly
-              className="font-mono bg-gray-100"
+              className="font-mono text-gray-900 bg-white border-gray-200"
             />
           </div>
           <Button 
