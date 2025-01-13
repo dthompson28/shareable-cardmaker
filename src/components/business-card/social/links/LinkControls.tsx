@@ -44,6 +44,14 @@ export const LinkControls = ({
     transition,
   };
 
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onTitleChange(e.target.value);
+  };
+
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onUrlChange(e.target.value);
+  };
+
   return (
     <div 
       ref={setNodeRef} 
@@ -64,7 +72,7 @@ export const LinkControls = ({
             <Input
               id={`link-title-${index}`}
               value={title}
-              onChange={(e) => onTitleChange(e.target.value)}
+              onChange={handleTitleChange}
               placeholder="Enter link title"
               className="mt-2"
             />
@@ -76,7 +84,7 @@ export const LinkControls = ({
             <Input
               id={`link-url-${index}`}
               value={url}
-              onChange={(e) => onUrlChange(e.target.value)}
+              onChange={handleUrlChange}
               placeholder="https://"
               className="flex-1"
             />
