@@ -11,11 +11,13 @@ export const useFormInitialization = (
     if (editData) {
       console.log("Edit data received:", editData);
       // Ensure we're working with a clean ID string
-      const id = editData.id && typeof editData.id === 'object' ? editData.id.value : editData.id;
+      const id = editData.id ? 
+        (typeof editData.id === 'object' ? editData.id.value : editData.id) 
+        : crypto.randomUUID();
       
       const processedData = sortGroupsAndLinks({
         ...editData,
-        id: id || crypto.randomUUID(), // Ensure we always have a valid ID
+        id: id,
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
       console.log("Processed data:", processedData);
