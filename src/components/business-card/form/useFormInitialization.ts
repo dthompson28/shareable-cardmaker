@@ -17,6 +17,7 @@ export const useFormInitialization = (
           ...editData,
           id: editData.id // Explicitly set the ID from editData
         });
+        console.log("Set client ID to:", editData.id); // Debug log
       } else if (!data.id) {
         // Only generate new ID for new cards
         const newId = crypto.randomUUID();

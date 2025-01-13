@@ -44,7 +44,10 @@ const SavedCards = () => {
       card_name: card.card_name,
       embed_code: card.embed_code,
       preview_image: card.preview_image || '',
-      card_data: card.card_data as unknown as BusinessCardData
+      card_data: {
+        ...card.card_data as BusinessCardData,
+        id: card.id // Ensure the ID is set in card_data
+      }
     }));
 
     setCards(transformedData);
@@ -56,7 +59,12 @@ const SavedCards = () => {
   };
 
   const handleEdit = (cardData: BusinessCardData) => {
-    navigate('/', { state: { editData: cardData } });
+    const dataWithId = {
+      ...cardData,
+      id: cardData.id // Ensure ID is preserved
+    };
+    console.log("Navigating to edit with data:", dataWithId); // Debug log
+    navigate('/', { state: { editData: dataWithId } });
   };
 
   const handleDelete = async (id: string) => {
@@ -100,7 +108,10 @@ const SavedCards = () => {
               cardName={card.card_name}
               previewImage={card.preview_image}
               embedCode={card.embed_code}
-              cardData={card.card_data}
+              cardData={{
+                ...card.card_data,
+                id: card.id // Ensure ID is passed to the item
+              }}
               onCopyEmbed={copyEmbedCode}
               onEdit={handleEdit}
               onDelete={() => handleDelete(card.id)}

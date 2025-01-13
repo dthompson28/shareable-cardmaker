@@ -27,7 +27,7 @@ export const ClientIdSection = ({ clientId, isEditing, onGenerateNewId }: Client
           <Label htmlFor="clientId">Client ID</Label>
           <Input
             id="clientId"
-            value={clientId}
+            value={clientId || ''}
             readOnly
             className="font-mono text-gray-900 bg-white border-gray-200"
           />
