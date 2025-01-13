@@ -29,12 +29,12 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   useFormInitialization(data, onChange, location.state?.editData);
 
-  const { handleNewCard, handleGenerateNewId } = useNewCard(
+  const { handleNewCard, handleGenerateNewId } = useNewCard({
     data,
     isEditing,
     onClear,
     onChange
-  );
+  });
 
   const handleNext = () => {
     const sortedData = sortGroupsAndLinks(data);

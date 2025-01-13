@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { BusinessCardData } from "@/types/businessCard";
-import { Location } from "react-router-dom";
 
 export const useFormInitialization = (
   data: BusinessCardData,
@@ -10,7 +9,11 @@ export const useFormInitialization = (
   useEffect(() => {
     if (editData) {
       console.log("Initializing form with edit data:", editData);
-      onChange(editData);
+      // Ensure we preserve the ID when editing
+      onChange({
+        ...editData,
+        id: editData.id // Explicitly preserve the ID
+      });
     }
   }, [editData, onChange]);
 };
