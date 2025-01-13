@@ -2,19 +2,19 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
 interface FormHeaderProps {
-  onClear: () => void;
+  onNewCard: () => void;
 }
 
-export const FormHeader = ({ onClear }: FormHeaderProps) => {
+export const FormHeader = ({ onNewCard }: FormHeaderProps) => {
   const navigate = useNavigate();
 
   return (
     <div className="flex justify-between">
       <Button 
         variant="outline"
-        onClick={onClear}
+        onClick={onNewCard}
       >
-        Clear Form
+        Create New Card
       </Button>
       <Button 
         variant="outline"

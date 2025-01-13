@@ -48,18 +48,24 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
     }
   }, [location.state, onChange, data]);
 
-  const handleClearForm = () => {
+  const handleNewCard = () => {
     if (isEditing) {
-      toast.error("Cannot clear form while editing");
+      toast.error("Cannot create new card while editing");
       return;
     }
     onClear();
     const newId = crypto.randomUUID();
     onChange({
       ...data,
-      id: newId
+      id: newId,
+      colors: {
+        primary: "#FFFFFF",
+        secondary: "#FFFFFF",
+        accent: "#FFFFFF",
+        background: "#FFFFFF"
+      }
     });
-    toast.success("Form has been cleared");
+    toast.success("New card created");
   };
 
   const handleGenerateNewId = () => {
@@ -83,7 +89,7 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   return (
     <div className="space-y-8">
-      <FormHeader onClear={handleClearForm} />
+      <FormHeader onNewCard={handleNewCard} />
       <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1">
