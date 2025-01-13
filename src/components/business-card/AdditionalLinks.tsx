@@ -7,13 +7,10 @@ interface AdditionalLinksProps {
 export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   if (!data.social.additionalLinks?.length) return null;
 
-  // Create a map of group positions
-  const groupPositions = new Map<string, number>();
-  data.social.additionalLinks.forEach(link => {
-    if (link.groupName && !groupPositions.has(link.groupName)) {
-      groupPositions.set(link.groupName, groupPositions.size);
-    }
-  });
+  // Create a map of group positions from the linkGroups array
+  const groupPositions = new Map(
+    data.social.linkGroups?.map(group => [group.name, group.position]) || []
+  );
 
   // Get all unique group names and sort them by their position
   const groupOrder = Array.from(new Set(
@@ -26,7 +23,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
     return posA - posB;
   });
 
-  // Create a map of links by group while preserving order
+  // Create a map of links by group
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
     acc[groupName] = data.social.additionalLinks.filter(
       link => link.groupName === groupName
