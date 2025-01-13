@@ -25,32 +25,32 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   // Create a map of links by group
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
-    acc[groupName] = data.social.additionalLinks.filter(
+    acc[groupName] = data.social.additionalLinks?.filter(
       link => link.groupName === groupName
-    );
+    ) || [];
     return acc;
   }, {} as Record<string, typeof data.social.additionalLinks>);
 
   // Get ungrouped links
-  const ungroupedLinks = data.social.additionalLinks.filter(
+  const ungroupedLinks = data.social.additionalLinks?.filter(
     link => !link.groupName
-  );
+  ) || [];
 
   return (
     <div className="additional-links">
-      {groupOrder.map((groupName, groupIndex) => {
+      {groupOrder.map((groupName) => {
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
         
         return (
-          <div key={groupIndex} className="link-group">
+          <div key={groupName} className="link-group">
             <h3 className="group-title" style={{ color: data.colors.secondary }}>
               {groupName}
             </h3>
             <div className="space-y-3">
               {links.map((link, index) => (
                 <a
-                  key={index}
+                  key={`${groupName}-${index}`}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -76,12 +76,11 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
         );
       })}
       
-      {/* Render ungrouped links at the end */}
       {ungroupedLinks.length > 0 && (
         <div className="space-y-3">
           {ungroupedLinks.map((link, index) => (
             <a
-              key={index}
+              key={`ungrouped-${index}`}
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
