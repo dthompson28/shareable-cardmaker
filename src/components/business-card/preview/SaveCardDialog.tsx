@@ -25,7 +25,10 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
 
   useEffect(() => {
     if (open) {
-      if (data.id) {
+      // Clean up the ID if it's an object
+      const id = typeof data.id === 'object' ? data.id.value : data.id;
+      
+      if (id) {
         // Editing existing card - use existing data
         setClientName(data.name);
         setCardName(data.company);
@@ -54,6 +57,9 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
     try {
       const embedCode = generateEmbedCode(data);
       const previewImage = await capturePreview(previewRef.current);
+      
+      // Clean up the ID if it's an object
+      const id = typeof data.id === 'object' ? data.id.value : data.id;
 
       const cardData = {
         client_name: clientName,
@@ -65,19 +71,19 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
 
       let error;
 
-      if (data.id) {
-        // Update existing card
+      if (id) {
+        console.log("Updating existing card with ID:", id);
         const { error: updateError } = await supabase
           .from('business_cards')
           .update(cardData)
-          .eq('id', data.id);
+          .eq('id', id);
         error = updateError;
         if (!error) {
           toast.success("Business card updated successfully");
           navigate('/saved-cards');
         }
       } else {
-        // Create new card
+        console.log("Creating new card");
         const { error: insertError } = await supabase
           .from('business_cards')
           .insert(cardData);
@@ -104,7 +110,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
         <DialogHeader>
           <DialogTitle>
             {data.id ? (
-              <>Update Business Card (ID: {data.id})</>
+              <>Update Business Card (ID: {typeof data.id === 'object' ? data.id.value : data.id})</>
             ) : (
               <>Save Business Card</>
             )}
@@ -122,7 +128,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
           cardName={cardName}
           setCardName={setCardName}
           isEditing={!!data.id}
-          clientId={data.id || ''}
+          clientId={typeof data.id === 'object' ? data.id.value : data.id || ''}
         />
         <SaveCardActions
           onCancel={() => onOpenChange(false)}
