@@ -27,12 +27,15 @@ export const UngroupedLinks = ({
         <h4 className="font-medium text-muted-foreground">Ungrouped Links</h4>
       </div>
       <div ref={setNodeRef} className="p-4 space-y-4 min-h-[100px]">
-        <SortableContext items={links.map(link => link.id!)} strategy={verticalListSortingStrategy}>
+        <SortableContext 
+          items={links.map(link => link.id || `ungrouped-${links.indexOf(link)}`)} 
+          strategy={verticalListSortingStrategy}
+        >
           {links.map((link, index) => (
             <LinkControls
-              key={link.id || index}
+              key={link.id || `ungrouped-${index}`}
               index={index}
-              id={link.id}
+              id={link.id || `ungrouped-${index}`}
               title={link.title}
               url={link.url}
               onTitleChange={(value) => onLinkUpdate(index, "title", value)}

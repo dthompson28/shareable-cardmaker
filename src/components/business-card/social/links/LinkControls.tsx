@@ -21,7 +21,6 @@ export const LinkControls = ({
   title,
   url,
   id,
-  groupName,
   onTitleChange,
   onUrlChange,
   onDelete,
@@ -33,23 +32,12 @@ export const LinkControls = ({
     transform,
     transition,
   } = useSortable({ 
-    id: id || index.toString(),
-    data: {
-      groupName,
-    }
+    id: id || `link-${index}`,
   });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-  };
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onTitleChange(e.target.value);
-  };
-
-  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onUrlChange(e.target.value);
   };
 
   return (
@@ -68,23 +56,23 @@ export const LinkControls = ({
             <GripVertical className="w-5 h-5 text-muted-foreground" />
           </div>
           <div className="flex-1">
-            <Label htmlFor={`link-title-${index}`}>Link Title</Label>
+            <Label htmlFor={`link-title-${id || index}`}>Link Title</Label>
             <Input
-              id={`link-title-${index}`}
+              id={`link-title-${id || index}`}
               value={title}
-              onChange={handleTitleChange}
+              onChange={(e) => onTitleChange(e.target.value)}
               placeholder="Enter link title"
               className="mt-2"
             />
           </div>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor={`link-url-${index}`}>Link URL</Label>
+          <Label htmlFor={`link-url-${id || index}`}>Link URL</Label>
           <div className="flex gap-2">
             <Input
-              id={`link-url-${index}`}
+              id={`link-url-${id || index}`}
               value={url}
-              onChange={handleUrlChange}
+              onChange={(e) => onUrlChange(e.target.value)}
               placeholder="https://"
               className="flex-1"
             />
