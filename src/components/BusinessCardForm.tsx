@@ -61,6 +61,11 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
         secondary: "#FFFFFF",
         accent: "#FFFFFF",
         background: "#FFFFFF"
+      },
+      social: {
+        ...data.social,
+        additionalLinks: [],
+        linkGroups: []
       }
     });
     toast.success("New card created");
