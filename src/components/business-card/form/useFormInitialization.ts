@@ -10,7 +10,10 @@ export const useFormInitialization = (
     if (editData) {
       console.log("Initializing form with edit data:", editData);
       // When editing, preserve the existing ID
-      onChange(editData);
+      onChange({
+        ...editData,
+        id: editData.id // Explicitly set the ID from editData
+      });
     } else if (!data.id) {
       // Only generate new ID for new cards
       const newId = crypto.randomUUID();
