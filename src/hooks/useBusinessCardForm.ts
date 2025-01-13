@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { BusinessCardData } from "@/components/BusinessCardForm";
 import { STORAGE_KEY } from "@/constants/businessCard";
-import { sortLinkGroups, sortAdditionalLinks } from "@/components/business-card/utils/groupSorting";
+import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
 
 export const useBusinessCardForm = (
   data: BusinessCardData,
@@ -12,54 +12,39 @@ export const useBusinessCardForm = (
       const savedData = localStorage.getItem(STORAGE_KEY);
       if (savedData) {
         const parsedData = JSON.parse(savedData);
-        
-        // Apply sorting on initial load
-        const sortedData = {
-          ...parsedData,
-          social: {
-            ...parsedData.social,
-            linkGroups: sortLinkGroups(parsedData.social.linkGroups || []),
-            additionalLinks: sortAdditionalLinks(parsedData.social.additionalLinks || [])
-          }
-        };
-
-        onChange(sortedData);
+        onChange(sortGroupsAndLinks(parsedData));
       }
     } catch (error) {
-      console.error('Error loading data from localStorage:', error);
+      console.error("Error loading data from localStorage:", error);
     }
   }, []);
 
-  const handleChange = (field: string, value: string | any) => {
+  const handleChange = (field: string, value: any) => {
+    let updatedData = { ...data };
+
     if (field.includes(".")) {
       const [parent, child] = field.split(".");
-      const parentKey = parent as keyof BusinessCardData;
-      const parentValue = data[parentKey];
-      
-      if (parentValue && typeof parentValue === 'object') {
-        let updatedValue = value;
+      const parentValue = updatedData[parent as keyof BusinessCardData];
 
-        // Apply sorting when updating linkGroups or additionalLinks
-        if (field === "social.linkGroups") {
-          updatedValue = sortLinkGroups(value);
-        } else if (field === "social.additionalLinks") {
-          updatedValue = sortAdditionalLinks(value);
-        }
-
-        onChange({
-          ...data,
+      if (parentValue && typeof parentValue === "object") {
+        updatedData = {
+          ...updatedData,
           [parent]: {
             ...parentValue,
-            [child]: updatedValue,
+            [child]: value,
           },
-        });
+        };
+
+        // Apply sorting if we're updating linkGroups or additionalLinks
+        if (child === "linkGroups" || child === "additionalLinks") {
+          updatedData = sortGroupsAndLinks(updatedData);
+        }
       }
     } else {
-      onChange({
-        ...data,
-        [field]: value,
-      });
+      updatedData[field] = value;
     }
+
+    onChange(updatedData);
   };
 
   return { handleChange };

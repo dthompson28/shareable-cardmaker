@@ -11,7 +11,7 @@ import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { sortLinkGroups, sortAdditionalLinks } from "./business-card/utils/groupSorting";
+import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
 
 export interface BusinessCardData {
   id?: string;
@@ -75,18 +75,10 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   useEffect(() => {
     const editData = location.state?.editData;
     if (editData) {
-      const processedData = {
+      const processedData = sortGroupsAndLinks({
         ...editData,
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
-        social: {
-          ...editData.social,
-          linkGroups: sortLinkGroups(editData.social.linkGroups || []),
-          additionalLinks: sortAdditionalLinks(editData.social.additionalLinks?.map(link => ({
-            ...link,
-            id: link.id || crypto.randomUUID()
-          })) || [])
-        }
-      };
+      });
       onChange(processedData);
     }
   }, [location.state, onChange]);
@@ -98,14 +90,7 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   const handleNext = () => {
     // Sort groups and links before saving
-    const sortedData = {
-      ...data,
-      social: {
-        ...data.social,
-        linkGroups: sortLinkGroups(data.social.linkGroups || []),
-        additionalLinks: sortAdditionalLinks(data.social.additionalLinks || [])
-      }
-    };
+    const sortedData = sortGroupsAndLinks(data);
     onChange(sortedData);
     onNext();
   };
