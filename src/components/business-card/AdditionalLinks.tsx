@@ -12,18 +12,29 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
     data.social.linkGroups?.map(group => [group.name, group.position]) || []
   );
 
-  // Get all unique group names from actual links
+  // Get all unique group names from actual links while preserving order
   const groupNames = Array.from(new Set(
     data.social.additionalLinks
       .map(link => link.groupName)
       .filter((name): name is string => !!name)
   ));
 
-  // Sort groups by their position while preserving original order
+  // Sort groups by their position while preserving original order for groups without position
   const groupOrder = [...groupNames].sort((a, b) => {
-    const posA = groupPositions.get(a) ?? Number.MAX_VALUE;
-    const posB = groupPositions.get(b) ?? Number.MAX_VALUE;
-    return posA - posB;
+    const posA = groupPositions.get(a);
+    const posB = groupPositions.get(b);
+    
+    // If both positions exist, sort by position
+    if (posA !== undefined && posB !== undefined) {
+      return posA - posB;
+    }
+    
+    // If only one position exists, prioritize the one with position
+    if (posA !== undefined) return -1;
+    if (posB !== undefined) return 1;
+    
+    // If neither has a position, maintain original order
+    return groupNames.indexOf(a) - groupNames.indexOf(b);
   });
 
   // Create a map of links by group

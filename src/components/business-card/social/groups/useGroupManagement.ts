@@ -18,7 +18,7 @@ export const useGroupManagement = (
   const [groups, setGroups] = useState<Group[]>([]);
 
   useEffect(() => {
-    // Extract unique group names from links
+    // Extract unique group names from links and maintain their original order
     const uniqueGroups = Array.from(new Set(
       initialLinks
         .map(link => link.groupName)
@@ -40,14 +40,13 @@ export const useGroupManagement = (
       name: `Group ${groups.length + 1}`,
       position: newPosition
     };
-    setGroups([...groups, newGroup]);
+    setGroups(prevGroups => [...prevGroups, newGroup]);
   };
 
   const updateGroupName = (index: number, name: string) => {
     const newGroups = [...groups];
     const oldName = newGroups[index].name;
-    const position = newGroups[index].position;
-    newGroups[index] = { name, position };
+    newGroups[index] = { ...newGroups[index], name };
     setGroups(newGroups);
     
     // Update all links in this group with the new name
@@ -72,11 +71,14 @@ export const useGroupManagement = (
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     
     // Swap positions while maintaining array order
-    const temp = newGroups[index].position;
-    newGroups[index].position = newGroups[targetIndex].position;
-    newGroups[targetIndex].position = temp;
+    [newGroups[index], newGroups[targetIndex]] = [newGroups[targetIndex], newGroups[index]];
     
-    setGroups([...newGroups]);
+    // Update positions to match new order
+    newGroups.forEach((group, idx) => {
+      group.position = idx;
+    });
+    
+    setGroups(newGroups);
   };
 
   const removeGroup = (position: number) => {
@@ -86,9 +88,9 @@ export const useGroupManagement = (
     // Remove the group and update positions
     const newGroups = groups
       .filter(g => g.name !== groupToRemove.name)
-      .map(g => ({
+      .map((g, index) => ({
         ...g,
-        position: g.position > position ? g.position - 1 : g.position
+        position: index
       }));
     
     setGroups(newGroups);
