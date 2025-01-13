@@ -31,16 +31,14 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   useEffect(() => {
     const editData = location.state?.editData;
     if (editData) {
-      console.log("Edit data received:", editData); // Debug log
-      // When editing, preserve all data including the ID
+      console.log("Edit data received:", editData);
       const processedData = sortGroupsAndLinks({
         ...editData,
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
-      console.log("Processed data:", processedData); // Debug log
+      console.log("Processed data:", processedData);
       onChange(processedData);
     } else if (!data.id) {
-      // Only generate new ID if we're not editing and don't have an ID
       onChange({
         ...data,
         id: crypto.randomUUID()
@@ -53,8 +51,8 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
       toast.error("Cannot create new card while editing");
       return;
     }
-    onClear();
     const newId = crypto.randomUUID();
+    onClear();
     onChange({
       ...data,
       id: newId,
