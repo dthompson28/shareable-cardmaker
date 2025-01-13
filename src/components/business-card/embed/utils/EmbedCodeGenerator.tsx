@@ -326,17 +326,17 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 
       ${data.social.additionalLinks?.length ? `
       <div class="additional-links">
-        ${data.social.additionalLinks.reduce((groups, link) => {
+        ${Object.entries(data.social.additionalLinks.reduce((groups: { [key: string]: any[] }, link) => {
           const groupName = link.groupName || 'Links';
           if (!groups[groupName]) {
             groups[groupName] = [];
           }
           groups[groupName].push(link);
           return groups;
-        }, {}).map(group => `
+        }, {})).map(([groupName, links]) => `
           <div class="link-group">
-            <h3 class="group-title">${group[0].groupName || 'Links'}</h3>
-            ${group.map(link => `
+            <h3 class="group-title">${groupName}</h3>
+            ${links.map(link => `
               <a href="${link.url}" target="_blank" class="additional-link">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M5 12h14M12 5l7 7-7 7" />
