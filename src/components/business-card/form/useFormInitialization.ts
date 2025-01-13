@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { BusinessCardData } from "@/types/businessCard";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
+import { getSafeId } from "../preview/utils/idUtils";
 
 export const useFormInitialization = (
   data: BusinessCardData,
@@ -10,10 +11,7 @@ export const useFormInitialization = (
   useEffect(() => {
     if (editData) {
       console.log("Edit data received:", editData);
-      // Ensure we're working with a clean ID string
-      const id = editData?.id ? 
-        (typeof editData?.id === 'object' ? editData?.id?.value : editData?.id) 
-        : crypto.randomUUID();
+      const id = getSafeId(editData.id) || crypto.randomUUID();
       
       const processedData = sortGroupsAndLinks({
         ...editData,
