@@ -1,4 +1,4 @@
-import { BusinessCardData } from "../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { sortGroups, sortAdditionalLinks } from "./utils/groupSorting";
 import { LinkItem, LinkGroup } from "./utils/linkRenderer";
 
@@ -11,7 +11,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   const sortedLinks = sortAdditionalLinks(data.social.additionalLinks);
 
-  const groupPositions = new Map(
+  const groupPositions = new Map<string, number>(
     data.social.linkGroups?.map(group => [group.name, group.position]) || []
   );
 

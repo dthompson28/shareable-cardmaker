@@ -1,3 +1,8 @@
+export interface Position {
+  x: number;
+  y: number;
+}
+
 export interface BusinessCardData {
   id?: string;
   name: string;
@@ -8,10 +13,7 @@ export interface BusinessCardData {
   website: string;
   photo: string;
   photoStyle: 'full' | 'compact';
-  photoPosition: {
-    x: number;
-    y: number;
-  };
+  photoPosition: Position;
   logo: string;
   address: string;
   fonts: {
