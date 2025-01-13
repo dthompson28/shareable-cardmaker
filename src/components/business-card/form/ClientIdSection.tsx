@@ -18,6 +18,8 @@ export const ClientIdSection = ({ clientId, isEditing, onGenerateNewId }: Client
     onGenerateNewId();
   };
 
+  console.log("ClientIdSection rendering with ID:", clientId); // Debug log
+
   return (
     <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
       <div className="flex items-center justify-between gap-4">
