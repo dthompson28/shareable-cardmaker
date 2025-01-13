@@ -18,7 +18,6 @@
   width: 100%;
   max-width: 448px;
   border-radius: 12px;
-  background-color: #E6EDF3;
   overflow: hidden;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
@@ -26,19 +25,29 @@
 .header {
   height: 192px;
   width: 100%;
-  background-color: #0D1B2A;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
+.logo {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 64px;
+  height: 64px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .contact-photo {
   width: 192px;
   height: 192px;
   border-radius: 50%;
-  border: 4px solid white;
+  border: 4px solid;
   background-size: cover;
+  background-position: center;
   position: absolute;
   bottom: -96px;
   left: 24px;
@@ -53,21 +62,15 @@
   font-size: 28px;
   margin-bottom: 4px;
   font-weight: 700;
-  font-family: 'Playfair Display', serif;
-  color: #1B3A57;
 }
 
 .title {
   font-size: 18px;
-  font-family: 'Playfair Display', serif;
-  color: #0D1B2A;
   margin: 2px 0;
 }
 
 .company {
   font-size: 18px;
-  font-family: 'Playfair Display', serif;
-  color: #A2AEBB;
   margin: 2px 0;
 }
 
@@ -82,7 +85,6 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #1B3A57;
   text-decoration: none;
   font-size: 16px;
   padding: 8px;
@@ -108,7 +110,6 @@
 }
 
 .social-icon {
-  color: #1B3A57;
   width: 20px;
   height: 20px;
 }
@@ -129,7 +130,6 @@
 .group-title {
   font-size: 18px;
   font-weight: 600;
-  color: #00674f;
   margin-bottom: 12px;
 }
 
@@ -137,7 +137,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #0D1B2A;
   text-decoration: none;
   font-size: 16px;
   margin-bottom: 12px;
@@ -177,7 +176,6 @@
 .share-button {
   color: white;
   border: none;
-  background-color: #1B3A57;
 }
 
 .share-button svg {
@@ -186,10 +184,8 @@
 
 .save-button {
   background-color: transparent;
-  color: #A2AEBB;
-  border: 2px solid #A2AEBB;
 }
 
 .save-button svg {
-  color: #A2AEBB;
+  color: currentColor;
 }

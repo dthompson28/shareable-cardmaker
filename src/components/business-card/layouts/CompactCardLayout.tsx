@@ -20,23 +20,65 @@ export const CompactCardLayout = ({
 }: CompactCardLayoutProps) => {
   return (
     <div className="business-card">
-      <div className="header">
+      <div 
+        className="header"
+        style={{ backgroundColor: data.colors.secondary }}
+      >
         {data.photo && (
           <div 
             className="contact-photo"
             style={{ 
               backgroundImage: `url(${data.photo})`,
-              backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`
+              backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
+              borderColor: data.colors.background
             }}
           />
         )}
-        {renderLogo()}
+        {data.logo && (
+          <div 
+            className="logo"
+            style={{ 
+              backgroundImage: `url(${data.logo})`
+            }}
+          />
+        )}
       </div>
 
-      <div className="content">
-        <div className="name">{data.name}</div>
-        {data.jobTitle && <div className="title">{data.jobTitle}</div>}
-        {data.company && <div className="company">{data.company}</div>}
+      <div 
+        className="content"
+        style={{ backgroundColor: data.colors.background }}
+      >
+        <div 
+          className="name"
+          style={{ 
+            color: data.colors.primary,
+            fontFamily: data.fonts.heading
+          }}
+        >
+          {data.name}
+        </div>
+        {data.jobTitle && (
+          <div 
+            className="title"
+            style={{ 
+              color: data.colors.secondary,
+              fontFamily: data.fonts.heading
+            }}
+          >
+            {data.jobTitle}
+          </div>
+        )}
+        {data.company && (
+          <div 
+            className="company"
+            style={{ 
+              color: data.colors.accent,
+              fontFamily: data.fonts.heading
+            }}
+          >
+            {data.company}
+          </div>
+        )}
 
         <ContactInfo data={data} />
         <SocialLinks data={data} />
