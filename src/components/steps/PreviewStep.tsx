@@ -1,5 +1,6 @@
 import { BusinessCardData } from "@/types/businessCard";
-import BusinessCard from "@/components/BusinessCard";
+import { CardPreview } from "@/components/business-card/CardPreview";
+import { PreviewActions } from "@/components/business-card/preview/PreviewActions";
 
 interface PreviewStepProps {
   data: BusinessCardData;
@@ -9,10 +10,13 @@ interface PreviewStepProps {
 
 export const PreviewStep = ({ data, onBack, onEdit }: PreviewStepProps) => {
   return (
-    <BusinessCard
-      data={data}
-      onBack={onBack}
-      onEdit={onEdit}
-    />
+    <div className="space-y-8">
+      <CardPreview data={data} />
+      <PreviewActions
+        data={data}
+        onBack={onBack}
+        onEdit={onEdit}
+      />
+    </div>
   );
 };
