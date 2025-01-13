@@ -7,51 +7,49 @@ interface AdditionalLinksProps {
 export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   if (!data.social.additionalLinks?.length) return null;
 
-  // Create a map of group positions from the linkGroups array
+  // Create a map of group positions
   const groupPositions = new Map(
     data.social.linkGroups?.map(group => [group.name, group.position]) || []
   );
 
-  // Get all unique group names from actual links
-  const groupNames = Array.from(new Set(
-    data.social.additionalLinks
-      .map(link => link.groupName)
-      .filter((name): name is string => !!name)
-  ));
+  // Get all groups that have links
+  const groupsWithLinks = data.social.additionalLinks
+    .filter(link => link.groupName)
+    .reduce((groups, link) => {
+      if (link.groupName && !groups.includes(link.groupName)) {
+        groups.push(link.groupName);
+      }
+      return groups;
+    }, [] as string[]);
 
   // Sort groups by their position
-  const groupOrder = groupNames.sort((a, b) => {
+  const sortedGroups = groupsWithLinks.sort((a, b) => {
     const posA = groupPositions.get(a) ?? Number.MAX_VALUE;
     const posB = groupPositions.get(b) ?? Number.MAX_VALUE;
     return posA - posB;
   });
 
-  // Create a map of links by group
-  const groupedLinks = groupOrder.reduce((acc, groupName) => {
-    acc[groupName] = data.social.additionalLinks?.filter(
-      link => link.groupName === groupName
-    ) || [];
-    return acc;
-  }, {} as Record<string, typeof data.social.additionalLinks>);
-
   // Get ungrouped links
-  const ungroupedLinks = data.social.additionalLinks?.filter(
+  const ungroupedLinks = data.social.additionalLinks.filter(
     link => !link.groupName
-  ) || [];
+  );
 
   return (
     <div className="additional-links">
-      {groupOrder.map((groupName) => {
-        const links = groupedLinks[groupName];
-        if (!links?.length) return null;
-        
+      {sortedGroups.map((groupName) => {
+        const groupLinks = data.social.additionalLinks.filter(
+          link => link.groupName === groupName
+        );
+
+        if (!groupLinks.length) return null;
+
         return (
           <div key={groupName} className="link-group">
             <h3 className="group-title" style={{ color: data.colors.secondary }}>
               {groupName}
             </h3>
             <div className="space-y-3">
-              {links.map((link, index) => (
+              {groupLinks.map((link, index) => (
                 <a
                   key={`${groupName}-${index}`}
                   href={link.url}
