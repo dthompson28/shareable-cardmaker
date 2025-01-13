@@ -31,11 +31,13 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   useEffect(() => {
     const editData = location.state?.editData;
     if (editData) {
-      // When editing, use the ID from the editData
+      console.log("Edit data received:", editData); // Debug log
+      // When editing, preserve all data including the ID
       const processedData = sortGroupsAndLinks({
         ...editData,
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
+      console.log("Processed data:", processedData); // Debug log
       onChange(processedData);
     } else if (!data.id) {
       // Only generate new ID if we're not editing and don't have an ID
