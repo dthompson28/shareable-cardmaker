@@ -1,12 +1,12 @@
 import { BusinessCardData } from "@/types/businessCard";
 import { generateStyles } from "../styles/styleGenerator";
 import { 
-  generateHeaderHTML, 
-  generateContactHTML, 
-  generateSocialHTML, 
-  generateActionButtonsHTML, 
-  generateScriptHTML 
+  generateHeaderSection, 
+  generateContactSection, 
+  generateSocialSection, 
+  generateActionButtonsSection 
 } from "./sections/htmlSections";
+import { generateScriptContent } from "./scriptGenerator";
 
 export const generateEmbedCode = (data: BusinessCardData) => `
 <!DOCTYPE html>
@@ -25,14 +25,14 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 <body>
   <div class="bc-card-container">
     <div class="bc-business-card">
-      ${generateHeaderHTML(data)}
+      ${generateHeaderSection(data)}
       <div class="bc-content">
-        ${generateContactHTML(data)}
-        ${generateSocialHTML(data)}
-        ${generateActionButtonsHTML(data)}
+        ${generateContactSection(data)}
+        ${generateSocialSection(data)}
+        ${generateActionButtonsSection(data)}
       </div>
     </div>
   </div>
-  ${generateScriptHTML(data)}
+  <script>${generateScriptContent(data)}</script>
 </body>
 </html>`;
