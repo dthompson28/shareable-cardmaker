@@ -10,7 +10,7 @@ interface LinkControlsProps {
   title: string;
   url: string;
   id?: string;
-  groupName?: string; // Add back the groupName prop
+  groupName?: string;
   onTitleChange: (value: string) => void;
   onUrlChange: (value: string) => void;
   onDelete: () => void;
@@ -40,7 +40,7 @@ export const LinkControls = ({
     transition,
   };
 
-  const uniqueId = id || `link-${index}`;
+  const inputId = id || `link-${index}`;
 
   return (
     <div 
@@ -58,9 +58,9 @@ export const LinkControls = ({
             <GripVertical className="w-5 h-5 text-muted-foreground" />
           </div>
           <div className="flex-1">
-            <Label htmlFor={`title-${uniqueId}`}>Link Title</Label>
+            <Label htmlFor={`title-${inputId}`}>Link Title</Label>
             <Input
-              id={`title-${uniqueId}`}
+              id={`title-${inputId}`}
               value={title}
               onChange={(e) => onTitleChange(e.target.value)}
               placeholder="Enter link title"
@@ -69,10 +69,10 @@ export const LinkControls = ({
           </div>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor={`url-${uniqueId}`}>Link URL</Label>
+          <Label htmlFor={`url-${inputId}`}>Link URL</Label>
           <div className="flex gap-2">
             <Input
-              id={`url-${uniqueId}`}
+              id={`url-${inputId}`}
               value={url}
               onChange={(e) => onUrlChange(e.target.value)}
               placeholder="https://"

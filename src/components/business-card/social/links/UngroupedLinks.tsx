@@ -21,10 +21,6 @@ export const UngroupedLinks = ({
 
   if (!links.length) return null;
 
-  const handleLinkUpdate = (index: number, field: "title" | "url", value: string) => {
-    onLinkUpdate(index, field, value);
-  };
-
   return (
     <Card className="bg-background border border-border overflow-hidden">
       <div className="p-4 border-b border-border">
@@ -32,18 +28,18 @@ export const UngroupedLinks = ({
       </div>
       <div ref={setNodeRef} className="p-4 space-y-4 min-h-[100px]">
         <SortableContext 
-          items={links.map((link, index) => link.id || `ungrouped-${index}`)} 
+          items={links.map(link => link.id || `ungrouped-${link.title}`)} 
           strategy={verticalListSortingStrategy}
         >
           {links.map((link, index) => (
             <LinkControls
-              key={`ungrouped-${index}`}
+              key={link.id || `ungrouped-${index}`}
               index={index}
-              id={`ungrouped-${index}`}
+              id={link.id || `ungrouped-${index}`}
               title={link.title}
               url={link.url}
-              onTitleChange={(value) => handleLinkUpdate(index, "title", value)}
-              onUrlChange={(value) => handleLinkUpdate(index, "url", value)}
+              onTitleChange={(value) => onLinkUpdate(index, "title", value)}
+              onUrlChange={(value) => onLinkUpdate(index, "url", value)}
               onDelete={() => onLinkDelete(index)}
             />
           ))}
