@@ -16,7 +16,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   const groupOrder = Array.from(new Set(
     data.social.additionalLinks
       .map(link => link.groupName)
-      .filter((name): name is string => !!name && groupPositions.has(name))
+      .filter((name): name is string => !!name)
   )).sort((a, b) => {
     const posA = groupPositions.get(a) ?? Number.MAX_VALUE;
     const posB = groupPositions.get(b) ?? Number.MAX_VALUE;
@@ -25,7 +25,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   // Create a map of links by group
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
-    if (groupName && groupPositions.has(groupName)) {
+    if (groupName) {
       acc[groupName] = data.social.additionalLinks?.filter(
         link => link.groupName === groupName
       ) || [];
@@ -35,13 +35,13 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   // Get ungrouped links
   const ungroupedLinks = data.social.additionalLinks?.filter(
-    link => !link.groupName || !groupPositions.has(link.groupName)
+    link => !link.groupName
   ) || [];
 
   return (
     <div className="additional-links">
       {groupOrder.map((groupName) => {
-        if (!groupName || !groupPositions.has(groupName)) return null;
+        if (!groupName) return null;
         
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
