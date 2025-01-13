@@ -18,6 +18,9 @@ export const CompactCardLayout = ({
   onSectionClick,
   renderLogo 
 }: CompactCardLayoutProps) => {
+  // Ensure fonts object exists with default values
+  const fonts = data.fonts || { heading: 'Playfair Display', body: 'Open Sans' };
+
   return (
     <div className="business-card">
       <div 
@@ -52,7 +55,7 @@ export const CompactCardLayout = ({
           className="name"
           style={{ 
             color: data.colors.primary,
-            fontFamily: data.fonts.heading
+            fontFamily: fonts.heading
           }}
         >
           {data.name}
@@ -62,7 +65,7 @@ export const CompactCardLayout = ({
             className="title"
             style={{ 
               color: data.colors.secondary,
-              fontFamily: data.fonts.heading
+              fontFamily: fonts.heading
             }}
           >
             {data.jobTitle}
@@ -73,7 +76,7 @@ export const CompactCardLayout = ({
             className="company"
             style={{ 
               color: data.colors.accent,
-              fontFamily: data.fonts.heading
+              fontFamily: fonts.heading
             }}
           >
             {data.company}

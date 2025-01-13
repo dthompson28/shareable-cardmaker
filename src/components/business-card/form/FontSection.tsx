@@ -33,6 +33,9 @@ const fonts = {
 };
 
 export const FontSection = ({ data, onChange }: FontSectionProps) => {
+  // Ensure fonts object exists with default values
+  const currentFonts = data.fonts || { heading: 'Playfair Display', body: 'Open Sans' };
+
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold">Font Settings</h2>
@@ -40,7 +43,7 @@ export const FontSection = ({ data, onChange }: FontSectionProps) => {
         <div className="space-y-2">
           <Label htmlFor="heading-font">Heading Font</Label>
           <Select
-            value={data.fonts?.heading || 'Playfair Display'}
+            value={currentFonts.heading}
             onValueChange={(value) => onChange('fonts.heading', value)}
           >
             <SelectTrigger>
@@ -59,7 +62,7 @@ export const FontSection = ({ data, onChange }: FontSectionProps) => {
         <div className="space-y-2">
           <Label htmlFor="body-font">Body Font</Label>
           <Select
-            value={data.fonts?.body || 'Open Sans'}
+            value={currentFonts.body}
             onValueChange={(value) => onChange('fonts.body', value)}
           >
             <SelectTrigger>
