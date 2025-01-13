@@ -75,15 +75,28 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       background-image: url('${data.photo}');
     }
 
-    <div class="header-content">
-      <div class="header-text">
-        <h1>${data.name}</h1>
-        ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
-        ${data.company ? `<p>${data.company}</p>` : ''}
-      </div>
-    </div>
+    .header-content {
+      position: relative;
+      z-index: 1;
+      color: white;
+      padding: 16px;
+    }
 
-    <div class="header-logo" style="background-image: url('${data.logo}');"></div>
+    .header-text {
+      text-align: center;
+    }
+
+    .header-logo {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 64px;
+      height: 64px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 50%;
+      background-image: url('${data.logo}');
+    }
 
     .content {
       padding: 24px;
@@ -268,15 +281,17 @@ export const generateFullTemplate = (data: BusinessCardData) => {
 
   <script>
     function shareCard() {
+      const shareData = {
+        title: '${data.name} - Digital Business Card',
+        text: 'Check out my digital business card!',
+        url: document.location.href
+      };
+
       if (navigator.share) {
-        navigator.share({
-          title: '${data.name} - Digital Business Card',
-          text: 'Check out my digital business card!',
-          url: window.location.href
-        }).catch(console.error);
+        navigator.share(shareData).catch(console.error);
       } else {
         const tempInput = document.createElement('input');
-        tempInput.value = window.location.href;
+        tempInput.value = document.location.href;
         document.body.appendChild(tempInput);
         tempInput.select();
         document.execCommand('copy');
