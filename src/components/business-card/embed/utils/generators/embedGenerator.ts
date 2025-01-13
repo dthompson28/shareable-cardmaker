@@ -1,12 +1,12 @@
 import { BusinessCardData } from "@/types/businessCard";
 import { generateStyles } from "../styles/styleGenerator";
-import {
-  generateHeaderSection,
-  generateContactSection,
-  generateSocialSection,
-  generateActionButtonsSection,
+import { 
+  generateHeaderHTML, 
+  generateContactHTML, 
+  generateSocialHTML, 
+  generateActionButtonsHTML, 
+  generateScriptHTML 
 } from "./sections/htmlSections";
-import { generateScriptSection } from "./sections/scriptSection";
 
 export const generateEmbedCode = (data: BusinessCardData) => `
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <title>${data.name} - Digital Business Card</title>
   <meta name="description" content="Digital Business Card for ${data.name}">
   <meta name="author" content="${data.name}">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=Merriweather:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;600;700&family=Lato:wght@400;500;600;700&family=Source+Sans+Pro:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     ${generateStyles(data)}
   </style>
@@ -25,16 +25,14 @@ export const generateEmbedCode = (data: BusinessCardData) => `
 <body>
   <div class="bc-card-container">
     <div class="bc-business-card">
-      ${generateHeaderSection(data)}
+      ${generateHeaderHTML(data)}
       <div class="bc-content">
-        ${generateContactSection(data)}
-        ${generateSocialSection(data)}
-        ${generateActionButtonsSection(data)}
+        ${generateContactHTML(data)}
+        ${generateSocialHTML(data)}
+        ${generateActionButtonsHTML(data)}
       </div>
     </div>
   </div>
-  <script>
-    ${generateScriptSection(data)}
-  </script>
+  ${generateScriptHTML(data)}
 </body>
 </html>`;

@@ -18,17 +18,17 @@ export const generateButtonStyles = (data: BusinessCardData) => `
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
 
   .share-button {
+    background-color: ${data.colors.primary};
     color: white;
     border: none;
-    background-color: ${data.colors.primary};
   }
 
-  .share-button svg {
-    color: white;
-    background: none;
+  .share-button:hover {
+    background-color: ${data.colors.secondary};
   }
 
   .save-button {
@@ -37,7 +37,15 @@ export const generateButtonStyles = (data: BusinessCardData) => `
     border: 2px solid ${data.colors.accent};
   }
 
-  .save-button svg {
+  .save-button:hover {
+    background-color: ${data.colors.secondary};
+    color: white;
+    border-color: ${data.colors.secondary};
+  }
+
+  .action-button svg {
+    width: 20px;
+    height: 20px;
     background: none;
   }
 `;
