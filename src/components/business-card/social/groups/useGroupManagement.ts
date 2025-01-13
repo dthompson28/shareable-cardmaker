@@ -25,16 +25,21 @@ export const useGroupManagement = (
         .filter((name): name is string => !!name)
     ));
     
-    setGroups(uniqueGroups.map((name, index) => ({
-      name,
-      position: index
-    })));
-  }, []);
+    // Preserve existing positions or assign new ones
+    setGroups(uniqueGroups.map((name, index) => {
+      const existingGroup = groups.find(g => g.name === name);
+      return {
+        name,
+        position: existingGroup?.position ?? index
+      };
+    }));
+  }, [initialLinks]);
 
   const addGroup = () => {
+    const newPosition = groups.length;
     const newGroup = {
       name: `Group ${groups.length + 1}`,
-      position: groups.length
+      position: newPosition
     };
     setGroups([...groups, newGroup]);
   };
@@ -42,7 +47,8 @@ export const useGroupManagement = (
   const updateGroupName = (index: number, name: string) => {
     const newGroups = [...groups];
     const oldName = newGroups[index].name;
-    newGroups[index] = { ...newGroups[index], name };
+    const position = newGroups[index].position;
+    newGroups[index] = { name, position };
     setGroups(newGroups);
     
     // Update all links in this group with the new name
@@ -56,18 +62,26 @@ export const useGroupManagement = (
   };
 
   const moveGroup = (index: number, direction: 'up' | 'down') => {
-    const newGroups = [...groups];
-    const group = newGroups[index];
-    
-    if (direction === 'up' && index > 0) {
-      const prevGroup = newGroups[index - 1];
-      newGroups[index - 1] = { ...group, position: prevGroup.position };
-      newGroups[index] = { ...prevGroup, position: group.position };
-    } else if (direction === 'down' && index < groups.length - 1) {
-      const nextGroup = newGroups[index + 1];
-      newGroups[index + 1] = { ...group, position: nextGroup.position };
-      newGroups[index] = { ...nextGroup, position: group.position };
+    if (
+      (direction === 'up' && index === 0) || 
+      (direction === 'down' && index === groups.length - 1)
+    ) {
+      return;
     }
+
+    const newGroups = [...groups];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    
+    // Swap positions, not array indices
+    const currentPosition = newGroups[index].position;
+    newGroups[index] = { 
+      ...newGroups[index], 
+      position: newGroups[targetIndex].position 
+    };
+    newGroups[targetIndex] = { 
+      ...newGroups[targetIndex], 
+      position: currentPosition 
+    };
     
     setGroups(newGroups.sort((a, b) => a.position - b.position));
   };
@@ -76,7 +90,15 @@ export const useGroupManagement = (
     const groupToRemove = groups.find(g => g.position === position);
     if (!groupToRemove) return;
 
-    setGroups(groups.filter(g => g.position !== position));
+    // Remove the group and update positions
+    const newGroups = groups
+      .filter(g => g.position !== position)
+      .map(g => ({
+        ...g,
+        position: g.position > position ? g.position - 1 : g.position
+      }));
+    
+    setGroups(newGroups);
     
     // Remove group name from all links in this group
     const updatedLinks = initialLinks.map(link => {
@@ -90,7 +112,7 @@ export const useGroupManagement = (
   };
 
   return {
-    groups,
+    groups: groups.sort((a, b) => a.position - b.position),
     addGroup,
     updateGroupName,
     moveGroup,

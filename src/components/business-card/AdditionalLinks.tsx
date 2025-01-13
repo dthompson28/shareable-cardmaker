@@ -19,7 +19,7 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
       .filter((name): name is string => !!name)
   ));
 
-  // Sort groups by their position in ascending order (1 comes before 2)
+  // Create a new array and sort it by position to avoid mutating the original data
   const groupOrder = [...groupNames].sort((a, b) => {
     const posA = groupPositions.get(a) ?? Number.MAX_VALUE;
     const posB = groupPositions.get(b) ?? Number.MAX_VALUE;
