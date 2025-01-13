@@ -8,6 +8,7 @@ import { SaveCardForm } from "./save-dialog/SaveCardForm";
 import { SaveCardActions } from "./save-dialog/SaveCardActions";
 import { capturePreview } from "@/utils/previewCapture";
 import { Json } from "@/integrations/supabase/types";
+import { useNavigate } from "react-router-dom";
 
 interface SaveCardDialogProps {
   open: boolean;
@@ -21,17 +22,18 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
   const [cardName, setCardName] = useState("");
   const [clientId, setClientId] = useState("");
   const [isSaving, setIsSaving] = useState(false);
+  const navigate = useNavigate();
 
   // Initialize form data when dialog opens or when editing an existing card
   useEffect(() => {
     if (open) {
       if (data.id) {
-        // Editing existing card
+        // Editing existing card - use existing data
         setClientName(data.name);
         setCardName(data.company);
         setClientId(data.id);
       } else {
-        // New card - auto populate from form data with formatted name
+        // New card - auto populate from form data
         const formattedClientName = `${data.name || ""} - ${data.company || ""}`.trim();
         setClientName(formattedClientName);
         setCardName("");
@@ -74,14 +76,20 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
           .update(cardData)
           .eq('id', data.id);
         error = updateError;
-        if (!error) toast.success("Business card updated successfully");
+        if (!error) {
+          toast.success("Business card updated successfully");
+          navigate('/saved-cards');
+        }
       } else {
         // Create new card
         const { error: insertError } = await supabase
           .from('business_cards')
           .insert(cardData);
         error = insertError;
-        if (!error) toast.success("Business card saved successfully");
+        if (!error) {
+          toast.success("Business card saved successfully");
+          navigate('/saved-cards');
+        }
       }
 
       if (error) throw error;

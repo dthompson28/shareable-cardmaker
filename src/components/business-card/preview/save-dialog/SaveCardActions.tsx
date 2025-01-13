@@ -14,7 +14,7 @@ export const SaveCardActions = ({ onCancel, onSave, isSaving, isEditing }: SaveC
         Cancel
       </Button>
       <Button onClick={onSave} disabled={isSaving}>
-        {isSaving ? "Saving..." : isEditing ? "Confirm Overwrite" : "Save Card"}
+        {isSaving ? "Saving..." : isEditing ? "Update Card" : "Save Card"}
       </Button>
     </div>
   );
