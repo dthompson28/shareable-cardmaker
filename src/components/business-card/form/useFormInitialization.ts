@@ -11,7 +11,7 @@ export const useFormInitialization = (
     if (editData) {
       console.log("Edit data received:", editData);
       // Ensure we're working with a clean ID string
-      const id = typeof editData.id === 'object' ? editData.id.value : editData.id;
+      const id = editData.id && typeof editData.id === 'object' ? editData.id.value : editData.id;
       
       const processedData = sortGroupsAndLinks({
         ...editData,

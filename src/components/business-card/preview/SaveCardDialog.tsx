@@ -26,7 +26,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
   useEffect(() => {
     if (open) {
       // Clean up the ID if it's an object
-      const id = typeof data.id === 'object' ? data.id.value : data.id;
+      const id = data.id && typeof data.id === 'object' ? data.id.value : data.id;
       
       if (id) {
         // Editing existing card - use existing data
@@ -59,7 +59,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
       const previewImage = await capturePreview(previewRef.current);
       
       // Clean up the ID if it's an object
-      const id = typeof data.id === 'object' ? data.id.value : data.id;
+      const id = data.id && typeof data.id === 'object' ? data.id.value : data.id;
 
       const cardData = {
         client_name: clientName,
@@ -104,19 +104,21 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
     }
   };
 
+  const safeId = data.id && typeof data.id === 'object' ? data.id.value : data.id;
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {data.id ? (
-              <>Update Business Card (ID: {typeof data.id === 'object' ? data.id.value : data.id})</>
+            {safeId ? (
+              <>Update Business Card (ID: {safeId})</>
             ) : (
               <>Save Business Card</>
             )}
           </DialogTitle>
           <DialogDescription>
-            {data.id ? 
+            {safeId ? 
               "Update the existing business card with your changes." :
               "Save your business card with a name and client information."
             }
@@ -127,14 +129,14 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
           setClientName={setClientName}
           cardName={cardName}
           setCardName={setCardName}
-          isEditing={!!data.id}
-          clientId={typeof data.id === 'object' ? data.id.value : data.id || ''}
+          isEditing={!!safeId}
+          clientId={safeId || ''}
         />
         <SaveCardActions
           onCancel={() => onOpenChange(false)}
           onSave={handleSave}
           isSaving={isSaving}
-          isEditing={!!data.id}
+          isEditing={!!safeId}
         />
       </DialogContent>
     </Dialog>
