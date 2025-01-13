@@ -23,9 +23,9 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
     return posA - posB;
   });
 
-  // Create a map of links by group, only for groups that exist in linkGroups
+  // Create a map of links by group
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
-    if (groupName && groupPositions.has(groupName)) {
+    if (groupName) {
       acc[groupName] = data.social.additionalLinks?.filter(
         link => link.groupName === groupName
       ) || [];
@@ -35,14 +35,13 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   // Get ungrouped links
   const ungroupedLinks = data.social.additionalLinks?.filter(
-    link => !link.groupName || !groupPositions.has(link.groupName)
+    link => !link.groupName
   ) || [];
 
   return (
     <div className="additional-links">
       {groupOrder.map((groupName) => {
-        // Only render groups that exist in linkGroups
-        if (!groupName || !groupPositions.has(groupName)) return null;
+        if (!groupName) return null;
         
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
