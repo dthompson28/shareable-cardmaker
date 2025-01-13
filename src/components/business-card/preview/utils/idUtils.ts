@@ -1,4 +1,4 @@
-export const getSafeId = (id: string | { value: string } | null | undefined): string | undefined => {
-  if (!id) return undefined;
-  return typeof id === 'object' ? id.value : id;
+export const getSafeId = (id: string | undefined | null): string | null => {
+  if (!id) return null;
+  return typeof id === 'string' ? id : null;
 };

@@ -1,19 +1,19 @@
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface SaveCardFormProps {
   clientName: string;
-  setClientName: (value: string) => void;
+  setClientName: (name: string) => void;
   cardName: string;
-  setCardName: (value: string) => void;
-  isEditing?: boolean;
+  setCardName: (name: string) => void;
+  isEditing: boolean;
   clientId: string;
 }
 
-export const SaveCardForm = ({ 
-  clientName, 
-  setClientName, 
-  cardName, 
+export const SaveCardForm = ({
+  clientName,
+  setClientName,
+  cardName,
   setCardName,
   isEditing,
   clientId
@@ -21,23 +21,12 @@ export const SaveCardForm = ({
   return (
     <div className="space-y-4 py-4">
       <div className="space-y-2">
-        <Label htmlFor="clientId">Client ID</Label>
-        <Input
-          id="clientId"
-          value={clientId}
-          readOnly
-          className="bg-gray-100 font-mono"
-        />
-      </div>
-      <div className="space-y-2">
         <Label htmlFor="clientName">Client Name</Label>
         <Input
           id="clientName"
           value={clientName}
           onChange={(e) => setClientName(e.target.value)}
           placeholder="Enter client name"
-          readOnly={isEditing}
-          className={isEditing ? "bg-gray-100" : ""}
         />
       </div>
       <div className="space-y-2">
@@ -49,6 +38,11 @@ export const SaveCardForm = ({
           placeholder="Enter card name"
         />
       </div>
+      {isEditing && (
+        <div className="text-sm text-muted-foreground">
+          Client ID: {clientId}
+        </div>
+      )}
     </div>
   );
 };
