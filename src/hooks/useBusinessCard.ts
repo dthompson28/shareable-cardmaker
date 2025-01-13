@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { STORAGE_KEY } from "@/constants/businessCard";
 import { toast } from "sonner";
 

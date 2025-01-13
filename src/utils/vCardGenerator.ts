@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 const getBase64FromUrl = async (url: string): Promise<string> => {
   try {

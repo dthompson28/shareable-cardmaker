@@ -1,4 +1,4 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 export const sortGroupsAndLinks = (data: BusinessCardData): BusinessCardData => {
   if (!data.social) return data;
