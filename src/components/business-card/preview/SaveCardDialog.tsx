@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { BusinessCardData } from "../../BusinessCardForm";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -20,24 +20,20 @@ interface SaveCardDialogProps {
 export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCardDialogProps) => {
   const [clientName, setClientName] = useState("");
   const [cardName, setCardName] = useState("");
-  const [clientId, setClientId] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
 
-  // Initialize form data when dialog opens or when editing an existing card
   useEffect(() => {
     if (open) {
       if (data.id) {
         // Editing existing card - use existing data
         setClientName(data.name);
         setCardName(data.company);
-        setClientId(data.id);
       } else {
         // New card - auto populate from form data
         const formattedClientName = `${data.name || ""} - ${data.company || ""}`.trim();
         setClientName(formattedClientName);
         setCardName("");
-        setClientId(crypto.randomUUID());
       }
     }
   }, [data.id, data.name, data.company, open]);
@@ -110,9 +106,15 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
             {data.id ? (
               <>Update Business Card (ID: {data.id})</>
             ) : (
-              <>Save Business Card (ID: {clientId})</>
+              <>Save Business Card</>
             )}
           </DialogTitle>
+          <DialogDescription>
+            {data.id ? 
+              "Update the existing business card with your changes." :
+              "Save your business card with a name and client information."
+            }
+          </DialogDescription>
         </DialogHeader>
         <SaveCardForm
           clientName={clientName}
@@ -120,7 +122,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
           cardName={cardName}
           setCardName={setCardName}
           isEditing={!!data.id}
-          clientId={clientId}
+          clientId={data.id || ''}
         />
         <SaveCardActions
           onCancel={() => onOpenChange(false)}

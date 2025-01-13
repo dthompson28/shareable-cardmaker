@@ -12,6 +12,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export interface BusinessCardData {
   id?: string;
@@ -80,16 +82,26 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
       onChange(processedData);
+    } else if (!data.id) {
+      // Generate new ID only for new cards
+      onChange({
+        ...data,
+        id: crypto.randomUUID()
+      });
     }
-  }, [location.state, onChange]);
+  }, [location.state, onChange, data]);
 
   const handleClearForm = () => {
     onClear();
+    // Generate new ID when form is cleared
+    onChange({
+      ...data,
+      id: crypto.randomUUID()
+    });
     toast.success("Form has been cleared");
   };
 
   const handleNext = () => {
-    // Sort groups and links before saving
     const sortedData = sortGroupsAndLinks(data);
     onChange(sortedData);
     onNext();
@@ -98,6 +110,15 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   return (
     <div className="space-y-8">
       <FormHeader onClear={handleClearForm} />
+      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <Label htmlFor="clientId">Client ID</Label>
+        <Input
+          id="clientId"
+          value={data.id || ''}
+          readOnly
+          className="font-mono bg-gray-100"
+        />
+      </div>
       <FormContainer data={data} onNext={handleNext}>
         <FontSection data={data} onChange={handleChange} />
         <PhotoSection data={data} onChange={handleChange} />

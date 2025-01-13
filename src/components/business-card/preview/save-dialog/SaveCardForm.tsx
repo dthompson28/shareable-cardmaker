@@ -26,7 +26,7 @@ export const SaveCardForm = ({
           id="clientId"
           value={clientId}
           readOnly
-          className="bg-gray-100"
+          className="bg-gray-100 font-mono"
         />
       </div>
       <div className="space-y-2">
