@@ -27,7 +27,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
     if (open) {
       // Clean up the ID if it's an object
       const id = data?.id ? 
-        (typeof data.id === 'object' ? data.id?.value : data.id) 
+        (typeof data?.id === 'object' ? data?.id?.value : data?.id) 
         : undefined;
       
       if (id) {
@@ -62,7 +62,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
       
       // Clean up the ID if it's an object
       const id = data?.id ? 
-        (typeof data.id === 'object' ? data.id?.value : data.id) 
+        (typeof data?.id === 'object' ? data?.id?.value : data?.id) 
         : undefined;
 
       const cardData = {
@@ -110,7 +110,7 @@ export const SaveCardDialog = ({ open, onOpenChange, data, previewRef }: SaveCar
 
   // Create a safe ID value that handles all edge cases
   const safeId = data?.id ? 
-    (typeof data.id === 'object' ? data.id?.value : data.id) 
+    (typeof data?.id === 'object' ? data?.id?.value : data?.id) 
     : undefined;
 
   return (
