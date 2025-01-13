@@ -18,21 +18,20 @@ export const useGroupManagement = (
   const [groups, setGroups] = useState<Group[]>([]);
 
   useEffect(() => {
-    // Extract unique group names from links and create group objects with positions
+    // Extract unique group names from links
     const uniqueGroups = Array.from(new Set(
       initialLinks
         .map(link => link.groupName)
         .filter((name): name is string => !!name)
     ));
     
-    // Preserve existing positions or assign new ones
-    setGroups(uniqueGroups.map((name, index) => {
-      const existingGroup = groups.find(g => g.name === name);
-      return {
+    // Initialize groups with sequential positions if they don't exist
+    if (groups.length === 0) {
+      setGroups(uniqueGroups.map((name, index) => ({
         name,
-        position: existingGroup?.position ?? index
-      };
-    }));
+        position: index
+      })));
+    }
   }, [initialLinks]);
 
   const addGroup = () => {
@@ -72,18 +71,12 @@ export const useGroupManagement = (
     const newGroups = [...groups];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     
-    // Swap positions, not array indices
-    const currentPosition = newGroups[index].position;
-    newGroups[index] = { 
-      ...newGroups[index], 
-      position: newGroups[targetIndex].position 
-    };
-    newGroups[targetIndex] = { 
-      ...newGroups[targetIndex], 
-      position: currentPosition 
-    };
+    // Swap positions while maintaining array order
+    const temp = newGroups[index].position;
+    newGroups[index].position = newGroups[targetIndex].position;
+    newGroups[targetIndex].position = temp;
     
-    setGroups(newGroups.sort((a, b) => a.position - b.position));
+    setGroups([...newGroups]);
   };
 
   const removeGroup = (position: number) => {
@@ -92,7 +85,7 @@ export const useGroupManagement = (
 
     // Remove the group and update positions
     const newGroups = groups
-      .filter(g => g.position !== position)
+      .filter(g => g.name !== groupToRemove.name)
       .map(g => ({
         ...g,
         position: g.position > position ? g.position - 1 : g.position
@@ -112,7 +105,7 @@ export const useGroupManagement = (
   };
 
   return {
-    groups: groups.sort((a, b) => a.position - b.position),
+    groups: [...groups].sort((a, b) => a.position - b.position),
     addGroup,
     updateGroupName,
     moveGroup,
