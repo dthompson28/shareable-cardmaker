@@ -1,4 +1,5 @@
 import { BusinessCardData } from "@/types/businessCard";
+import { getSocialIcon } from "../socialIcons";
 
 export const generateSocialSection = (data: BusinessCardData) => {
   const socialLinks = Object.entries(data.social)
