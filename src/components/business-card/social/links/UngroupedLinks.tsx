@@ -21,6 +21,11 @@ export const UngroupedLinks = ({
 
   if (!links.length) return null;
 
+  // Find the base index for ungrouped links in the overall links array
+  const getGlobalIndex = (localIndex: number) => {
+    return links.findIndex((_, idx) => idx === localIndex);
+  };
+
   return (
     <Card className="bg-background border border-border overflow-hidden">
       <div className="p-4 border-b border-border">
@@ -31,13 +36,13 @@ export const UngroupedLinks = ({
           {links.map((link, index) => (
             <LinkControls
               key={link.id || index}
-              index={index}
+              index={getGlobalIndex(index)}
               id={link.id}
               title={link.title}
               url={link.url}
-              onTitleChange={(value) => onLinkUpdate(index, "title", value)}
-              onUrlChange={(value) => onLinkUpdate(index, "url", value)}
-              onDelete={() => onLinkDelete(index)}
+              onTitleChange={(value) => onLinkUpdate(getGlobalIndex(index), "title", value)}
+              onUrlChange={(value) => onLinkUpdate(getGlobalIndex(index), "url", value)}
+              onDelete={() => onLinkDelete(getGlobalIndex(index))}
             />
           ))}
         </SortableContext>
