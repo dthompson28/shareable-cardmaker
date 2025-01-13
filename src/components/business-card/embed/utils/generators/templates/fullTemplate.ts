@@ -33,6 +33,10 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     :root {
       --heading-font: "${data.fonts.heading}", serif;
       --body-font: "${data.fonts.body}", sans-serif;
+      --primary: ${data.colors.primary};
+      --secondary: ${data.colors.secondary};
+      --accent: ${data.colors.accent};
+      --background: ${data.colors.background};
     }
 
     * {
@@ -44,7 +48,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     body {
       font-family: var(--body-font);
       line-height: 1.5;
-      background-color: transparent !important;
+      background-color: var(--background) !important;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -67,50 +71,23 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       height: 256px;
       background-size: cover;
       background-position: center;
-      background-color: white;
+      background-color: var(--secondary);
       background-image: url('${data.photo}');
     }
 
-    .header-content {
-      position: relative;
-      height: 100%;
-      padding: 24px;
-    }
+    <div class="header-content">
+      <div class="header-text">
+        <h1>${data.name}</h1>
+        ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
+        ${data.company ? `<p>${data.company}</p>` : ''}
+      </div>
+    </div>
 
-    .header-logo {
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      width: 64px;
-      height: 64px;
-      object-fit: contain;
-      background-image: url('${data.logo}');
-    }
-
-    .header-text {
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      color: white;
-    }
-
-    .header-text h1 {
-      font-size: 28px;
-      margin-bottom: 4px;
-      font-weight: 700;
-      font-family: var(--heading-font);
-    }
-
-    .header-text p {
-      font-size: 18px;
-      margin: 2px 0;
-      opacity: 0.9;
-      font-family: var(--heading-font);
-    }
+    <div class="header-logo" style="background-image: url('${data.logo}');"></div>
 
     .content {
       padding: 24px;
-      background-color: #cecabe;
+      background-color: var(--background);
     }
 
     .contact-info {
@@ -123,7 +100,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #00674f;
+      color: var(--primary);
       text-decoration: none;
       font-size: 16px;
       padding: 8px;
@@ -132,14 +109,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     }
 
     .contact-link:hover {
-      background-color: #00674f1a;
-    }
-
-    .contact-link svg {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      background: none;
+      background-color: ${data.colors.primary}1a;
     }
 
     .social-links {
@@ -150,29 +120,15 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     }
 
     .social-icon {
-      color: #00674f;
+      color: var(--primary);
       width: 20px;
       height: 20px;
-    }
-
-    .social-icon svg {
-      width: 20px;
-      height: 20px;
-      background: none;
-    }
-
-    .additional-links {
-      margin: 24px 0;
-    }
-
-    .link-group {
-      margin-bottom: 24px;
     }
 
     .group-title {
       font-size: 18px;
       font-weight: 600;
-      color: #326872;
+      color: var(--secondary);
       margin-bottom: 12px;
     }
 
@@ -180,7 +136,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: #0D1B2A;
+      color: var(--primary);
       text-decoration: none;
       font-size: 16px;
       margin-bottom: 12px;
@@ -190,12 +146,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     }
 
     .additional-link:hover {
-      background-color: #0D1B2A1a;
-    }
-
-    .additional-link svg {
-      width: 20px;
-      height: 20px;
+      background-color: ${data.colors.primary}1a;
     }
 
     .action-buttons {
@@ -220,22 +171,13 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     .share-button {
       color: white;
       border: none;
-      background-color: #00674f;
-    }
-
-    .share-button svg {
-      color: white;
-      background: none;
+      background-color: var(--primary);
     }
 
     .save-button {
       background-color: transparent;
-      color: #be5103;
-      border: 2px solid #be5103;
-    }
-
-    .save-button svg {
-      background: none;
+      color: var(--accent);
+      border: 2px solid var(--accent);
     }
   </style>
 </head>
@@ -244,7 +186,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     <div class="business-card">
       <div class="header">
         <div class="header-content">
-          ${data.logo ? `<div class="header-logo"></div>` : ''}
+          <div class="header-logo" style="background-image: url('${data.logo}');"></div>
           <div class="header-text">
             <h1>${data.name}</h1>
             ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
@@ -266,7 +208,6 @@ export const generateFullTemplate = (data: BusinessCardData) => {
           ` : ''}
         </div>
 
-        ${Object.values(data.social).some(value => value && typeof value === 'string') ? `
         <div class="social-links">
           ${data.social.linkedin ? `
           <a href="${data.social.linkedin}" target="_blank" class="social-icon">
@@ -278,25 +219,29 @@ export const generateFullTemplate = (data: BusinessCardData) => {
           </a>
           ` : ''}
         </div>
-        ` : ''}
 
-        ${sortedLinks.length > 0 ? `
         <div class="additional-links">
-          ${Object.entries(groupedLinks).map(([groupName, links]) => `
-          <div class="link-group">
-            <h3 class="group-title">${groupName}</h3>
-            ${links.map(link => `
-            <a href="${link.url}" target="_blank" class="additional-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-              <span>${link.title}</span>
-            </a>
-            `).join('')}
-          </div>
+          ${Object.entries(data.social.additionalLinks.reduce((groups: { [key: string]: any[] }, link) => {
+            const groupName = link.groupName || 'Links';
+            if (!groups[groupName]) {
+              groups[groupName] = [];
+            }
+            groups[groupName].push(link);
+            return groups;
+          }, {})).map(([groupName, links]) => `
+            <div class="link-group">
+              <h3 class="group-title">${groupName}</h3>
+              ${links.map(link => `
+                <a href="${link.url}" target="_blank" class="additional-link">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                  <span>${link.title}</span>
+                </a>
+              `).join('')}
+            </div>
           `).join('')}
         </div>
-        ` : ''}
 
         <div class="action-buttons">
           <button onclick="shareCard()" class="action-button share-button">
@@ -348,9 +293,14 @@ N:${data.name};;;
 ${data.jobTitle ? `TITLE:${data.jobTitle}` : ''}
 ${data.company ? `ORG:${data.company}` : ''}
 ${data.email ? `EMAIL;TYPE=work:${data.email}` : ''}
+${data.phone ? `TEL;TYPE=work,voice:${data.phone}` : ''}
 ${data.website ? `URL;TYPE=work:${data.website}` : ''}
+${data.address ? `ADR;TYPE=work:;;${data.address};;;` : ''}
 ${data.photo ? `PHOTO;VALUE=URL:${data.photo}` : ''}
 ${data.social.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${data.social.linkedin}` : ''}
+${data.social.facebook ? `X-SOCIALPROFILE;TYPE=facebook:${data.social.facebook}` : ''}
+${data.social.instagram ? `X-SOCIALPROFILE;TYPE=instagram:${data.social.instagram}` : ''}
+${data.social.twitter ? `X-SOCIALPROFILE;TYPE=twitter:${data.social.twitter}` : ''}
 END:VCARD\`;
       const blob = new Blob([vcard], { type: 'text/vcard' });
       const url = URL.createObjectURL(blob);
