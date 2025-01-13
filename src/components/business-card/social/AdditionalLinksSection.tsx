@@ -127,6 +127,31 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
         onDragEnd={handleDragEnd}
       >
         <div className="space-y-4 rounded-lg border border-border p-4">
+          {/* Render ungrouped links first */}
+          <UngroupedLinks
+            links={groupedLinks['ungrouped'] || []}
+            onLinkUpdate={(linkIndex, field, value) => {
+              const globalIndex = links.findIndex(link => 
+                !link.groupName && 
+                link.id === (groupedLinks['ungrouped'][linkIndex]?.id)
+              );
+              if (globalIndex !== -1) {
+                updateLink(globalIndex, field, value);
+              }
+            }}
+            onLinkDelete={(linkIndex) => {
+              const globalIndex = links.findIndex(link => 
+                !link.groupName && 
+                link.id === (groupedLinks['ungrouped'][linkIndex]?.id)
+              );
+              if (globalIndex !== -1) {
+                removeLink(globalIndex);
+              }
+            }}
+            availableGroups={groups.map(g => g.name)}
+          />
+
+          {/* Then render grouped links */}
           {groups.map((group, groupIndex) => (
             <GroupCard
               key={groupIndex}
@@ -159,29 +184,6 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
               availableGroups={groups.map(g => g.name)}
             />
           ))}
-          
-          <UngroupedLinks
-            links={groupedLinks['ungrouped'] || []}
-            onLinkUpdate={(linkIndex, field, value) => {
-              const globalIndex = links.findIndex(link => 
-                !link.groupName && 
-                link.id === (groupedLinks['ungrouped'][linkIndex]?.id)
-              );
-              if (globalIndex !== -1) {
-                updateLink(globalIndex, field, value);
-              }
-            }}
-            onLinkDelete={(linkIndex) => {
-              const globalIndex = links.findIndex(link => 
-                !link.groupName && 
-                link.id === (groupedLinks['ungrouped'][linkIndex]?.id)
-              );
-              if (globalIndex !== -1) {
-                removeLink(globalIndex);
-              }
-            }}
-            availableGroups={groups.map(g => g.name)}
-          />
         </div>
 
         <DragOverlay>

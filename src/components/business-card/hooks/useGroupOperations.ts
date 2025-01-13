@@ -70,11 +70,18 @@ export const useGroupOperations = (
     const newGroups = [...groups];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     
+    // Swap positions
     const tempPosition = newGroups[index].position;
     newGroups[index].position = newGroups[targetIndex].position;
     newGroups[targetIndex].position = tempPosition;
+
+    // Swap orders
+    const tempOrder = newGroups[index].order;
+    newGroups[index].order = newGroups[targetIndex].order;
+    newGroups[targetIndex].order = tempOrder;
     
     setGroups(updateGroupPositions(newGroups));
+    toast.success(`Group moved ${direction}`);
   };
 
   const removeGroup = (position: number) => {
@@ -95,6 +102,7 @@ export const useGroupOperations = (
       return link;
     });
     onChange(updatedLinks);
+    toast.success("Group removed");
   };
 
   return {
