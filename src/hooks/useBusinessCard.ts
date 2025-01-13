@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { BusinessCardData } from "@/types/businessCard";
 import { STORAGE_KEY } from "@/constants/businessCard";
 import { toast } from "sonner";
+import { useLocation } from "react-router-dom";
 
 const initialData: BusinessCardData = {
   id: undefined,
@@ -42,10 +43,11 @@ const initialData: BusinessCardData = {
 };
 
 export const useBusinessCard = () => {
+  const location = useLocation();
   const [step, setStep] = useState(1);
   const [data, setData] = useState<BusinessCardData>(() => {
-    // Only load from localStorage if we're editing (location.state.editData exists)
-    const isEditing = window.location.state?.editData;
+    // Only load from localStorage if we're editing (location.state?.editData exists)
+    const isEditing = !!location.state?.editData;
     if (isEditing) {
       try {
         const savedData = localStorage.getItem(STORAGE_KEY);
