@@ -1,5 +1,5 @@
 import { memo, useState, useRef } from "react";
-import { BusinessCardData } from "./BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { CardPreview } from "./business-card/CardPreview";
 import { EmbedCodeDialog } from "./business-card/embed/EmbedCodeDialog";
 import { PreviewContainer } from "./business-card/preview/PreviewContainer";
