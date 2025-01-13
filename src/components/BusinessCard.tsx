@@ -20,7 +20,7 @@ const BusinessCard = memo(({ data, onBack, onEdit }: BusinessCardProps) => {
 
   return (
     <div className="flex flex-col h-full gap-4">
-      <PreviewHeader onEdit={onEdit} />
+      <PreviewHeader onEdit={onEdit} clientId={data.id} />
       
       <div className="flex-1">
         <PreviewContainer title="Business Card Preview">

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { ContactSection } from "./business-card/form/ContactSection";
 import { SocialSection } from "./business-card/form/SocialSection";
 import { ColorSection } from "./business-card/form/ColorSection";
@@ -9,11 +9,11 @@ import { FormHeader } from "./business-card/form/FormHeader";
 import { FontSection } from "./business-card/form/FontSection";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
 import { toast } from "sonner";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 export interface BusinessCardData {
   id?: string;
@@ -83,7 +83,6 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
       });
       onChange(processedData);
     } else if (!data.id) {
-      // Generate new ID only for new cards
       onChange({
         ...data,
         id: crypto.randomUUID()
@@ -93,12 +92,19 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   const handleClearForm = () => {
     onClear();
-    // Generate new ID when form is cleared
     onChange({
       ...data,
       id: crypto.randomUUID()
     });
     toast.success("Form has been cleared");
+  };
+
+  const handleGenerateNewId = () => {
+    onChange({
+      ...data,
+      id: crypto.randomUUID()
+    });
+    toast.success("New client ID generated");
   };
 
   const handleNext = () => {
@@ -111,13 +117,25 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
     <div className="space-y-8">
       <FormHeader onClear={handleClearForm} />
       <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-        <Label htmlFor="clientId">Client ID</Label>
-        <Input
-          id="clientId"
-          value={data.id || ''}
-          readOnly
-          className="font-mono bg-gray-100"
-        />
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <Label htmlFor="clientId">Client ID</Label>
+            <Input
+              id="clientId"
+              value={data.id || ''}
+              readOnly
+              className="font-mono bg-gray-100"
+            />
+          </div>
+          <Button 
+            type="button"
+            variant="outline"
+            onClick={handleGenerateNewId}
+            className="mt-6"
+          >
+            Generate New ID
+          </Button>
+        </div>
       </div>
       <FormContainer data={data} onNext={handleNext}>
         <FontSection data={data} onChange={handleChange} />

@@ -1,19 +1,24 @@
-import { memo } from "react";
 import { Button } from "@/components/ui/button";
 
 interface PreviewHeaderProps {
   onEdit: () => void;
+  clientId?: string;
 }
 
-export const PreviewHeader = memo(({ onEdit }: PreviewHeaderProps) => {
+export const PreviewHeader = ({ onEdit, clientId }: PreviewHeaderProps) => {
   return (
-    <div className="flex justify-between items-center">
-      <h2 className="text-2xl font-semibold text-[#00674f]">Preview Your Business Card</h2>
-      <Button onClick={onEdit} variant="outline" size="sm">
-        Reset Form
+    <div className="flex items-center justify-between mb-4">
+      <div className="space-y-1">
+        <h2 className="text-2xl font-semibold tracking-tight">Preview Your Card</h2>
+        {clientId && (
+          <p className="text-sm text-muted-foreground font-mono">
+            Client ID: {clientId}
+          </p>
+        )}
+      </div>
+      <Button onClick={onEdit} variant="outline">
+        Edit Card
       </Button>
     </div>
   );
-});
-
-PreviewHeader.displayName = "PreviewHeader";
+};
