@@ -10,6 +10,7 @@ interface LinkControlsProps {
   title: string;
   url: string;
   id?: string;
+  groupName?: string;  // Added this prop
   onTitleChange: (value: string) => void;
   onUrlChange: (value: string) => void;
   onDelete: () => void;
