@@ -19,36 +19,28 @@ export const CompactCardLayout = ({
   renderLogo 
 }: CompactCardLayoutProps) => {
   return (
-    <div 
-      className="w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-xl relative transition-all duration-300" 
-      style={{ backgroundColor: data.colors.background }}
-    >
-      <div 
-        className="relative h-48" 
-        style={{ backgroundColor: data.colors.secondary }}
-      >
-        {renderLogo()}
+    <div className="business-card">
+      <div className="header">
         {data.photo && (
-          <div className="absolute left-6 -bottom-24">
-            <div 
-              className="w-48 h-48 rounded-full bg-cover border-4 border-white shadow-xl" 
-              style={{ 
-                backgroundImage: `url(${data.photo})`,
-                backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`,
-                backgroundColor: 'white'
-              }} 
-            />
-          </div>
+          <div 
+            className="contact-photo"
+            style={{ 
+              backgroundImage: `url(${data.photo})`,
+              backgroundPosition: `${data.photoPosition?.x || 50}% ${data.photoPosition?.y || 50}%`
+            }}
+          />
         )}
+        {renderLogo()}
       </div>
 
-      <div className="pt-28 pb-6 px-6 space-y-6">
-        <CardHeader data={data} />
+      <div className="content">
+        <div className="name">{data.name}</div>
+        {data.jobTitle && <div className="title">{data.jobTitle}</div>}
+        {data.company && <div className="company">{data.company}</div>}
+
         <ContactInfo data={data} />
-        <div className="space-y-4">
-          <SocialLinks data={data} />
-          <AdditionalLinks data={data} />
-        </div>
+        <SocialLinks data={data} />
+        <AdditionalLinks data={data} />
         <CardActions data={data} />
       </div>
     </div>

@@ -13,7 +13,111 @@
   @apply bg-white rounded-lg shadow-md p-4;
 }
 
-/* Additional Links Styles */
+/* Business Card Specific Styles */
+.business-card {
+  width: 100%;
+  max-width: 448px;
+  border-radius: 12px;
+  background-color: #E6EDF3;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  height: 192px;
+  width: 100%;
+  background-color: #0D1B2A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.contact-photo {
+  width: 192px;
+  height: 192px;
+  border-radius: 50%;
+  border: 4px solid white;
+  background-size: cover;
+  position: absolute;
+  bottom: -96px;
+  left: 24px;
+  z-index: 10;
+}
+
+.content {
+  padding: 120px 24px 24px;
+}
+
+.name {
+  font-size: 28px;
+  margin-bottom: 4px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: #1B3A57;
+}
+
+.title {
+  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  color: #0D1B2A;
+  margin: 2px 0;
+}
+
+.company {
+  font-size: 18px;
+  font-family: 'Playfair Display', serif;
+  color: #A2AEBB;
+  margin: 2px 0;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #1B3A57;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.contact-link:hover {
+  background-color: rgba(27, 58, 87, 0.1);
+}
+
+.contact-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin: 32px 0;
+}
+
+.social-icon {
+  color: #1B3A57;
+  width: 20px;
+  height: 20px;
+}
+
+.social-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
 .additional-links {
   margin: 24px 0;
 }
@@ -25,14 +129,15 @@
 .group-title {
   font-size: 18px;
   font-weight: 600;
+  color: #00674f;
   margin-bottom: 12px;
-  text-align: left;
 }
 
 .additional-link {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #0D1B2A;
   text-decoration: none;
   font-size: 16px;
   margin-bottom: 12px;
@@ -42,7 +147,7 @@
 }
 
 .additional-link:hover {
-  background-color: rgba(50, 104, 114, 0.1);
+  background-color: rgba(13, 27, 42, 0.1);
 }
 
 .additional-link svg {
@@ -50,7 +155,41 @@
   height: 20px;
 }
 
-/* Action Button Styles */
-.preview-actions {
-  @apply flex justify-between mt-4;
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.action-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.share-button {
+  color: white;
+  border: none;
+  background-color: #1B3A57;
+}
+
+.share-button svg {
+  color: white;
+}
+
+.save-button {
+  background-color: transparent;
+  color: #A2AEBB;
+  border: 2px solid #A2AEBB;
+}
+
+.save-button svg {
+  color: #A2AEBB;
 }
