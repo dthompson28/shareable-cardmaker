@@ -1,4 +1,4 @@
-import { memo, useState, useEffect } from "react";
+import { memo } from "react";
 import { ContactSection } from "./business-card/form/ContactSection";
 import { SocialSection } from "./business-card/form/SocialSection";
 import { ColorSection } from "./business-card/form/ColorSection";
@@ -7,13 +7,12 @@ import { LogoSection } from "./business-card/form/LogoSection";
 import { FormContainer } from "./business-card/form/FormContainer";
 import { FormHeader } from "./business-card/form/FormHeader";
 import { FontSection } from "./business-card/form/FontSection";
+import { ClientIdSection } from "./business-card/form/ClientIdSection";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { useLocation } from "react-router-dom";
-import { toast } from "sonner";
+import { useFormInitialization } from "./business-card/form/useFormInitialization";
+import { useNewCard } from "./business-card/form/useNewCard";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
 import { BusinessCardData } from "@/types/businessCard";
 
 interface Props {
@@ -28,61 +27,14 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   const location = useLocation();
   const isEditing = !!location.state?.editData;
 
-  useEffect(() => {
-    const editData = location.state?.editData;
-    if (editData) {
-      console.log("Edit data received:", editData);
-      const processedData = sortGroupsAndLinks({
-        ...editData,
-        fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
-      });
-      console.log("Processed data:", processedData);
-      onChange(processedData);
-    } else if (!data.id) {
-      onChange({
-        ...data,
-        id: crypto.randomUUID()
-      });
-    }
-  }, [location.state, onChange, data]);
+  useFormInitialization(data, onChange, location.state?.editData);
 
-  const handleNewCard = () => {
-    if (isEditing) {
-      toast.error("Cannot create new card while editing");
-      return;
-    }
-    const newId = crypto.randomUUID();
-    onClear();
-    onChange({
-      ...data,
-      id: newId,
-      colors: {
-        primary: "#FFFFFF",
-        secondary: "#FFFFFF",
-        accent: "#FFFFFF",
-        background: "#FFFFFF"
-      },
-      social: {
-        ...data.social,
-        additionalLinks: [],
-        linkGroups: []
-      }
-    });
-    toast.success("New card created");
-  };
-
-  const handleGenerateNewId = () => {
-    if (isEditing) {
-      toast.error("Cannot generate new ID while editing");
-      return;
-    }
-    const newId = crypto.randomUUID();
-    onChange({
-      ...data,
-      id: newId
-    });
-    toast.success("New client ID generated");
-  };
+  const { handleNewCard, handleGenerateNewId } = useNewCard(
+    data,
+    isEditing,
+    onClear,
+    onChange
+  );
 
   const handleNext = () => {
     const sortedData = sortGroupsAndLinks(data);
@@ -93,29 +45,11 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   return (
     <div className="space-y-8">
       <FormHeader onNewCard={handleNewCard} />
-      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex-1">
-            <Label htmlFor="clientId">Client ID</Label>
-            <Input
-              id="clientId"
-              value={data.id || ''}
-              readOnly
-              className="font-mono text-gray-900 bg-white border-gray-200"
-            />
-          </div>
-          {!isEditing && (
-            <Button 
-              type="button"
-              variant="outline"
-              onClick={handleGenerateNewId}
-              className="mt-6"
-            >
-              Generate New ID
-            </Button>
-          )}
-        </div>
-      </div>
+      <ClientIdSection 
+        clientId={data.id || ''} 
+        isEditing={isEditing}
+        onGenerateNewId={handleGenerateNewId}
+      />
       <FormContainer data={data} onNext={handleNext}>
         <FontSection data={data} onChange={handleChange} />
         <PhotoSection data={data} onChange={handleChange} />
