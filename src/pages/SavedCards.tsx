@@ -38,17 +38,23 @@ const SavedCards = () => {
       return;
     }
 
-    const transformedData: SavedCard[] = (data as BusinessCard[]).map(card => ({
-      id: card.id,
-      client_name: card.client_name,
-      card_name: card.card_name,
-      embed_code: card.embed_code,
-      preview_image: card.preview_image || '',
-      card_data: {
-        ...card.card_data as BusinessCardData,
-        id: card.id // Ensure the ID is set in card_data
-      }
-    }));
+    const transformedData: SavedCard[] = (data as BusinessCard[]).map(card => {
+      // First cast to unknown, then to BusinessCardData to ensure type safety
+      const cardData = card.card_data as unknown as BusinessCardData;
+      console.log("Card data from DB:", cardData); // Debug log
+
+      return {
+        id: card.id,
+        client_name: card.client_name,
+        card_name: card.card_name,
+        embed_code: card.embed_code,
+        preview_image: card.preview_image || '',
+        card_data: {
+          ...cardData,
+          id: card.id // Ensure the ID is set in card_data
+        }
+      };
+    });
 
     setCards(transformedData);
   };
