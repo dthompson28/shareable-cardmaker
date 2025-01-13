@@ -1,4 +1,5 @@
 import { BusinessCardData } from "../BusinessCardForm";
+import { sortGroups } from "./utils/groupSorting";
 
 interface AdditionalLinksProps {
   data: BusinessCardData;
@@ -7,37 +8,18 @@ interface AdditionalLinksProps {
 export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   if (!data.social.additionalLinks?.length) return null;
 
-  // Create a map of group positions from the linkGroups array
   const groupPositions = new Map(
     data.social.linkGroups?.map(group => [group.name, group.position]) || []
   );
 
-  // Get all unique group names from actual links while preserving order
   const groupNames = Array.from(new Set(
     data.social.additionalLinks
       .map(link => link.groupName)
       .filter((name): name is string => !!name)
   ));
 
-  // Sort groups by their position while preserving original order for groups without position
-  const groupOrder = [...groupNames].sort((a, b) => {
-    const posA = groupPositions.get(a);
-    const posB = groupPositions.get(b);
-    
-    // If both positions exist, sort by position
-    if (posA !== undefined && posB !== undefined) {
-      return posA - posB;
-    }
-    
-    // If only one position exists, prioritize the one with position
-    if (posA !== undefined) return -1;
-    if (posB !== undefined) return 1;
-    
-    // If neither has a position, maintain original order
-    return groupNames.indexOf(a) - groupNames.indexOf(b);
-  });
+  const groupOrder = sortGroups(groupNames, groupPositions);
 
-  // Create a map of links by group
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
     acc[groupName] = data.social.additionalLinks?.filter(
       link => link.groupName === groupName
@@ -45,14 +27,12 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
     return acc;
   }, {} as Record<string, typeof data.social.additionalLinks>);
 
-  // Get ungrouped links
   const ungroupedLinks = data.social.additionalLinks?.filter(
     link => !link.groupName
   ) || [];
 
   return (
     <div className="additional-links">
-      {/* Render grouped links */}
       {groupOrder.map((groupName) => {
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
@@ -91,7 +71,6 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
         );
       })}
       
-      {/* Render ungrouped links */}
       {ungroupedLinks.length > 0 && (
         <div className="space-y-3">
           {ungroupedLinks.map((link, index) => (

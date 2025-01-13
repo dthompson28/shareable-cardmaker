@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { useGroupManagement } from "./groups/useGroupManagement";
 import { toast } from "sonner";
 import { GroupCard } from "./groups/GroupCard";
 import { UngroupedLinks } from "./links/UngroupedLinks";
 import { DndContext, DragEndEvent, closestCenter, DragOverlay, DragStartEvent } from "@dnd-kit/core";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useState } from "react";
+import { useGroupOperations } from "../hooks/useGroupOperations";
 
 interface Props {
   links: { title: string; url: string; groupName?: string; id?: string }[];
@@ -21,7 +20,7 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     updateGroupName,
     moveGroup,
     removeGroup
-  } = useGroupManagement(links, onChange);
+  } = useGroupOperations(links, onChange);
 
   const addLink = () => {
     const newLink = { 
@@ -71,24 +70,20 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     const newLinks = [...links];
     const [movedItem] = newLinks.splice(activeIndex, 1);
 
-    // Handle dropping into a group
     if (typeof overId === 'string' && overId.startsWith('group-')) {
       const targetGroupName = overId.replace('group-', '');
       movedItem.groupName = targetGroupName;
       
-      // Find the last position in the target group
       const lastGroupItemIndex = newLinks.reduce((lastIndex, link, index) => {
         return link.groupName === targetGroupName ? index : lastIndex;
       }, -1);
       
       newLinks.splice(lastGroupItemIndex + 1, 0, movedItem);
     }
-    // Handle dropping into ungrouped section
     else if (overId === 'ungrouped') {
       movedItem.groupName = undefined;
       newLinks.push(movedItem);
     }
-    // Handle dropping onto another link
     else {
       const overIndex = newLinks.findIndex(link => link.id === overId);
       if (overIndex === -1) return;
@@ -101,7 +96,6 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
     toast.success("Link moved successfully");
   };
 
-  // Group links by their groupName while preserving order
   const groupedLinks = links.reduce((acc, link) => {
     const group = link.groupName || 'ungrouped';
     if (!acc[group]) {
@@ -133,7 +127,6 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
         onDragEnd={handleDragEnd}
       >
         <div className="space-y-4 rounded-lg border border-border p-4">
-          {/* Display grouped links */}
           {groups.map((group, groupIndex) => (
             <GroupCard
               key={groupIndex}
@@ -167,7 +160,6 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
             />
           ))}
           
-          {/* Ungrouped links */}
           <UngroupedLinks
             links={groupedLinks['ungrouped'] || []}
             onLinkUpdate={(linkIndex, field, value) => {
