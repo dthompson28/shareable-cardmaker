@@ -17,8 +17,16 @@ export const generateEmbedCode = (data: BusinessCardData) => `
   <title>${data.name} - Digital Business Card</title>
   <meta name="description" content="Digital Business Card for ${data.name}">
   <meta name="author" content="${data.name}">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=${data.fonts.heading.replace(' ', '+')}&family=${data.fonts.body.replace(' ', '+')}&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --heading-font: '${data.fonts.heading}', serif;
+      --body-font: '${data.fonts.body}', sans-serif;
+      --primary-color: ${data.colors.primary};
+      --secondary-color: ${data.colors.secondary};
+      --accent-color: ${data.colors.accent};
+      --background-color: ${data.colors.background};
+    }
     ${generateStyles(data)}
   </style>
 </head>

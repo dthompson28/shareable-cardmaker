@@ -3,12 +3,12 @@ import { generateBaseStyles } from "./baseStyles";
 import { generateHeaderStyles } from "./headerStyles";
 import { generateContactStyles } from "./contactStyles";
 import { generateSocialStyles } from "./socialStyles";
-import { generateButtonStyles } from "../generators/sections/buttonStyles";
+import { generateGroupStyles } from "./groupStyles";
 
 export const generateStyles = (data: BusinessCardData) => `
   ${generateBaseStyles(data)}
   ${generateHeaderStyles(data)}
   ${generateContactStyles(data)}
   ${generateSocialStyles(data)}
-  ${generateButtonStyles(data)}
+  ${generateGroupStyles(data)}
 `;

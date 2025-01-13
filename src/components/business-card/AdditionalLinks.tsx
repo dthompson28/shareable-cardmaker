@@ -35,9 +35,9 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   ) || [];
 
   return (
-    <div className="additional-links">
+    <div className="bc-link-groups">
       {ungroupedLinks.length > 0 && (
-        <div className="space-y-3">
+        <div className="bc-group-links">
           {ungroupedLinks.map((link, index) => (
             <LinkItem
               key={`ungrouped-${index}`}
@@ -55,12 +55,20 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
         if (!links?.length) return null;
         
         return (
-          <LinkGroup
-            key={groupName}
-            name={groupName}
-            links={links}
-            colors={data.colors}
-          />
+          <div key={groupName} className="bc-link-group">
+            <h3 className="bc-group-title">{groupName}</h3>
+            <div className="bc-group-links">
+              {links.map((link, index) => (
+                <LinkItem
+                  key={`${groupName}-${index}`}
+                  title={link.title}
+                  url={link.url}
+                  color={data.colors.secondary}
+                  accentColor={data.colors.accent}
+                />
+              ))}
+            </div>
+          </div>
         );
       })}
     </div>
