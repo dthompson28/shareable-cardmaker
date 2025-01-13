@@ -40,7 +40,7 @@ export const LinkControls = ({
     transition,
   };
 
-  const inputId = id || `link-${index}`;
+  const uniqueInputId = `${id || `link-${index}`}-${Math.random().toString(36).substr(2, 9)}`;
 
   return (
     <div 
@@ -58,9 +58,9 @@ export const LinkControls = ({
             <GripVertical className="w-5 h-5 text-muted-foreground" />
           </div>
           <div className="flex-1">
-            <Label htmlFor={`title-${inputId}`}>Link Title</Label>
+            <Label htmlFor={`title-${uniqueInputId}`}>Link Title</Label>
             <Input
-              id={`title-${inputId}`}
+              id={`title-${uniqueInputId}`}
               value={title}
               onChange={(e) => onTitleChange(e.target.value)}
               placeholder="Enter link title"
@@ -69,10 +69,10 @@ export const LinkControls = ({
           </div>
         </div>
         <div className="grid gap-2">
-          <Label htmlFor={`url-${inputId}`}>Link URL</Label>
+          <Label htmlFor={`url-${uniqueInputId}`}>Link URL</Label>
           <div className="flex gap-2">
             <Input
-              id={`url-${inputId}`}
+              id={`url-${uniqueInputId}`}
               value={url}
               onChange={(e) => onUrlChange(e.target.value)}
               placeholder="https://"

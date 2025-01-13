@@ -28,12 +28,12 @@ export const UngroupedLinks = ({
       </div>
       <div ref={setNodeRef} className="p-4 space-y-4 min-h-[100px]">
         <SortableContext 
-          items={links.map(link => link.id || `ungrouped-${link.title}`)} 
+          items={links.map(link => link.id || `ungrouped-${Math.random().toString(36).substr(2, 9)}`)} 
           strategy={verticalListSortingStrategy}
         >
           {links.map((link, index) => (
             <LinkControls
-              key={link.id || `ungrouped-${index}`}
+              key={link.id || `ungrouped-${Math.random().toString(36).substr(2, 9)}`}
               index={index}
               id={link.id || `ungrouped-${index}`}
               title={link.title}
