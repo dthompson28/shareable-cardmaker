@@ -36,7 +36,6 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   return (
     <div className="additional-links">
-      {/* Render ungrouped links first */}
       {ungroupedLinks.length > 0 && (
         <div className="space-y-3">
           {ungroupedLinks.map((link, index) => (
@@ -51,7 +50,6 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
         </div>
       )}
       
-      {/* Then render grouped links */}
       {groupOrder.map((groupName) => {
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
