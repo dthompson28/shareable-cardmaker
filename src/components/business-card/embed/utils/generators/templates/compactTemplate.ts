@@ -1,5 +1,5 @@
+import { sortGroups, sortAdditionalLinks } from "../../../../utils/groupSorting";
 import { BusinessCardData } from "@/types/businessCard";
-import { sortGroups, sortAdditionalLinks } from "../../../utils/groupSorting";
 
 export const generateCompactTemplate = (data: BusinessCardData) => {
   const sortedLinks = sortAdditionalLinks(data.social.additionalLinks || []);
