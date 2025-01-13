@@ -12,8 +12,8 @@ export const useFormInitialization = (
       // Ensure we preserve the ID when editing
       onChange({
         ...editData,
-        id: editData.id // Explicitly preserve the ID
+        id: editData.id || data.id // Explicitly preserve the ID, fallback to current data ID
       });
     }
-  }, [editData, onChange]);
+  }, [editData, onChange, data.id]);
 };
