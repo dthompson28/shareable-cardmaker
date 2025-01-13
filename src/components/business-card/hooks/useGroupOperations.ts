@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { updateGroupPositions } from "../utils/groupSorting";
+import { updateGroupPositions, getNextGroupPosition } from "../utils/groupSorting";
 
 interface Group {
   name: string;
@@ -36,7 +36,7 @@ export const useGroupOperations = (
   }, [initialLinks]);
 
   const addGroup = () => {
-    const newPosition = groups.length;
+    const newPosition = getNextGroupPosition(groups);
     setGroups(prevGroups => [...prevGroups, {
       name: `Group ${prevGroups.length + 1}`,
       position: newPosition,
@@ -70,7 +70,6 @@ export const useGroupOperations = (
     const newGroups = [...groups];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     
-    // Swap positions while preserving order
     const tempPosition = newGroups[index].position;
     newGroups[index].position = newGroups[targetIndex].position;
     newGroups[targetIndex].position = tempPosition;

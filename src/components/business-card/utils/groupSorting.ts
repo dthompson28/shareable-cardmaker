@@ -27,6 +27,12 @@ export const updateGroupPositions = (groups: Group[]): Group[] => {
   return groups.map((group, index) => ({
     ...group,
     position: index,
-    order: group.order || index // Preserve existing order or fallback to index
+    order: group.order || index
   }));
+};
+
+export const getNextGroupPosition = (groups: Group[]): number => {
+  return groups.length > 0 
+    ? Math.max(...groups.map(g => g.position)) + 1 
+    : 0;
 };
