@@ -25,6 +25,7 @@ export default {
         merriweather: ['Merriweather', 'serif'],
         poppins: ['Poppins', 'sans-serif'],
         sourcesans: ['Source Sans Pro', 'sans-serif'],
+        raleway: ['Raleway', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

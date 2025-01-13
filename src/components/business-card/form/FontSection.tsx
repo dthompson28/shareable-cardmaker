@@ -17,6 +17,7 @@ const fonts = {
     { value: 'Merriweather', label: 'Merriweather' },
     { value: 'Poppins', label: 'Poppins' },
     { value: 'Source Sans Pro', label: 'Source Sans Pro' },
+    { value: 'Raleway', label: 'Raleway' },
   ],
   body: [
     { value: 'Open Sans', label: 'Open Sans' },
@@ -27,6 +28,7 @@ const fonts = {
     { value: 'Merriweather', label: 'Merriweather' },
     { value: 'Poppins', label: 'Poppins' },
     { value: 'Source Sans Pro', label: 'Source Sans Pro' },
+    { value: 'Raleway', label: 'Raleway' },
   ],
 };
 
