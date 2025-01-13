@@ -12,12 +12,15 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
     data.social.linkGroups?.map(group => [group.name, group.position]) || []
   );
 
-  // Get all unique group names from actual links and sort them by their position
-  const groupOrder = Array.from(new Set(
+  // Get all unique group names from actual links
+  const groupNames = Array.from(new Set(
     data.social.additionalLinks
       .map(link => link.groupName)
       .filter((name): name is string => !!name)
-  )).sort((a, b) => {
+  ));
+
+  // Sort groups by their position
+  const groupOrder = groupNames.sort((a, b) => {
     const posA = groupPositions.get(a) ?? Number.MAX_VALUE;
     const posB = groupPositions.get(b) ?? Number.MAX_VALUE;
     return posA - posB;
@@ -25,11 +28,9 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   // Create a map of links by group
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
-    if (groupName) {
-      acc[groupName] = data.social.additionalLinks?.filter(
-        link => link.groupName === groupName
-      ) || [];
-    }
+    acc[groupName] = data.social.additionalLinks?.filter(
+      link => link.groupName === groupName
+    ) || [];
     return acc;
   }, {} as Record<string, typeof data.social.additionalLinks>);
 
@@ -41,8 +42,6 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   return (
     <div className="additional-links">
       {groupOrder.map((groupName) => {
-        if (!groupName) return null;
-        
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
         
