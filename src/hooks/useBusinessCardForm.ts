@@ -2,22 +2,29 @@ import { useEffect } from "react";
 import { BusinessCardData } from "@/types/businessCard";
 import { STORAGE_KEY } from "@/constants/businessCard";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
+import { useLocation } from "react-router-dom";
 
 export const useBusinessCardForm = (
   data: BusinessCardData,
   onChange: (data: BusinessCardData) => void
 ) => {
+  const location = useLocation();
+  const isEditing = !!location.state?.editData;
+
   useEffect(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        onChange(sortGroupsAndLinks(parsedData));
+    // Only load from localStorage if we're editing
+    if (isEditing) {
+      try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          onChange(sortGroupsAndLinks(parsedData));
+        }
+      } catch (error) {
+        console.error("Error loading data from localStorage:", error);
       }
-    } catch (error) {
-      console.error("Error loading data from localStorage:", error);
     }
-  }, []);
+  }, [isEditing, onChange]);
 
   const handleChange = (field: string, value: any) => {
     let updatedData = { ...data };

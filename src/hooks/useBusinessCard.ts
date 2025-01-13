@@ -44,13 +44,20 @@ const initialData: BusinessCardData = {
 export const useBusinessCard = () => {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<BusinessCardData>(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      return savedData ? JSON.parse(savedData) : initialData;
-    } catch (error) {
-      console.error('Error loading data from localStorage:', error);
-      return initialData;
+    // Only load from localStorage if we're editing (location.state.editData exists)
+    const isEditing = window.location.state?.editData;
+    if (isEditing) {
+      try {
+        const savedData = localStorage.getItem(STORAGE_KEY);
+        return savedData ? JSON.parse(savedData) : initialData;
+      } catch (error) {
+        console.error('Error loading data from localStorage:', error);
+        return initialData;
+      }
     }
+    // For new cards, always start with initialData and clear localStorage
+    localStorage.removeItem(STORAGE_KEY);
+    return initialData;
   });
 
   const handleEdit = useCallback(() => {
