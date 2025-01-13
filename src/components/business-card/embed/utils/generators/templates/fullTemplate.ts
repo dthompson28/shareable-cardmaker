@@ -125,6 +125,13 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       background-color: ${data.colors.primary}1a;
     }
 
+    .contact-link svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      background: none;
+    }
+
     .social-links {
       display: flex;
       justify-content: center;
@@ -136,6 +143,20 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       color: var(--primary);
       width: 20px;
       height: 20px;
+    }
+
+    .social-icon svg {
+      width: 20px;
+      height: 20px;
+      background: none;
+    }
+
+    .additional-links {
+      margin: 24px 0;
+    }
+
+    .link-group {
+      margin-bottom: 24px;
     }
 
     .group-title {
@@ -160,6 +181,12 @@ export const generateFullTemplate = (data: BusinessCardData) => {
 
     .additional-link:hover {
       background-color: ${data.colors.primary}1a;
+    }
+
+    .additional-link svg {
+      width: 20px;
+      height: 20px;
+      background: none;
     }
 
     .action-buttons {
@@ -187,10 +214,20 @@ export const generateFullTemplate = (data: BusinessCardData) => {
       background-color: var(--primary);
     }
 
+    .share-button svg {
+      color: white;
+      background: none;
+    }
+
     .save-button {
       background-color: transparent;
       color: var(--accent);
       border: 2px solid var(--accent);
+    }
+
+    .save-button svg {
+      color: var(--accent);
+      background: none;
     }
   </style>
 </head>
@@ -199,7 +236,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
     <div class="business-card">
       <div class="header">
         <div class="header-content">
-          <div class="header-logo" style="background-image: url('${data.logo}');"></div>
+          ${data.logo ? `<div class="header-logo"></div>` : ''}
           <div class="header-text">
             <h1>${data.name}</h1>
             ${data.jobTitle ? `<p>${data.jobTitle}</p>` : ''}
@@ -212,53 +249,93 @@ export const generateFullTemplate = (data: BusinessCardData) => {
         <div class="contact-info">
           ${data.email ? `
           <a href="mailto:${data.email}" class="contact-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
             ${data.email}
           </a>
           ` : ''}
+
+          ${data.phone ? `
+          <a href="tel:${data.phone}" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            ${data.phone}
+          </a>
+          ` : ''}
+
+          ${data.website ? `
+          <a href="${data.website}" target="_blank" class="contact-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            ${new URL(data.website).hostname}
+          </a>
+          ` : ''}
         </div>
 
+        ${Object.values(data.social).some(value => value && typeof value === 'string') ? `
         <div class="social-links">
           ${data.social.linkedin ? `
           <a href="${data.social.linkedin}" target="_blank" class="social-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
               <rect width="4" height="12" x="2" y="9"/>
               <circle cx="4" cy="4" r="2"/>
             </svg>
           </a>
           ` : ''}
+          ${data.social.facebook ? `
+          <a href="${data.social.facebook}" target="_blank" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          ` : ''}
+          ${data.social.twitter ? `
+          <a href="${data.social.twitter}" target="_blank" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/>
+            </svg>
+          </a>
+          ` : ''}
+          ${data.social.instagram ? `
+          <a href="${data.social.instagram}" target="_blank" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
+          </a>
+          ` : ''}
         </div>
+        ` : ''}
 
+        ${sortedLinks.length > 0 ? `
         <div class="additional-links">
-          ${Object.entries(data.social.additionalLinks.reduce((groups: { [key: string]: any[] }, link) => {
-            const groupName = link.groupName || 'Links';
-            if (!groups[groupName]) {
-              groups[groupName] = [];
-            }
-            groups[groupName].push(link);
-            return groups;
-          }, {})).map(([groupName, links]) => `
-            <div class="link-group">
-              <h3 class="group-title">${groupName}</h3>
-              ${links.map(link => `
-                <a href="${link.url}" target="_blank" class="additional-link">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                  <span>${link.title}</span>
-                </a>
-              `).join('')}
-            </div>
+          ${Object.entries(groupedLinks).map(([groupName, links]) => `
+          <div class="link-group">
+            <h3 class="group-title">${groupName}</h3>
+            ${links.map(link => `
+            <a href="${link.url}" target="_blank" class="additional-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              <span>${link.title}</span>
+            </a>
+            `).join('')}
+          </div>
           `).join('')}
         </div>
+        ` : ''}
 
         <div class="action-buttons">
           <button onclick="shareCard()" class="action-button share-button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
               <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
               <polyline points="16 6 12 2 8 6"/>
               <line x1="12" y1="2" x2="12" y2="15"/>
@@ -267,7 +344,7 @@ export const generateFullTemplate = (data: BusinessCardData) => {
           </button>
 
           <button onclick="saveContact()" class="action-button save-button">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
               <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
               <polyline points="17 21 17 13 7 13 7 21"/>
               <polyline points="7 3 7 8 15 8"/>
@@ -310,7 +387,6 @@ ${data.company ? `ORG:${data.company}` : ''}
 ${data.email ? `EMAIL;TYPE=work:${data.email}` : ''}
 ${data.phone ? `TEL;TYPE=work,voice:${data.phone}` : ''}
 ${data.website ? `URL;TYPE=work:${data.website}` : ''}
-${data.address ? `ADR;TYPE=work:;;${data.address};;;` : ''}
 ${data.photo ? `PHOTO;VALUE=URL:${data.photo}` : ''}
 ${data.social.linkedin ? `X-SOCIALPROFILE;TYPE=linkedin:${data.social.linkedin}` : ''}
 ${data.social.facebook ? `X-SOCIALPROFILE;TYPE=facebook:${data.social.facebook}` : ''}
@@ -321,7 +397,7 @@ END:VCARD\`;
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = '${data.name.replace(/\s+/g, '_')}_Contact.vcf';
+      link.download = '${data.name.replace(/\\s+/g, '_')}_Contact.vcf';
       link.click();
       URL.revokeObjectURL(url);
     }
