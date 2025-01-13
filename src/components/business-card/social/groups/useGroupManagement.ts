@@ -25,7 +25,7 @@ export const useGroupManagement = (
         .filter((name): name is string => !!name)
     ));
     
-    // Initialize groups with sequential positions if they don't exist
+    // Only initialize groups if they don't exist yet
     if (groups.length === 0) {
       setGroups(uniqueGroups.map((name, index) => ({
         name,
