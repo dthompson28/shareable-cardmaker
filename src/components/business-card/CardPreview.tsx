@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { BusinessCardData } from "../BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 import { CompactCardLayout } from "./layouts/CompactCardLayout";
 import { FullCardLayout } from "./layouts/FullCardLayout";
 
