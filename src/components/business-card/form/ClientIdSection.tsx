@@ -34,7 +34,7 @@ export const ClientIdSection = ({ clientId, isEditing, onGenerateNewId }: Client
           <Button 
             type="button"
             variant="outline"
-            onClick={handleGenerateNewId}
+            onClick={onGenerateNewId}
             className="mt-6"
           >
             Generate New ID
