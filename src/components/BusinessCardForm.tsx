@@ -26,6 +26,7 @@ interface Props {
 export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props) => {
   const { handleChange } = useBusinessCardForm(data, onChange);
   const location = useLocation();
+  const isEditing = !!location.state?.editData;
 
   useEffect(() => {
     const editData = location.state?.editData;
@@ -44,6 +45,10 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   }, [location.state, onChange, data]);
 
   const handleClearForm = () => {
+    if (isEditing) {
+      toast.error("Cannot clear form while editing");
+      return;
+    }
     onClear();
     const newId = crypto.randomUUID();
     onChange({
@@ -54,6 +59,10 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   };
 
   const handleGenerateNewId = () => {
+    if (isEditing) {
+      toast.error("Cannot generate new ID while editing");
+      return;
+    }
     const newId = crypto.randomUUID();
     onChange({
       ...data,
@@ -82,21 +91,27 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
               className="font-mono text-gray-900 bg-white border-gray-200"
             />
           </div>
-          <Button 
-            type="button"
-            variant="outline"
-            onClick={handleGenerateNewId}
-            className="mt-6"
-          >
-            Generate New ID
-          </Button>
+          {!isEditing && (
+            <Button 
+              type="button"
+              variant="outline"
+              onClick={handleGenerateNewId}
+              className="mt-6"
+            >
+              Generate New ID
+            </Button>
+          )}
         </div>
       </div>
       <FormContainer data={data} onNext={handleNext}>
         <FontSection data={data} onChange={handleChange} />
         <PhotoSection data={data} onChange={handleChange} />
         <LogoSection data={data} onChange={handleChange} />
-        <ContactSection data={data} onChange={handleChange} />
+        <ContactSection 
+          data={data} 
+          onChange={handleChange}
+          isEditing={isEditing}
+        />
         <SocialSection data={data} onChange={handleChange} />
         <ColorSection data={data} onChange={handleChange} />
       </FormContainer>

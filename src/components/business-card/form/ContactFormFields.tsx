@@ -5,9 +5,10 @@ import { BusinessCardData } from "@/types/businessCard";
 interface ContactFormFieldsProps {
   data: BusinessCardData;
   onChange: (field: string, value: string) => void;
+  isEditing?: boolean;
 }
 
-export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) => {
+export const ContactFormFields = ({ data, onChange, isEditing }: ContactFormFieldsProps) => {
   return (
     <div className="grid gap-6 pt-6">
       <div className="grid gap-2">
@@ -19,6 +20,8 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           onChange={(e) => onChange("name", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
           autoComplete="name"
+          readOnly={isEditing}
+          disabled={isEditing}
         />
       </div>
 
@@ -30,6 +33,8 @@ export const ContactFormFields = ({ data, onChange }: ContactFormFieldsProps) =>
           onChange={(e) => onChange("company", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
           autoComplete="organization"
+          readOnly={isEditing}
+          disabled={isEditing}
         />
       </div>
 
