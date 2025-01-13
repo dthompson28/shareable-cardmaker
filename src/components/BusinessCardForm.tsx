@@ -36,19 +36,18 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
     } else if (!data.id) {
       onChange({
         ...data,
-        id: crypto.randomUUID()
+        id: crypto.randomUUID(),
+        social: {
+          ...data.social,
+          additionalLinks: [],
+          linkGroups: []
+        }
       });
     }
   }, [location.state, onChange, data]);
 
   const handleClearForm = () => {
     onClear();
-    const newId = crypto.randomUUID();
-    onChange({
-      ...data,
-      id: newId
-    });
-    toast.success("Form has been cleared");
   };
 
   const handleGenerateNewId = () => {
