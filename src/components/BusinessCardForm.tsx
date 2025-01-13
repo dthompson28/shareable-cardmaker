@@ -31,12 +31,14 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   useEffect(() => {
     const editData = location.state?.editData;
     if (editData) {
+      // When editing, use the ID from the editData
       const processedData = sortGroupsAndLinks({
         ...editData,
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
       onChange(processedData);
     } else if (!data.id) {
+      // Only generate new ID if we're not editing and don't have an ID
       onChange({
         ...data,
         id: crypto.randomUUID()
