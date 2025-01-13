@@ -1,6 +1,7 @@
 interface Group {
   name: string;
   position: number;
+  order: number;
 }
 
 export const sortGroups = (
@@ -25,6 +26,7 @@ export const sortGroups = (
 export const updateGroupPositions = (groups: Group[]): Group[] => {
   return groups.map((group, index) => ({
     ...group,
-    position: index
+    position: index,
+    order: group.order || index // Preserve existing order or fallback to index
   }));
 };

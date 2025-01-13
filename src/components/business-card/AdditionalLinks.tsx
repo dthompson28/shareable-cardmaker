@@ -33,6 +33,36 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
 
   return (
     <div className="additional-links">
+      {/* Render ungrouped links first */}
+      {ungroupedLinks.length > 0 && (
+        <div className="space-y-3">
+          {ungroupedLinks.map((link, index) => (
+            <a
+              key={`ungrouped-${index}`}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="additional-link"
+              style={{ color: data.colors.secondary }}
+            >
+              <svg 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                style={{ color: data.colors.accent }}
+              >
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+              <span>{link.title}</span>
+            </a>
+          ))}
+        </div>
+      )}
+      
+      {/* Then render grouped links */}
       {groupOrder.map((groupName) => {
         const links = groupedLinks[groupName];
         if (!links?.length) return null;
@@ -70,34 +100,6 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
           </div>
         );
       })}
-      
-      {ungroupedLinks.length > 0 && (
-        <div className="space-y-3">
-          {ungroupedLinks.map((link, index) => (
-            <a
-              key={`ungrouped-${index}`}
-              href={link.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="additional-link"
-              style={{ color: data.colors.secondary }}
-            >
-              <svg 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round"
-                style={{ color: data.colors.accent }}
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-              <span>{link.title}</span>
-            </a>
-          ))}
-        </div>
-      )}
     </div>
   );
 };

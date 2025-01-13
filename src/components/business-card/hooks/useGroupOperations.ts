@@ -4,6 +4,7 @@ import { updateGroupPositions } from "../utils/groupSorting";
 interface Group {
   name: string;
   position: number;
+  order: number;
 }
 
 interface Link {
@@ -28,7 +29,8 @@ export const useGroupOperations = (
     if (groups.length === 0) {
       setGroups(uniqueGroups.map((name, index) => ({
         name,
-        position: index
+        position: index,
+        order: index
       })));
     }
   }, [initialLinks]);
@@ -37,7 +39,8 @@ export const useGroupOperations = (
     const newPosition = groups.length;
     setGroups(prevGroups => [...prevGroups, {
       name: `Group ${prevGroups.length + 1}`,
-      position: newPosition
+      position: newPosition,
+      order: newPosition
     }]);
   };
 
@@ -67,7 +70,10 @@ export const useGroupOperations = (
     const newGroups = [...groups];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     
-    [newGroups[index], newGroups[targetIndex]] = [newGroups[targetIndex], newGroups[index]];
+    // Swap positions while preserving order
+    const tempPosition = newGroups[index].position;
+    newGroups[index].position = newGroups[targetIndex].position;
+    newGroups[targetIndex].position = tempPosition;
     
     setGroups(updateGroupPositions(newGroups));
   };

@@ -49,6 +49,7 @@ export interface BusinessCardData {
     linkGroups?: {
       name: string;
       position: number;
+      order: number; // Added this field
     }[];
   };
   colors: {
