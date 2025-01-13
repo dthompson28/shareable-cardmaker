@@ -15,6 +15,7 @@ import { useNewCard } from "./business-card/form/useNewCard";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
 import { BusinessCardData } from "@/types/businessCard";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Props {
   data: BusinessCardData;
@@ -37,10 +38,24 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
     onChange
   });
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!isEditing && !data.id) {
       const newId = crypto.randomUUID();
       console.log("Generating new clientId:", newId);
+      
+      // Check if ID already exists in database
+      const { data: existingCard } = await supabase
+        .from('business_cards')
+        .select('id')
+        .eq('id', newId)
+        .maybeSingle();
+
+      if (existingCard) {
+        toast.error("Generated ID already exists. Generating new one...");
+        handleGenerateNewId();
+        return;
+      }
+
       onChange({
         ...data,
         id: newId
