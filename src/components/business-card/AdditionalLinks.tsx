@@ -1,5 +1,5 @@
 import { BusinessCardData } from "../BusinessCardForm";
-import { sortGroups } from "./utils/groupSorting";
+import { sortGroups, sortAdditionalLinks } from "./utils/groupSorting";
 import { LinkItem, LinkGroup } from "./utils/linkRenderer";
 
 interface AdditionalLinksProps {
@@ -9,12 +9,14 @@ interface AdditionalLinksProps {
 export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   if (!data.social.additionalLinks?.length) return null;
 
+  const sortedLinks = sortAdditionalLinks(data.social.additionalLinks);
+
   const groupPositions = new Map(
     data.social.linkGroups?.map(group => [group.name, group.position]) || []
   );
 
   const groupNames = Array.from(new Set(
-    data.social.additionalLinks
+    sortedLinks
       .map(link => link.groupName)
       .filter((name): name is string => !!name)
   ));
@@ -22,13 +24,13 @@ export const AdditionalLinks = ({ data }: AdditionalLinksProps) => {
   const groupOrder = sortGroups(groupNames, groupPositions);
 
   const groupedLinks = groupOrder.reduce((acc, groupName) => {
-    acc[groupName] = data.social.additionalLinks?.filter(
+    acc[groupName] = sortedLinks.filter(
       link => link.groupName === groupName
     ) || [];
     return acc;
   }, {} as Record<string, typeof data.social.additionalLinks>);
 
-  const ungroupedLinks = data.social.additionalLinks?.filter(
+  const ungroupedLinks = sortedLinks.filter(
     link => !link.groupName
   ) || [];
 
