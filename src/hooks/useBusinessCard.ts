@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { BusinessCardData } from "@/types/businessCard";
+import { BusinessCardData } from "@/components/BusinessCardForm";
 import { STORAGE_KEY } from "@/constants/businessCard";
 import { toast } from "sonner";
 
@@ -32,13 +32,12 @@ const initialData: BusinessCardData = {
     tiktok: "",
     whatsapp: "",
     additionalLinks: [],
-    linkGroups: [],
   },
   colors: {
-    primary: "#000000",
-    secondary: "#000000",
-    accent: "#000000",
-    background: "#ffffff",
+    primary: "#00674f",
+    secondary: "#326872",
+    accent: "#be5103",
+    background: "#cecabe",
   },
 };
 
@@ -72,14 +71,8 @@ export const useBusinessCard = () => {
   }, []);
 
   const handleClearForm = useCallback(() => {
-    // Generate a new ID for the cleared form
-    const clearedData = {
-      ...initialData,
-      id: crypto.randomUUID()
-    };
-    setData(clearedData);
+    setData(initialData);
     localStorage.removeItem(STORAGE_KEY);
-    toast.success("Form has been cleared");
   }, []);
 
   const handleNext = useCallback(() => {

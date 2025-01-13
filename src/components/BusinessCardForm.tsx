@@ -7,12 +7,61 @@ import { LogoSection } from "./business-card/form/LogoSection";
 import { FormContainer } from "./business-card/form/FormContainer";
 import { FormHeader } from "./business-card/form/FormHeader";
 import { FontSection } from "./business-card/form/FontSection";
-import { ClientIdSection } from "./business-card/form/ClientIdSection";
 import { useBusinessCardForm } from "@/hooks/useBusinessCardForm";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { sortGroupsAndLinks } from "@/utils/sortGroupsAndLinks";
-import { BusinessCardData } from "@/types/businessCard";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+
+export interface BusinessCardData {
+  id?: string;
+  name: string;
+  company: string;
+  jobTitle: string;
+  phone: string;
+  email: string;
+  website: string;
+  photo: string;
+  photoStyle: 'full' | 'compact';
+  photoPosition: {
+    x: number;
+    y: number;
+  };
+  logo: string;
+  address: string;
+  fonts: {
+    heading: string;
+    body: string;
+  };
+  social: {
+    linkedin: string;
+    facebook: string;
+    instagram: string;
+    youtube: string;
+    twitter: string;
+    tiktok: string;
+    whatsapp: string;
+    additionalLinks?: { 
+      title: string; 
+      url: string;
+      groupName?: string; 
+      id?: string;
+    }[];
+    linkGroups?: {
+      name: string;
+      position: number;
+      order: number;
+    }[];
+  };
+  colors: {
+    primary: string;
+    secondary: string;
+    accent: string;
+    background: string;
+  };
+}
 
 interface Props {
   data: BusinessCardData;
@@ -36,18 +85,19 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
     } else if (!data.id) {
       onChange({
         ...data,
-        id: crypto.randomUUID(),
-        social: {
-          ...data.social,
-          additionalLinks: [],
-          linkGroups: []
-        }
+        id: crypto.randomUUID()
       });
     }
   }, [location.state, onChange, data]);
 
   const handleClearForm = () => {
     onClear();
+    const newId = crypto.randomUUID();
+    onChange({
+      ...data,
+      id: newId
+    });
+    toast.success("Form has been cleared");
   };
 
   const handleGenerateNewId = () => {
@@ -68,10 +118,27 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   return (
     <div className="space-y-8">
       <FormHeader onClear={handleClearForm} />
-      <ClientIdSection 
-        clientId={data.id} 
-        onGenerateNewId={handleGenerateNewId}
-      />
+      <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1">
+            <Label htmlFor="clientId">Client ID</Label>
+            <Input
+              id="clientId"
+              value={data.id || ''}
+              readOnly
+              className="font-mono text-gray-900 bg-white border-gray-200"
+            />
+          </div>
+          <Button 
+            type="button"
+            variant="outline"
+            onClick={handleGenerateNewId}
+            className="mt-6"
+          >
+            Generate New ID
+          </Button>
+        </div>
+      </div>
       <FormContainer data={data} onNext={handleNext}>
         <FontSection data={data} onChange={handleChange} />
         <PhotoSection data={data} onChange={handleChange} />

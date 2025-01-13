@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { BusinessCardData } from "@/types/businessCard";
+import { BusinessCardData } from "../BusinessCardForm";
 import { FormStep } from "@/components/steps/FormStep";
 import { PreviewStep } from "@/components/steps/PreviewStep";
 
