@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { BusinessCardData } from "@/types/businessCard";
 import { SavedCardItem } from "@/components/business-card/saved/SavedCardItem";
 import { Database } from "@/integrations/supabase/types";
+import { PageLayout } from "@/components/layout/PageLayout";
 
 type BusinessCard = Database['public']['Tables']['business_cards']['Row'];
 
@@ -37,7 +38,6 @@ const SavedCards = () => {
       return;
     }
 
-    // Transform the data to ensure card_data is properly typed
     const transformedData: SavedCard[] = (data as BusinessCard[]).map(card => ({
       id: card.id,
       client_name: card.client_name,
@@ -75,34 +75,40 @@ const SavedCards = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-semibold text-[#00674f]">Saved Business Cards</h1>
-        <Button 
-          onClick={() => navigate('/', { state: { newCard: true } })} 
-          variant="outline"
-        >
-          Create New Card
-        </Button>
-      </div>
+    <PageLayout>
+      <div className="space-y-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-[#00674f] mb-2">Saved Cards</h1>
+          <p className="text-muted-foreground">View and manage your saved business cards</p>
+        </div>
 
-      <div className="grid gap-6">
-        {cards.map((card) => (
-          <SavedCardItem
-            key={card.id}
-            id={card.id}
-            clientName={card.client_name}
-            cardName={card.card_name}
-            previewImage={card.preview_image}
-            embedCode={card.embed_code}
-            cardData={card.card_data}
-            onCopyEmbed={copyEmbedCode}
-            onEdit={handleEdit}
-            onDelete={() => handleDelete(card.id)}
-          />
-        ))}
+        <div className="flex justify-end mb-8">
+          <Button 
+            onClick={() => navigate('/', { state: { newCard: true } })} 
+            variant="outline"
+          >
+            Create New Card
+          </Button>
+        </div>
+
+        <div className="grid gap-6">
+          {cards.map((card) => (
+            <SavedCardItem
+              key={card.id}
+              id={card.id}
+              clientName={card.client_name}
+              cardName={card.card_name}
+              previewImage={card.preview_image}
+              embedCode={card.embed_code}
+              cardData={card.card_data}
+              onCopyEmbed={copyEmbedCode}
+              onEdit={handleEdit}
+              onDelete={() => handleDelete(card.id)}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

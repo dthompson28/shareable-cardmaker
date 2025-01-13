@@ -38,7 +38,6 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   });
 
   const handleNext = () => {
-    // Only generate new ID if we're not editing and don't have an ID
     if (!isEditing && !data.id) {
       const newId = crypto.randomUUID();
       console.log("Generating new clientId:", newId);
@@ -56,12 +55,6 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
 
   return (
     <div className="space-y-8">
-      {isEditing ? (
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold text-[#00674f] mb-2">Edit Business Card</h2>
-          <p className="text-muted-foreground">Make changes to your existing business card</p>
-        </div>
-      ) : null}
       <FormHeader onNewCard={handleNewCard} />
       <ClientIdSection 
         clientId={data.id || ''} 
