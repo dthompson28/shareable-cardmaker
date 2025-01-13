@@ -38,8 +38,8 @@ export const BusinessCardForm = memo(({ data, onChange, onNext, onClear }: Props
   });
 
   const handleNext = () => {
-    // Ensure we have a clientId before proceeding
-    if (!data.id) {
+    // Only generate new ID if we're not editing and don't have an ID
+    if (!isEditing && !data.id) {
       const newId = crypto.randomUUID();
       console.log("Generating new clientId:", newId);
       onChange({

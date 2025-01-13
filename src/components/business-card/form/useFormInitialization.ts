@@ -9,13 +9,10 @@ export const useFormInitialization = (
   useEffect(() => {
     if (editData) {
       console.log("Initializing form with edit data:", editData);
-      // Ensure we preserve the ID when editing
-      onChange({
-        ...editData,
-        id: editData.id || data.id // Explicitly preserve the ID, fallback to current data ID
-      });
+      // When editing, preserve the existing ID
+      onChange(editData);
     } else if (!data.id) {
-      // Generate new ID for new cards
+      // Only generate new ID for new cards
       const newId = crypto.randomUUID();
       console.log("Generating initial clientId for new card:", newId);
       onChange({
