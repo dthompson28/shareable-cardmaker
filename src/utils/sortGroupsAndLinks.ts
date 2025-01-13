@@ -1,10 +1,10 @@
-import { BusinessCardData } from "@/components/BusinessCardForm";
+import { BusinessCardData } from "@/types/businessCard";
 
 export const sortGroupsAndLinks = (data: BusinessCardData): BusinessCardData => {
   if (!data.social) return data;
 
   const sortedGroups = data.social.linkGroups
-    ? [...data.social.linkGroups].sort((a, b) => a.position - b.position)
+    ? [...data.social.linkGroups].sort((a, b) => a.order - b.order)
     : undefined;
 
   const sortedLinks = data.social.additionalLinks
@@ -21,13 +21,21 @@ export const sortGroupsAndLinks = (data: BusinessCardData): BusinessCardData => 
         }
         return 0;
       })
+      .map(link => ({
+        ...link,
+        id: link.id || crypto.randomUUID()
+      }))
     : undefined;
 
   return {
     ...data,
     social: {
       ...data.social,
-      linkGroups: sortedGroups,
+      linkGroups: sortedGroups?.map((group, index) => ({
+        ...group,
+        position: index,
+        order: group.order || index
+      })),
       additionalLinks: sortedLinks,
     },
   };
