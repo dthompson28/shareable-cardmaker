@@ -20,8 +20,6 @@ export const ContactFormFields = ({ data, onChange, isEditing }: ContactFormFiel
           onChange={(e) => onChange("name", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
           autoComplete="name"
-          readOnly={isEditing}
-          disabled={isEditing}
         />
       </div>
 
@@ -33,8 +31,6 @@ export const ContactFormFields = ({ data, onChange, isEditing }: ContactFormFiel
           onChange={(e) => onChange("company", e.target.value)}
           className="h-12 bg-white/50 border-muted focus:border-brand-primary focus:ring-brand-primary/20"
           autoComplete="organization"
-          readOnly={isEditing}
-          disabled={isEditing}
         />
       </div>
 
