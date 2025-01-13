@@ -12,8 +12,8 @@ export const useFormInitialization = (
       console.log("Edit data received:", editData);
       const processedData = sortGroupsAndLinks({
         ...editData,
-        // Ensure ID is properly preserved as a string
-        id: editData.id?.toString(),
+        // Ensure ID is properly preserved
+        id: editData.id,
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
       console.log("Processed data:", processedData);
