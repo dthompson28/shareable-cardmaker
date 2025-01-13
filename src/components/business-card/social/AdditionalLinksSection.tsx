@@ -24,18 +24,29 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
   } = useGroupManagement(links, onChange);
 
   const addLink = () => {
-    onChange([...links, { title: "", url: "", id: crypto.randomUUID() }]);
+    const newLink = { 
+      title: "", 
+      url: "", 
+      id: crypto.randomUUID() 
+    };
+    onChange([...links, newLink]);
     toast.success("New link added");
   };
 
   const removeLink = (index: number) => {
-    onChange(links.filter((_, i) => i !== index));
+    const newLinks = [...links];
+    newLinks.splice(index, 1);
+    onChange(newLinks);
     toast.success("Link removed");
   };
 
   const updateLink = (index: number, field: "title" | "url", value: string) => {
     const newLinks = [...links];
-    newLinks[index] = { ...newLinks[index], [field]: value };
+    newLinks[index] = { 
+      ...newLinks[index], 
+      [field]: value,
+      id: newLinks[index].id || crypto.randomUUID()
+    };
     onChange(newLinks);
   };
 
@@ -134,8 +145,24 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
               onMoveUp={() => moveGroup(groupIndex, 'up')}
               onMoveDown={() => moveGroup(groupIndex, 'down')}
               onDelete={() => removeGroup(group.position)}
-              onLinkUpdate={updateLink}
-              onLinkDelete={removeLink}
+              onLinkUpdate={(linkIndex, field, value) => {
+                const globalIndex = links.findIndex(link => 
+                  link.groupName === group.name && 
+                  link.id === (groupedLinks[group.name][linkIndex]?.id)
+                );
+                if (globalIndex !== -1) {
+                  updateLink(globalIndex, field, value);
+                }
+              }}
+              onLinkDelete={(linkIndex) => {
+                const globalIndex = links.findIndex(link => 
+                  link.groupName === group.name && 
+                  link.id === (groupedLinks[group.name][linkIndex]?.id)
+                );
+                if (globalIndex !== -1) {
+                  removeLink(globalIndex);
+                }
+              }}
               availableGroups={groups.map(g => g.name)}
             />
           ))}
@@ -143,8 +170,24 @@ export const AdditionalLinksSection = ({ links, onChange }: Props) => {
           {/* Ungrouped links */}
           <UngroupedLinks
             links={groupedLinks['ungrouped'] || []}
-            onLinkUpdate={updateLink}
-            onLinkDelete={removeLink}
+            onLinkUpdate={(linkIndex, field, value) => {
+              const globalIndex = links.findIndex(link => 
+                !link.groupName && 
+                link.id === (groupedLinks['ungrouped'][linkIndex]?.id)
+              );
+              if (globalIndex !== -1) {
+                updateLink(globalIndex, field, value);
+              }
+            }}
+            onLinkDelete={(linkIndex) => {
+              const globalIndex = links.findIndex(link => 
+                !link.groupName && 
+                link.id === (groupedLinks['ungrouped'][linkIndex]?.id)
+              );
+              if (globalIndex !== -1) {
+                removeLink(globalIndex);
+              }
+            }}
             availableGroups={groups.map(g => g.name)}
           />
         </div>

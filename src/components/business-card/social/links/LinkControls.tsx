@@ -10,7 +10,6 @@ interface LinkControlsProps {
   title: string;
   url: string;
   id?: string;
-  groupName?: string;
   onTitleChange: (value: string) => void;
   onUrlChange: (value: string) => void;
   onDelete: () => void;
@@ -40,7 +39,7 @@ export const LinkControls = ({
     transition,
   };
 
-  const uniqueInputId = `${id || `link-${index}`}-${Math.random().toString(36).substr(2, 9)}`;
+  const uniqueInputId = `${id || `link-${index}`}-${crypto.randomUUID()}`;
 
   return (
     <div 
