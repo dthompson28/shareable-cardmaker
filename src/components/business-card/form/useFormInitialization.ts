@@ -11,16 +11,16 @@ export const useFormInitialization = (
   useEffect(() => {
     if (editData) {
       console.log("Edit data received:", editData);
-      const id = getSafeId(editData.id) || crypto.randomUUID();
-      
+      // When editing, preserve the existing ID
       const processedData = sortGroupsAndLinks({
         ...editData,
-        id: id,
+        id: editData.id, // Preserve the existing ID
         fonts: editData.fonts || { heading: 'Playfair Display', body: 'Open Sans' },
       });
       console.log("Processed data:", processedData);
       onChange(processedData);
     } else if (!data.id) {
+      // Only generate a new ID for new cards
       onChange({
         ...data,
         id: crypto.randomUUID()
