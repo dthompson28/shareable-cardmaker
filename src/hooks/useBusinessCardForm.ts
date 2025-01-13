@@ -34,17 +34,13 @@ export const useBusinessCardForm = (
             [child]: value,
           },
         };
-
-        // Apply sorting if we're updating linkGroups or additionalLinks
-        if (child === "linkGroups" || child === "additionalLinks") {
-          updatedData = sortGroupsAndLinks(updatedData);
-        }
       }
     } else {
       updatedData[field] = value;
     }
 
-    onChange(updatedData);
+    // Sort groups and links after each update
+    onChange(sortGroupsAndLinks(updatedData));
   };
 
   return { handleChange };
