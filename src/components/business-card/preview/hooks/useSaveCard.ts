@@ -36,6 +36,14 @@ export const useSaveCard = ({ data, previewRef, onOpenChange }: UseSaveCardProps
       const previewImage = await capturePreview(previewRef.current);
       const id = getSafeId(data.id);
 
+      // Log the data being saved for debugging
+      console.log("Saving card data:", {
+        id,
+        clientName,
+        cardName,
+        data
+      });
+
       const cardData = {
         client_name: clientName,
         card_name: cardName,
@@ -47,27 +55,38 @@ export const useSaveCard = ({ data, previewRef, onOpenChange }: UseSaveCardProps
       let error;
 
       if (id) {
+        // Update existing card
         const { error: updateError } = await supabase
           .from('business_cards')
           .update(cardData)
           .eq('id', id);
         error = updateError;
+        
         if (!error) {
           toast.success("Business card updated successfully");
           navigate('/saved-cards');
         }
       } else {
+        // Insert new card
         const { error: insertError } = await supabase
           .from('business_cards')
-          .insert(cardData);
+          .insert({
+            ...cardData,
+            id: data.id // Use the generated ID from the form
+          });
         error = insertError;
+        
         if (!error) {
           toast.success("Business card saved successfully");
           navigate('/saved-cards');
         }
       }
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error saving card:', error);
+        throw error;
+      }
+      
       onOpenChange(false);
     } catch (error) {
       console.error('Error saving business card:', error);
